@@ -1,0 +1,175 @@
+{
+  "settings": {
+    "name": "Shrenik Pillai",
+    "title": "Data Scientist",
+    "location": "Richardson, TX",
+    "summary": "Specializing in ML pipelines, data science, and Cloud infrastructure with a focus on optimization and pattern recognition.",
+    "profileImage": "https://media.licdn.com/dms/image/v2/D5603AQGQ4C_ejm16mg/profile-displayphoto-crop_800_800/B56Zl0785XI0AI-/0/1758603497511?e=1762387200&v=beta&t=T0fnJWXlzfLaDd0QLZT_2OBw0EC0uIggncUM0HoiXcg"
+  },
+  "sections": {
+    "hero": {
+      "enabled": true,
+      "ctaButtons": [
+        {
+          "text": "Get In Touch",
+          "url": "mailto:rshrenik811@gmail.com"
+        },
+        {
+          "text": "View Resume",
+          "url": ""
+        }
+      ]
+    },
+    "about": {
+      "enabled": true,
+      "skills": {
+        "enabled": true,
+        "title": "Technical Skills",
+        "items": [
+          "Python",
+          "R Programming",
+          "SQL",
+          "TensorFlow",
+          "PyTorch",
+          "Docker",
+          "Kubernetes",
+          "Power BI",
+          "Tableau",
+          "Pandas",
+          "Scikit-learn",
+          "Tensorflow"
+        ]
+      }
+    },
+    "experience": {
+      "enabled": true,
+      "title": "Work Experience",
+      "items": [
+        {
+          "company": "09 Solutions",
+          "position": "Cloud Engineer",
+          "period": "Jan 2023 - Aug 2025",
+          "description": "Built scalable ML data pipelines on AWS (Docker, Kubernetes) serving 70+ stakeholders at Mondelez, processing 1M+ daily records with feature engineering for downstream ML model training and personalization analytics. \n\nImplemented ELK Stack monitoring for ML systems enabling real-time model performance tracking and data drift detection, improving operational efficiency by 15% and reducing model training time by 30%."
+        },
+        {
+          "company": "Moksa.ai",
+          "position": "Computer Vision Intern",
+          "period": "Jan 2022 - Apr 2022",
+          "description": "Developed real-time object detection system using TensorFlow, YOLO, and OpenCV achieving 90%+ accuracy, building end-to-end ML pipeline from data annotation through production deployment via Azure DevOps and Docker. \n\n\n\nExperimented with multiple neural network architectures and hyperparameter tuning reducing inference latency by 35% through systematic A/B testing, demonstrating strong problem-solving and cross-functional collaboration skills."
+        }
+      ]
+    },
+    "projects": {
+      "enabled": true,
+      "title": "Featured Projects",
+      "items": [
+        {
+          "title": "Lie Detection System",
+          "description": "Designed supervised learning system using TensorFlow and MediaPipe achieving 85% accuracy by experimentation with Random Forest, SVM, and neural networks on 10,000+ facial image dataset with AWS deployment. Optimized production ML pipeline with <100ms inference latency applying A/B testing framework and explainability techniques, demonstrating understanding of experimentation design and end-to-end ML system development.",
+          "tags": [
+            "TensorFlow",
+            "MediaPipe",
+            "Random Forest",
+            "SVM",
+            "AWS"
+          ],
+          "previewUrl": null,
+          "repoUrl": null
+        }
+      ]
+    },
+    "education": {
+      "enabled": true,
+      "title": "Education",
+      "items": [
+        {
+          "institution": "The University of Texas at Dallas",
+          "degree": "Master of Business Analytics and Artificial Intelligence (AI)",
+          "period": "2025 - 2027"
+        },
+        {
+          "institution": "Amrita School of Engineering",
+          "degree": "Bachelor of Computer Science and Electronics Engineering",
+          "period": "2019 - 2023"
+        }
+      ]
+    },
+    "achievements": {
+      "enabled": true,
+      "title": "Achievements & Certifications",
+      "items": [
+        {
+          "title": "The Data Scientist's Toolbox ",
+          "description": "Johns Hopkins University\n"
+        },
+        {
+          "title": "Convolutional Neural Networks in TensorFlow,",
+          "description": "Deeplearning.AI"
+        },
+        {
+          "title": "Azure Fundamentals (AZ-900)",
+          "description": "Microsoft"
+        }
+      ]
+    },
+    "contact": {
+      "enabled": true,
+      "title": "Contact",
+      "email": "rshrenik811@gmail.com",
+      "phone": "(469) 545 8106",
+      "location": "Richardson,TX"
+    },
+    "social": {
+      "enabled": true,
+      "items": [
+        {
+          "platform": "linkedin",
+          "url": "https://linkedin.com/in/shrenik-r/",
+          "icon": "linkedin"
+        },
+        {
+          "platform": "github",
+          "url": "https://github.com/Shrenik811rp",
+          "icon": "github"
+        }
+      ]
+    }
+  },
+  "navigation": {
+    "enabled": true,
+    "items": [
+      {
+        "name": "Home",
+        "url": "/"
+      },
+      {
+        "name": "About",
+        "url": "#about"
+      },
+      {
+        "name": "Projects",
+        "url": "#projects"
+      },
+      {
+        "name": "Experience",
+        "url": "#experience"
+      },
+      {
+        "name": "Education",
+        "url": "#education"
+      },
+      {
+        "name": "Contact",
+        "url": "#contact"
+      },
+      {
+        "name": "Certifications",
+        "url": "#certifications"
+      }
+    ]
+  },
+  "footer": {
+    "enabled": false,
+    "copyright": "© 2025 Shrenik Pillai. All rights reserved."
+  }
+}
