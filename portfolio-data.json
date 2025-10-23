@@ -1,9 +1,9 @@
 {
   "settings": {
     "name": "Shrenik Pillai",
-    "title": "Data Scientist",
+    "title": "Data Scientist & ML Engineer",
     "location": "Richardson, TX",
-    "summary": "Specializing in ML pipelines, data science, and Cloud infrastructure with a focus on optimization and pattern recognition.",
+    "summary": "Specializing in ML pipelines, data science, and cloud infrastructure with a focus on optimization and pattern recognition. Experienced in architecting scalable solutions using AWS, Python, and modern ML frameworks. Passionate about Computer Vision, Deep Learning, and building end-to-end ML systems.",
     "profileImage": "https://media.licdn.com/dms/image/v2/D5603AQGQ4C_ejm16mg/profile-displayphoto-crop_800_800/B56Zl0785XI0AI-/0/1758603497511?e=1762387200&v=beta&t=T0fnJWXlzfLaDd0QLZT_2OBw0EC0uIggncUM0HoiXcg"
   },
   "sections": {
@@ -15,13 +15,14 @@
           "url": "mailto:rshrenik811@gmail.com"
         },
         {
-          "text": "View Resume",
-          "url": ""
+          "text": "Download Resume",
+          "url": "#"
         }
       ]
     },
     "about": {
       "enabled": true,
+      "content": "I am a dedicated professional aiming to achieve objectives through continuous learning and improvement. Currently pursuing Master's in Business Analytics and AI at UT Dallas, I leverage academic knowledge and work experience to build scalable ML solutions. I uphold a positive and hardworking attitude, being a good team player while helping teams grow and achieve objectives together. Other than coding, I love fitness, helping others in the community, and exploring new technologies.",
       "skills": {
         "enabled": true,
         "title": "Technical Skills",
@@ -33,11 +34,22 @@
           "PyTorch",
           "Docker",
           "Kubernetes",
+          "AWS",
+          "Azure",
+          "Scikit-learn",
+          "Pandas",
+          "NumPy",
+          "OpenCV",
+          "MediaPipe",
           "Power BI",
           "Tableau",
-          "Pandas",
-          "Scikit-learn",
-          "Tensorflow"
+          "Snowflake",
+          "Databricks",
+          "MongoDB",
+          "Node.js",
+          "React",
+          "Git",
+          "Heroku"
         ]
       }
     },
@@ -46,16 +58,22 @@
       "title": "Work Experience",
       "items": [
         {
-          "company": "09 Solutions",
+          "company": "o9 Solutions",
           "position": "Cloud Engineer",
           "period": "Jan 2023 - Aug 2025",
-          "description": "Built scalable ML data pipelines on AWS (Docker, Kubernetes) serving 70+ stakeholders at Mondelez, processing 1M+ daily records with feature engineering for downstream ML model training and personalization analytics. \n\nImplemented ELK Stack monitoring for ML systems enabling real-time model performance tracking and data drift detection, improving operational efficiency by 15% and reducing model training time by 30%."
+          "description": "Architected scalable pipelines in high-stakes Mondelez production environment using AWS, Python, SQL, Docker, and Kubernetes, enhanced data ingestion and modeling process by 5% to deliver insights and optimize cloud deployment. Implemented ELK Stack (Elasticsearch, Logstash, Kibana) to address monitoring inefficiencies, boosted operational efficiency by 5%, ensuring data quality and data warehouse stability resulting in improved scalability and reliability."
         },
         {
           "company": "Moksa.ai",
           "position": "Computer Vision Intern",
           "period": "Jan 2022 - Apr 2022",
-          "description": "Developed real-time object detection system using TensorFlow, YOLO, and OpenCV achieving 90%+ accuracy, building end-to-end ML pipeline from data annotation through production deployment via Azure DevOps and Docker. \n\n\n\nExperimented with multiple neural network architectures and hyperparameter tuning reducing inference latency by 35% through systematic A/B testing, demonstrating strong problem-solving and cross-functional collaboration skills."
+          "description": "Developed ML pipelines with TensorFlow, OpenCV, and Azure DevOps for real-time theft detection in security applications, achieved 90% accuracy on datasets using YOLO, integrating cloud-based data modeling and troubleshooting. Optimized neural architectures through A/B testing and collaboration, reduced inference latency by 35%, refined production datasets, demonstrating problem-solving in performance enhancement and cloud system testing."
+        },
+        {
+          "company": "Google Student Developer Club",
+          "position": "Technical Lead Volunteer",
+          "period": "Sep 2021 - Aug 2022",
+          "description": "Led 5+ ML/data science competitions, using Python and SQL to analyze feedback and improve engagement by 25% for 200+ students, fostering collaborative problem-solving and providing insights in group or team discussions. Collaborated with industry experts and mentors on model deployment and experimentation methodologies, demonstrating strong verbal and written communication skills."
         }
       ]
     },
@@ -65,16 +83,38 @@
       "items": [
         {
           "title": "Lie Detection System",
-          "description": "Designed supervised learning system using TensorFlow and MediaPipe achieving 85% accuracy by experimentation with Random Forest, SVM, and neural networks on 10,000+ facial image dataset with AWS deployment. Optimized production ML pipeline with <100ms inference latency applying A/B testing framework and explainability techniques, demonstrating understanding of experimentation design and end-to-end ML system development.",
-          "tags": [
-            "TensorFlow",
-            "MediaPipe",
-            "Random Forest",
-            "SVM",
-            "AWS"
-          ],
+          "description": "Built supervised learning models with TensorFlow on 10,000+ images to analyze facial cues in AI research. Designed production pipeline with <100ms inference latency using A/B testing framework and explainability techniques. Achieved 85% accuracy using Random Forest, SVM, and neural networks with AWS deployment.",
+          "tags": ["TensorFlow", "MediaPipe", "Random Forest", "SVM", "AWS", "Python"],
           "previewUrl": null,
           "repoUrl": null
+        },
+        {
+          "title": "Facial Expression Recognition",
+          "description": "Implemented FER system containing three key steps: feature extraction, dimensionality reduction, and classification. Built using deep learning techniques to accurately detect and classify human emotions from facial images in real-time.",
+          "tags": ["TensorFlow", "OpenCV", "Deep Learning", "Computer Vision"],
+          "previewUrl": null,
+          "repoUrl": "https://github.com/Shrenik811rp/JS_PROJECTS/tree/master/FUN_PROJECTS/ML_PROJECTS/Simple/IMAGE_CLASSIFIER/Face_expression_detection"
+        },
+        {
+          "title": "AI Hand PoseNet",
+          "description": "Developed hand tracking system employing machine learning to infer 21 3D landmarks of a hand from just a single frame. Implemented real-time hand gesture recognition with high accuracy for interactive applications.",
+          "tags": ["MediaPipe", "TensorFlow", "Computer Vision", "Python"],
+          "previewUrl": null,
+          "repoUrl": "https://github.com/Shrenik811rp/basic_python_projects/tree/master/ML_PROJECTS/FUN_AI_ML_PROJECTS/COMPUTER_VISION/POSE_NET/AI_HAND_POSENET"
+        },
+        {
+          "title": "Person and Car Detection",
+          "description": "Implemented object detection system using Haar Cascade classifier for detecting cars and persons in images and video streams. Optimized for real-time processing with high detection accuracy.",
+          "tags": ["OpenCV", "Haar Cascade", "Python", "Object Detection"],
+          "previewUrl": null,
+          "repoUrl": "https://github.com/Shrenik811rp/basic_python_projects/tree/master/ML_PROJECTS/FUN_AI_ML_PROJECTS/COMPUTER_VISION/OBJECT_DETECTION/CAR_PERSON_DETECT"
+        },
+        {
+          "title": "Heart Disease Prediction",
+          "description": "Developed machine learning classification model to predict heart disease through comprehensive data science lifecycle. Implemented feature engineering, model training, and evaluation to achieve high prediction accuracy for medical diagnosis support.",
+          "tags": ["Machine Learning", "Scikit-learn", "Python", "Healthcare AI"],
+          "previewUrl": null,
+          "repoUrl": "https://github.com/Shrenik811rp/heart_disease-app"
         }
       ]
     },
@@ -85,39 +125,69 @@
         {
           "institution": "The University of Texas at Dallas",
           "degree": "Master of Business Analytics and Artificial Intelligence (AI)",
-          "period": "2025 - 2027"
+          "period": "Aug 2025 - Jun 2027",
+          "details": "GPA: 3.50/4.00 | Relevant Coursework: Recommendation Systems, Experimentation Design, Data Visualization"
         },
         {
           "institution": "Amrita School of Engineering",
           "degree": "Bachelor of Computer Science and Electronics Engineering",
-          "period": "2019 - 2023"
+          "period": "Jul 2019 - Aug 2023",
+          "details": "GPA: 3.34/4.00 (8.01 CGPA) | Relevant Coursework: Machine Learning, Data Science, Statistical Analysis, Data Structures and Algorithms | CodeChef 3-star Rating"
+        },
+        {
+          "institution": "St. Vincent Pallotti School",
+          "degree": "High School Education",
+          "period": "2004 - 2019",
+          "details": "Board Exam Percentage: 86.34%"
         }
       ]
     },
     "achievements": {
       "enabled": true,
-      "title": "Achievements & Certifications",
+      "title": "Certifications & Accomplishments",
       "items": [
         {
-          "title": "The Data Scientist's Toolbox ",
-          "description": "Johns Hopkins University\n"
+          "title": "The Data Scientist's Toolbox",
+          "description": "Johns Hopkins University"
         },
         {
-          "title": "Convolutional Neural Networks in TensorFlow,",
+          "title": "Convolutional Neural Networks in TensorFlow",
+          "description": "Deeplearning.AI"
+        },
+        {
+          "title": "Introduction to TensorFlow for AI, ML and Deep Learning",
           "description": "Deeplearning.AI"
         },
         {
           "title": "Azure Fundamentals (AZ-900)",
           "description": "Microsoft"
+        },
+        {
+          "title": "Python Data Structures",
+          "description": "University of Michigan"
+        },
+        {
+          "title": "Interactivity with JavaScript",
+          "description": "University of Michigan"
+        },
+        {
+          "title": "Web Development Path",
+          "description": "Progate"
+        },
+        {
+          "title": "CodeChef 3-star Rating",
+          "description": "Competitive Programming Achievement"
         }
       ]
     },
     "contact": {
       "enabled": true,
-      "title": "Contact",
+      "title": "Get In Touch",
+      "subtitle": "Feel free to get in touch with me. I am always open to discussing new projects, creative ideas or opportunities to be a part of your visions. Email me with any questions or inquiries. I'll be happy to answer your questions and set up a meeting with you.",
       "email": "rshrenik811@gmail.com",
-      "phone": "(469) 545 8106",
-      "location": "Richardson,TX"
+      "phone": "(469) 545-8106",
+      "location": "Richardson, TX",
+      "showContactForm": true
     },
     "social": {
       "enabled": true,
@@ -140,10 +210,14 @@
     "items": [
       {
         "name": "Home",
-        "url": "/"
+        "url": "#"
       },
       {
         "name": "About",
+        "url": "#about"
+      },
+      {
+        "name": "Skills",
         "url": "#about"
       },
       {
@@ -159,17 +233,17 @@
         "url": "#education"
       },
       {
-        "name": "Contact",
-        "url": "#contact"
+        "name": "Certifications",
+        "url": "#achievements"
       },
       {
-        "name": "Certifications",
-        "url": "#certifications"
+        "name": "Contact",
+        "url": "#contact"
       }
     ]
   },
   "footer": {
-    "enabled": false,
+    "enabled": true,
     "copyright": "© 2025 Shrenik Pillai. All rights reserved."
   }
 }
