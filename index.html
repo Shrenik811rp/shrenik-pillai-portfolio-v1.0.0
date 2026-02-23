@@ -22,6 +22,8 @@
               "twinkle": "twinkle 3s ease-in-out infinite",
               "drift": "drift 8s ease-in-out infinite",
               "flutter": "flutter 4s ease-in-out infinite",
+              "fall": "fall 8s linear infinite",
+              "sway": "sway 4s ease-in-out infinite",
             },
             keyframes: {
               blurIn: {
@@ -61,6 +63,16 @@
                 "25%": { transform: "translateY(-10px) rotate(5deg)" },
                 "75%": { transform: "translateY(10px) rotate(-5deg)" },
               },
+              fall: {
+                "0%": { transform: "translateY(-10vh) rotate(0deg)", opacity: "1" },
+                "90%": { opacity: "1" },
+                "100%": { transform: "translateY(100vh) rotate(360deg)", opacity: "0" },
+              },
+              sway: {
+                "0%, 100%": { transform: "translateX(0)" },
+                "25%": { transform: "translateX(30px)" },
+                "75%": { transform: "translateX(-30px)" },
+              },
             },
           },
         },
@@ -84,11 +96,21 @@
         padding: 0;
         width: 100%;
         height: 100%;
+        user-select: none;
       }
 
       body {
         overflow-x: hidden;
         position: relative;
+      }
+
+      /* Disable text selection highlight */
+      ::selection {
+        background-color: transparent;
+      }
+
+      ::-moz-selection {
+        background-color: transparent;
       }
 
       /* Background canvas */
@@ -215,6 +237,14 @@
           height: 160px !important;
         }
       }
+
+      /* Sakura flowers */
+      .sakura {
+        position: fixed;
+        top: -10px;
+        z-index: 5;
+        pointer-events: none;
+      }
     </style>
   </head>
   <body
@@ -232,7 +262,9 @@
           this.stars = [];
           this.birds = [];
           this.clouds = [];
+          this.sakuraFlowers = [];
           this.sun = { x: 0, y: 0, radius: 60 };
+          this.moon = { x: 0, y: 0, radius: 50 };
           this.mouseX = window.innerWidth / 2;
           this.mouseY = window.innerHeight / 2;
           this.isDarkMode = true;
@@ -251,19 +283,22 @@
           this.canvas.height = window.innerHeight;
           this.sun.x = this.canvas.width * 0.85;
           this.sun.y = this.canvas.height * 0.2;
+          this.moon.x = this.canvas.width * 0.15;
+          this.moon.y = this.canvas.height * 0.15;
         }
 
         initStars() {
-          const starCount = Math.min(200, Math.floor(window.innerWidth / 12));
+          const starCount = Math.min(300, Math.floor(window.innerWidth / 8));
           this.stars = [];
           for (let i = 0; i < starCount; i++) {
             this.stars.push({
               x: Math.random() * this.canvas.width,
               y: Math.random() * this.canvas.height,
-              radius: Math.random() * 2,
-              opacity: Math.random() * 0.5 + 0.3,
-              twinkleSpeed: Math.random() * 0.03 + 0.01,
+              radius: Math.random() * 1.5,
+              opacity: Math.random() * 0.6 + 0.2,
+              twinkleSpeed: Math.random() * 0.04 + 0.01,
               twinklePhase: Math.random() * Math.PI * 2,
+              brightness: Math.random() * 0.5 + 0.5,
             });
           }
         }
@@ -316,37 +351,37 @@
         }
 
         createNightParticles(x, y) {
-          if (Math.random() > 0.75) {
-            const particle = {
-              x: x,
-              y: y,
-              vx: (Math.random() - 0.5) * 4,
-              vy: (Math.random() - 0.5) * 4 - 1,
-              radius: Math.random() * 2 + 1,
-              opacity: 0.8,
-              decay: 0.98,
-              life: 1,
-              color: ['rgba(147, 197, 253', 'rgba(59, 130, 246'][Math.floor(Math.random() * 2)],
-            };
-            this.particles.push(particle);
-          }
-        }
-
-        createDayParticles(x, y) {
-          if (Math.random() > 0.8) {
-            const colors = [
-              'rgba(255, 192, 203', // Pink
-              'rgba(255, 218, 185', // Peach
-              'rgba(144, 238, 144', // Light green
-            ];
+          if (Math.random() > 0.78) {
             const particle = {
               x: x,
               y: y,
               vx: (Math.random() - 0.5) * 3,
               vy: (Math.random() - 0.5) * 3 - 0.5,
               radius: Math.random() * 1.5 + 0.5,
-              opacity: 0.6,
+              opacity: 0.9,
               decay: 0.97,
+              life: 1,
+              color: ['rgba(147, 197, 253', 'rgba(59, 130, 246', 'rgba(168, 85, 247'][Math.floor(Math.random() * 3)],
+            };
+            this.particles.push(particle);
+          }
+        }
+
+        createDayParticles(x, y) {
+          if (Math.random() > 0.85) {
+            const colors = [
+              'rgba(255, 182, 193', // Light pink
+              'rgba(255, 192, 203', // Pink
+              'rgba(219, 112, 147', // Pale violet red
+            ];
+            const particle = {
+              x: x,
+              y: y,
+              vx: (Math.random() - 0.5) * 2,
+              vy: (Math.random() - 0.5) * 2 - 1,
+              radius: Math.random() * 1 + 0.3,
+              opacity: 0.7,
+              decay: 0.96,
               life: 1,
               color: colors[Math.floor(Math.random() * colors.length)],
             };
@@ -369,7 +404,8 @@
         updateStars() {
           for (let star of this.stars) {
             star.twinklePhase += star.twinkleSpeed;
-            star.opacity = Math.sin(star.twinklePhase) * 0.35 + 0.35;
+            const twinkle = Math.sin(star.twinklePhase);
+            star.opacity = (twinkle * 0.4 + 0.4) * star.brightness;
           }
         }
 
@@ -397,31 +433,80 @@
 
         drawBackground() {
           if (this.isDarkMode) {
-            // Night sky gradient
+            // Night sky gradient with deep colors
             const gradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
-            gradient.addColorStop(0, '#030712');
-            gradient.addColorStop(0.5, '#0f172a');
-            gradient.addColorStop(1, '#0a0e27');
+            gradient.addColorStop(0, '#020617');
+            gradient.addColorStop(0.3, '#0f172a');
+            gradient.addColorStop(0.7, '#0a0e27');
+            gradient.addColorStop(1, '#050a1a');
             this.ctx.fillStyle = gradient;
           } else {
             // Day sky gradient
             const gradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
             gradient.addColorStop(0, '#87CEEB');
-            gradient.addColorStop(0.7, '#E0F6FF');
+            gradient.addColorStop(0.5, '#E0F6FF');
             gradient.addColorStop(1, '#FFE4B5');
             this.ctx.fillStyle = gradient;
           }
           this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         }
 
+        drawMoon() {
+          // Main moon
+          const moonGradient = this.ctx.createRadialGradient(this.moon.x - 15, this.moon.y - 15, 0, this.moon.x, this.moon.y, this.moon.radius);
+          moonGradient.addColorStop(0, 'rgba(255, 250, 240, 0.95)');
+          moonGradient.addColorStop(0.7, 'rgba(240, 240, 220, 0.9)');
+          moonGradient.addColorStop(1, 'rgba(200, 200, 180, 0.8)');
+          this.ctx.fillStyle = moonGradient;
+          this.ctx.beginPath();
+          this.ctx.arc(this.moon.x, this.moon.y, this.moon.radius, 0, Math.PI * 2);
+          this.ctx.fill();
+
+          // Moon craters
+          this.ctx.fillStyle = 'rgba(180, 180, 160, 0.6)';
+          this.ctx.beginPath();
+          this.ctx.arc(this.moon.x - 15, this.moon.y - 10, 8, 0, Math.PI * 2);
+          this.ctx.fill();
+          this.ctx.beginPath();
+          this.ctx.arc(this.moon.x + 10, this.moon.y + 15, 6, 0, Math.PI * 2);
+          this.ctx.fill();
+          this.ctx.beginPath();
+          this.ctx.arc(this.moon.x - 5, this.moon.y + 20, 5, 0, Math.PI * 2);
+          this.ctx.fill();
+
+          // Moon glow
+          const glowGradient = this.ctx.createRadialGradient(this.moon.x, this.moon.y, this.moon.radius, this.moon.x, this.moon.y, this.moon.radius + 40);
+          glowGradient.addColorStop(0, 'rgba(255, 250, 205, 0.4)');
+          glowGradient.addColorStop(1, 'rgba(255, 250, 205, 0)');
+          this.ctx.fillStyle = glowGradient;
+          this.ctx.beginPath();
+          this.ctx.arc(this.moon.x, this.moon.y, this.moon.radius + 40, 0, Math.PI * 2);
+          this.ctx.fill();
+        }
+
         drawSun() {
           const sunGradient = this.ctx.createRadialGradient(this.sun.x, this.sun.y, 0, this.sun.x, this.sun.y, this.sun.radius);
-          sunGradient.addColorStop(0, 'rgba(255, 200, 87, 0.9)');
+          sunGradient.addColorStop(0, 'rgba(255, 200, 87, 0.95)');
           sunGradient.addColorStop(1, 'rgba(255, 140, 0, 0.3)');
           this.ctx.fillStyle = sunGradient;
           this.ctx.beginPath();
           this.ctx.arc(this.sun.x, this.sun.y, this.sun.radius, 0, Math.PI * 2);
           this.ctx.fill();
+
+          // Sun rays
+          this.ctx.strokeStyle = 'rgba(255, 165, 0, 0.3)';
+          this.ctx.lineWidth = 2;
+          for (let i = 0; i < 8; i++) {
+            const angle = (i / 8) * Math.PI * 2;
+            const x1 = this.sun.x + Math.cos(angle) * (this.sun.radius + 10);
+            const y1 = this.sun.y + Math.sin(angle) * (this.sun.radius + 10);
+            const x2 = this.sun.x + Math.cos(angle) * (this.sun.radius + 30);
+            const y2 = this.sun.y + Math.sin(angle) * (this.sun.radius + 30);
+            this.ctx.beginPath();
+            this.ctx.moveTo(x1, y1);
+            this.ctx.lineTo(x2, y2);
+            this.ctx.stroke();
+          }
 
           // Sun glow
           this.ctx.strokeStyle = 'rgba(255, 165, 0, 0.2)';
@@ -438,10 +523,11 @@
             this.ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
             this.ctx.fill();
 
-            if (star.opacity > 0.4) {
-              this.ctx.fillStyle = `rgba(147, 197, 253, ${star.opacity * 0.3})`;
+            // Star glow
+            if (star.opacity > 0.3) {
+              this.ctx.fillStyle = `rgba(147, 197, 253, ${star.opacity * 0.4})`;
               this.ctx.beginPath();
-              this.ctx.arc(star.x, star.y, star.radius * 2.5, 0, Math.PI * 2);
+              this.ctx.arc(star.x, star.y, star.radius * 3, 0, Math.PI * 2);
               this.ctx.fill();
             }
           }
@@ -452,13 +538,11 @@
             this.ctx.save();
             this.ctx.translate(bird.x, bird.y);
             
-            // Bird body
             this.ctx.fillStyle = 'rgba(50, 50, 50, 0.8)';
             this.ctx.beginPath();
             this.ctx.ellipse(0, 0, bird.size / 2, bird.size / 3, 0, 0, Math.PI * 2);
             this.ctx.fill();
 
-            // Bird wings
             const wingFlap = Math.sin(this.time * 0.1 + bird.phase) * 15;
             this.ctx.strokeStyle = 'rgba(50, 50, 50, 0.8)';
             this.ctx.lineWidth = 2;
@@ -499,7 +583,7 @@
             this.ctx.fill();
 
             this.ctx.strokeStyle = `${particle.color}, ${particle.opacity * 0.5})`;
-            this.ctx.lineWidth = 1;
+            this.ctx.lineWidth = 0.5;
             this.ctx.beginPath();
             this.ctx.arc(particle.x, particle.y, particle.radius * 1.5, 0, Math.PI * 2);
             this.ctx.stroke();
@@ -511,6 +595,7 @@
           this.drawBackground();
           
           if (this.isDarkMode) {
+            this.drawMoon();
             this.drawStars();
             this.updateStars();
           } else {
@@ -527,7 +612,59 @@
         }
       }
 
+      // Sakura flowers system
+      class SakuraSystem {
+        constructor() {
+          this.flowers = [];
+          this.isDarkMode = true;
+          this.createFlowers();
+          this.setupObserver();
+        }
+
+        setupObserver() {
+          const observer = new MutationObserver(() => {
+            this.isDarkMode = document.documentElement.classList.contains('dark');
+            if (!this.isDarkMode) {
+              this.createFlowers();
+            } else {
+              this.clearFlowers();
+            }
+          });
+          observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        }
+
+        createFlowers() {
+          const containerWidth = window.innerWidth;
+          const flowerCount = Math.floor(containerWidth / 100);
+          
+          this.clearFlowers();
+          
+          for (let i = 0; i < flowerCount; i++) {
+            const flower = document.createElement('div');
+            flower.className = 'sakura fixed pointer-events-none';
+            flower.innerHTML = '🌸';
+            flower.style.left = Math.random() * window.innerWidth + 'px';
+            flower.style.fontSize = (Math.random() * 1 + 1.2) + 'rem';
+            flower.style.opacity = Math.random() * 0.6 + 0.4;
+            flower.style.animation = `fall ${Math.random() * 8 + 8}s linear infinite, sway ${Math.random() * 3 + 3}s ease-in-out infinite`;
+            flower.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(flower);
+            this.flowers.push(flower);
+          }
+        }
+
+        clearFlowers() {
+          this.flowers.forEach(flower => {
+            if (flower.parentNode) {
+              flower.parentNode.removeChild(flower);
+            }
+          });
+          this.flowers = [];
+        }
+      }
+
       let bgAnimation = null;
+      let sakuraSystem = null;
       let portfolioData = null;
 
       async function loadPortfolioData() {
@@ -596,8 +733,12 @@
           document.documentElement.classList.remove("dark");
         }
         const toggle = document.getElementById("theme-toggle");
+        const toggleMobile = document.getElementById("theme-toggle-mobile");
         if (toggle) {
           toggle.innerHTML = getIconSVG(theme === "dark" ? "sun" : "moon");
+        }
+        if (toggleMobile) {
+          toggleMobile.innerHTML = getIconSVG(theme === "dark" ? "sun" : "moon");
         }
       }
 
@@ -612,6 +753,14 @@
         const toggle = document.getElementById("theme-toggle");
         if (toggle) {
           toggle.addEventListener("click", () => {
+            const currentTheme = localStorage.getItem("theme") || "light";
+            setTheme(currentTheme === "dark" ? "light" : "dark");
+          });
+        }
+
+        const toggleMobile = document.getElementById("theme-toggle-mobile");
+        if (toggleMobile) {
+          toggleMobile.addEventListener("click", () => {
             const currentTheme = localStorage.getItem("theme") || "light";
             setTheme(currentTheme === "dark" ? "light" : "dark");
           });
@@ -678,9 +827,9 @@
               .join("");
 
             headerHTML = `
-        <!-- Desktop Header -->
-        <header class="nav-desktop fixed top-4 left-1/2 -translate-x-1/2 z-50 animate-fade-in w-full px-4 flex justify-center">
-          <nav class="flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-lg rounded-full px-4 py-3 border border-gray-200 dark:border-gray-700 flex-wrap justify-center max-w-4xl">
+        <!-- Desktop Header - Fixed Centered -->
+        <header class="nav-desktop fixed top-4 z-50 w-full flex justify-center animate-fade-in">
+          <nav class="flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-lg rounded-full px-4 py-3 border border-gray-200 dark:border-gray-700 flex-wrap justify-center max-w-5xl">
             <div class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-200 dark:to-gray-300 text-white dark:text-gray-800 rounded-full font-bold text-xs tracking-wider animate-pulse flex-shrink-0">
               ${generateInitials(data.settings.name)}
             </div>
@@ -758,24 +907,25 @@
 
           let projectsHTML = "";
           if (data.sections.projects && data.sections.projects.enabled) {
+            const projectDetails = {
+              'Lie Detection System': { icon: '🔍', color: 'from-blue-100 to-blue-50' },
+              'Facial Expression Recognition': { icon: '😊', color: 'from-purple-100 to-purple-50' },
+              'AI Hand PoseNet': { icon: '✋', color: 'from-pink-100 to-pink-50' },
+              'Person and Car Detection': { icon: '🚗', color: 'from-orange-100 to-orange-50' },
+              'Heart Disease Prediction': { icon: '❤️', color: 'from-red-100 to-red-50' },
+            };
+
             projectsHTML = `
         <div class="mt-20 section-enter" id="projects" style="animation-delay: 0.4s">
           ${createSectionDivider(data.sections.projects.title)}
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             ${data.sections.projects.items
               .map((project, idx) => {
-                const projectIcons = {
-                  'Lie Detection': '🔍',
-                  'Facial Expression': '😊',
-                  'Hand Pose': '✋',
-                  'Person and Car': '🚗',
-                  'Heart Disease': '❤️',
-                };
-                const icon = projectIcons[project.title] || '💻';
+                const details = projectDetails[project.title] || { icon: '💻', color: 'from-gray-100 to-gray-50' };
                 return `
             <div class="group border-2 border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden card-interactive hover:border-gray-400 dark:hover:border-gray-500" style="animation-delay: ${idx * 0.1}s; animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both">
-              <div class="relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center h-40 group-hover:scale-105 transition-transform duration-500">
-                <div class="text-6xl">${icon}</div>
+              <div class="relative overflow-hidden bg-gradient-to-br ${details.color} dark:from-gray-800 dark:to-gray-700 flex items-center justify-center h-40 group-hover:scale-105 transition-transform duration-500">
+                <div class="text-6xl drop-shadow-lg">${details.icon}</div>
               </div>
               <div class="p-6">
                 <h3 class="font-semibold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-gray-700 dark:group-hover:text-gray-100 transition-colors duration-300">${project.title}</h3>
@@ -1032,7 +1182,6 @@
 
           const hamburgerMenu = document.getElementById("hamburger-menu");
           const sidebar = document.getElementById("mobile-sidebar");
-          const themeToggleMobile = document.getElementById("theme-toggle-mobile");
 
           function closeSidebar() {
             if (sidebar) {
@@ -1068,17 +1217,6 @@
               }
             });
           }
-
-          if (themeToggleMobile) {
-            themeToggleMobile.innerHTML = getIconSVG(
-              (localStorage.getItem("theme") || "light") === "dark" ? "sun" : "moon"
-            );
-            themeToggleMobile.addEventListener("click", () => {
-              const currentTheme = localStorage.getItem("theme") || "light";
-              setTheme(currentTheme === "dark" ? "light" : "dark");
-              themeToggleMobile.innerHTML = getIconSVG(currentTheme === "dark" ? "moon" : "sun");
-            });
-          }
         } catch (err) {
           document.getElementById("app").innerHTML = `<div class="text-red-500 p-8">Error: ${err.message}</div>`;
           console.error(err);
@@ -1104,6 +1242,7 @@
 
       document.addEventListener("DOMContentLoaded", () => {
         bgAnimation = new BackgroundAnimationSystem();
+        sakuraSystem = new SakuraSystem();
         renderPortfolio();
       });
     </script>
