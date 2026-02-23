@@ -21,6 +21,7 @@
               "pulse-glow": "pulseGlow 2s ease-in-out infinite",
               "shimmer": "shimmer 2s infinite",
               "float": "float 3s ease-in-out infinite",
+              "twinkle": "twinkle 3s ease-in-out infinite",
             },
             keyframes: {
               blurIn: {
@@ -55,6 +56,10 @@
                 "0%, 100%": { transform: "translateY(0px)" },
                 "50%": { transform: "translateY(-10px)" },
               },
+              twinkle: {
+                "0%, 100%": { opacity: "0.3" },
+                "50%": { opacity: "1" },
+              },
             },
           },
         },
@@ -74,8 +79,33 @@
         transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
       }
 
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+
       body {
         overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Background canvas for animations */
+      #background-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* Main app content sits above background */
+      #app {
+        position: relative;
+        z-index: 10;
       }
 
       /* Section entrance animations with stagger */
@@ -197,13 +227,184 @@
         background-size: 200% 100%;
         animation: shimmer 2s infinite;
       }
+
+      /* Header center alignment fix */
+      header {
+        display: flex !important;
+        justify-content: center !important;
+        left: 0 !important;
+        right: 0 !important;
+      }
+
+      nav {
+        width: auto !important;
+      }
     </style>
   </head>
   <body
     class="bg-white text-gray-800 dark:bg-[#18181b] dark:text-gray-300 font-space-grotesk antialiased transition-colors duration-300"
   >
+    <canvas id="background-canvas"></canvas>
     <div id="app"></div>
     <script>
+      // Background Animation System
+      class BackgroundAnimationSystem {
+        constructor() {
+          this.canvas = document.getElementById('background-canvas');
+          this.ctx = this.canvas.getContext('2d');
+          this.particles = [];
+          this.stars = [];
+          this.mouseX = window.innerWidth / 2;
+          this.mouseY = window.innerHeight / 2;
+          this.isDarkMode = true;
+          
+          this.resize();
+          this.initStars();
+          this.setupEventListeners();
+          this.animate();
+        }
+
+        resize() {
+          this.canvas.width = window.innerWidth;
+          this.canvas.height = window.innerHeight;
+        }
+
+        initStars() {
+          const starCount = Math.min(150, Math.floor(window.innerWidth / 15));
+          this.stars = [];
+          for (let i = 0; i < starCount; i++) {
+            this.stars.push({
+              x: Math.random() * this.canvas.width,
+              y: Math.random() * this.canvas.height,
+              radius: Math.random() * 1.5,
+              opacity: Math.random() * 0.5 + 0.3,
+              twinkleSpeed: Math.random() * 0.03 + 0.01,
+              twinklePhase: Math.random() * Math.PI * 2,
+            });
+          }
+        }
+
+        setupEventListeners() {
+          window.addEventListener('mousemove', (e) => {
+            this.mouseX = e.clientX;
+            this.mouseY = e.clientY;
+            this.createParticles(e.clientX, e.clientY);
+          });
+
+          window.addEventListener('resize', () => this.resize());
+
+          // Watch for dark mode changes
+          const observer = new MutationObserver(() => {
+            this.isDarkMode = document.documentElement.classList.contains('dark');
+          });
+          observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        }
+
+        createParticles(x, y) {
+          // Create sparkle particles on mouse movement (less frequent)
+          if (Math.random() > 0.7) {
+            const particle = {
+              x: x,
+              y: y,
+              vx: (Math.random() - 0.5) * 4,
+              vy: (Math.random() - 0.5) * 4 - 1,
+              radius: Math.random() * 2 + 1,
+              opacity: 0.8,
+              decay: 0.98,
+              life: 1,
+            };
+            this.particles.push(particle);
+          }
+        }
+
+        updateParticles() {
+          this.particles = this.particles.filter(p => p.life > 0.01);
+          
+          for (let particle of this.particles) {
+            particle.x += particle.vx;
+            particle.y += particle.vy;
+            particle.vy += 0.1; // gravity
+            particle.opacity *= particle.decay;
+            particle.life *= particle.decay;
+          }
+        }
+
+        updateStars() {
+          for (let star of this.stars) {
+            star.twinklePhase += star.twinkleSpeed;
+            star.opacity = Math.sin(star.twinklePhase) * 0.35 + 0.35;
+          }
+        }
+
+        drawBackground() {
+          // Create gradient background
+          if (this.isDarkMode) {
+            const gradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
+            gradient.addColorStop(0, '#0f0f12');
+            gradient.addColorStop(1, '#18181b');
+            this.ctx.fillStyle = gradient;
+          } else {
+            const gradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
+            gradient.addColorStop(0, '#f9fafb');
+            gradient.addColorStop(1, '#ffffff');
+            this.ctx.fillStyle = gradient;
+          }
+          this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+
+        drawStars() {
+          for (let star of this.stars) {
+            this.ctx.fillStyle = this.isDarkMode 
+              ? `rgba(255, 255, 255, ${star.opacity})`
+              : `rgba(100, 100, 150, ${star.opacity * 0.6})`;
+            this.ctx.beginPath();
+            this.ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+            this.ctx.fill();
+
+            // Draw glow for dark mode
+            if (this.isDarkMode && star.opacity > 0.4) {
+              this.ctx.fillStyle = `rgba(147, 197, 253, ${star.opacity * 0.3})`;
+              this.ctx.beginPath();
+              this.ctx.arc(star.x, star.y, star.radius * 2.5, 0, Math.PI * 2);
+              this.ctx.fill();
+            }
+          }
+        }
+
+        drawParticles() {
+          for (let particle of this.particles) {
+            this.ctx.fillStyle = this.isDarkMode
+              ? `rgba(147, 197, 253, ${particle.opacity})`
+              : `rgba(59, 130, 246, ${particle.opacity})`;
+            
+            this.ctx.beginPath();
+            this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+            this.ctx.fill();
+
+            // Glow effect
+            this.ctx.strokeStyle = this.isDarkMode
+              ? `rgba(99, 102, 241, ${particle.opacity * 0.5})`
+              : `rgba(99, 102, 241, ${particle.opacity * 0.3})`;
+            this.ctx.lineWidth = 1;
+            this.ctx.beginPath();
+            this.ctx.arc(particle.x, particle.y, particle.radius * 1.5, 0, Math.PI * 2);
+            this.ctx.stroke();
+          }
+        }
+
+        animate() {
+          this.drawBackground();
+          this.drawStars();
+          this.updateStars();
+          this.updateParticles();
+          this.drawParticles();
+          requestAnimationFrame(() => this.animate());
+        }
+      }
+
+      // Initialize background animations
+      let bgAnimation = null;
+
       let portfolioData = null;
 
       async function loadPortfolioData() {
@@ -363,15 +564,15 @@
             const navLinks = data.navigation.items
               .map(
                 (item, idx) => `
-        <a href="${item.url}" class="px-3 py-2 text-sm rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 link-underline" style="animation-delay: ${idx * 0.05}s">${item.name}</a>
+        <a href="${item.url}" class="px-3 py-2 text-sm rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 link-underline whitespace-nowrap" style="animation-delay: ${idx * 0.05}s">${item.name}</a>
       `
               )
               .join("");
 
             headerHTML = `
-        <header class="hidden md:flex fixed top-4 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
-          <nav class="flex items-center gap-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-lg rounded-full px-6 py-3 border border-gray-200 dark:border-gray-700">
-            <div class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-200 dark:to-gray-300 text-white dark:text-gray-800 rounded-full font-bold text-sm tracking-wider animate-pulse">
+        <header class="hidden md:flex fixed top-4 left-1/2 -translate-x-1/2 z-50 animate-fade-in w-full justify-center px-4">
+          <nav class="flex items-center gap-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-lg rounded-full px-6 py-3 border border-gray-200 dark:border-gray-700 flex-wrap justify-center">
+            <div class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-200 dark:to-gray-300 text-white dark:text-gray-800 rounded-full font-bold text-sm tracking-wider animate-pulse flex-shrink-0">
               ${generateInitials(data.settings.name)}
             </div>
             ${navLinks}
@@ -665,7 +866,7 @@
 
           const content = `
     ${headerHTML}
-    <div class="flex flex-col min-h-screen">
+    <div class="flex flex-col min-h-screen relative">
       <div class="fixed top-4 right-4 z-50 animate-fade-in">
           <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-110"></button>
       </div>
@@ -812,7 +1013,10 @@
         form.reset();
       }
 
-      document.addEventListener("DOMContentLoaded", renderPortfolio);
+      document.addEventListener("DOMContentLoaded", () => {
+        bgAnimation = new BackgroundAnimationSystem();
+        renderPortfolio();
+      });
     </script>
   </body>
 </html>
