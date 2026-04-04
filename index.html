@@ -23,8 +23,11 @@
               "float": "float 3s ease-in-out infinite",
               "pulse-glow": "pulseGlow 2s ease-in-out infinite",
               "scan": "scan 2s linear infinite",
-              "target-lock": "targetLock 0.3s ease-out",
-              "loading-bar": "loadingBar 2s ease-in-out infinite",
+              "flip-in": "flipIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              "rotate-appear": "rotateAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              "bounce-in": "bounceIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              "gradient-shift": "gradientShift 8s ease infinite",
+              "particle-float": "particleFloat 20s linear infinite",
             },
             keyframes: {
               blurIn: {
@@ -67,13 +70,29 @@
                 "0%": { transform: "translateY(-100%)" },
                 "100%": { transform: "translateY(100%)" },
               },
-              targetLock: {
-                "0%": { transform: "scale(1.5)", opacity: "0" },
-                "100%": { transform: "scale(1)", opacity: "1" },
+              flipIn: {
+                "0%": { opacity: "0", transform: "perspective(1000px) rotateY(90deg)" },
+                "100%": { opacity: "1", transform: "perspective(1000px) rotateY(0deg)" },
               },
-              loadingBar: {
-                "0%, 100%": { transform: "translateX(-100%)" },
-                "50%": { transform: "translateX(100%)" },
+              rotateAppear: {
+                "0%": { opacity: "0", transform: "perspective(1000px) rotateX(-15deg) rotateY(20deg) scale(0.9)" },
+                "100%": { opacity: "1", transform: "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)" },
+              },
+              bounceIn: {
+                "0%": { opacity: "0", transform: "scale(0.3)" },
+                "50%": { opacity: "1", transform: "scale(1.05)" },
+                "70%": { transform: "scale(0.9)" },
+                "100%": { transform: "scale(1)" },
+              },
+              gradientShift: {
+                "0%, 100%": { backgroundPosition: "0% 50%" },
+                "50%": { backgroundPosition: "100% 50%" },
+              },
+              particleFloat: {
+                "0%": { transform: "translateY(0) translateX(0)" },
+                "33%": { transform: "translateY(-30px) translateX(20px)" },
+                "66%": { transform: "translateY(-10px) translateX(-20px)" },
+                "100%": { transform: "translateY(0) translateX(0)" },
               },
             },
           },
@@ -115,29 +134,20 @@
         cursor: crosshair !important;
       }
 
-      /* Target reticle for interactive elements */
+      /* Subtle border highlight for interactive elements - NO RED BOXES */
       .target-element {
         position: relative;
+        transition: all 0.3s ease;
       }
 
-      .target-element::before,
-      .target-element::after {
-        content: '';
-        position: absolute;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
+      .target-element:hover {
+        border-color: rgba(59, 130, 246, 0.6) !important;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
       }
 
-      .target-element:hover::before {
-        opacity: 1;
-        border: 2px solid rgba(239, 68, 68, 0.6);
-        border-radius: 4px;
-        top: -4px;
-        left: -4px;
-        right: -4px;
-        bottom: -4px;
-        animation: target-lock 0.3s ease-out;
+      .dark .target-element:hover {
+        border-color: rgba(96, 165, 250, 0.8) !important;
+        box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
       }
 
       /* Scan line effect */
@@ -281,8 +291,22 @@
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
       }
 
+      /* Glassmorphism effect for light mode */
+      .card-interactive:hover {
+        background: rgba(255, 255, 255, 0.7) !important;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      .dark .card-interactive {
+        background: transparent;
+      }
+
       .dark .card-interactive:hover {
         box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        background: rgba(15, 23, 42, 0.6) !important;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
       }
 
       .img-interactive {
@@ -320,35 +344,51 @@
       /* Scroll reveal animations */
       .scroll-reveal {
         opacity: 0;
-        transform: translateY(40px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        transform: perspective(1000px) translateY(40px) rotateX(-10deg);
+        transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
       .scroll-reveal.revealed {
         opacity: 1;
-        transform: translateY(0);
+        transform: perspective(1000px) translateY(0) rotateX(0deg);
       }
 
       .scroll-reveal-left {
         opacity: 0;
-        transform: translateX(-60px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        transform: perspective(1000px) translateX(-60px) rotateY(15deg);
+        transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
       .scroll-reveal-left.revealed {
         opacity: 1;
-        transform: translateX(0);
+        transform: perspective(1000px) translateX(0) rotateY(0deg);
       }
 
       .scroll-reveal-right {
         opacity: 0;
-        transform: translateX(60px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        transform: perspective(1000px) translateX(60px) rotateY(-15deg);
+        transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
       .scroll-reveal-right.revealed {
         opacity: 1;
-        transform: translateX(0);
+        transform: perspective(1000px) translateX(0) rotateY(0deg);
+      }
+
+      /* Add rotation flip for cards */
+      .card-flip {
+        opacity: 0;
+        transform: perspective(1000px) rotateY(180deg) scale(0.8);
+        transition: opacity 1s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                    transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .card-flip.revealed {
+        opacity: 1;
+        transform: perspective(1000px) rotateY(0deg) scale(1);
       }
 
       /* Responsive header */
@@ -571,13 +611,48 @@
             gradient.addColorStop(1, '#020617');
             this.ctx.fillStyle = gradient;
           } else {
-            // Clean light gradient
-            const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-            gradient.addColorStop(0, '#ffffff');
-            gradient.addColorStop(1, '#f8fafc');
+            // Animated vibrant gradient for light mode
+            const time = this.time * 0.001;
+            const gradient = this.ctx.createLinearGradient(
+              0, 
+              0, 
+              this.canvas.width * Math.cos(time), 
+              this.canvas.height * Math.sin(time)
+            );
+            gradient.addColorStop(0, '#e0f2fe'); // Sky blue
+            gradient.addColorStop(0.25, '#fae8ff'); // Light purple
+            gradient.addColorStop(0.5, '#fef3c7'); // Light yellow
+            gradient.addColorStop(0.75, '#fce7f3'); // Light pink
+            gradient.addColorStop(1, '#e0e7ff'); // Light indigo
             this.ctx.fillStyle = gradient;
+            
+            // Add floating orbs
+            this.drawLightModeOrbs();
           }
           this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+
+        drawLightModeOrbs() {
+          if (this.isDarkMode) return;
+          
+          const orbCount = 8;
+          for (let i = 0; i < orbCount; i++) {
+            const angle = (this.time * 0.0003 + i * Math.PI / 4);
+            const radius = Math.min(this.canvas.width, this.canvas.height) * 0.3;
+            const x = this.canvas.width / 2 + Math.cos(angle) * radius;
+            const y = this.canvas.height / 2 + Math.sin(angle) * radius;
+            const size = 60 + Math.sin(this.time * 0.002 + i) * 20;
+            
+            const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, size);
+            gradient.addColorStop(0, 'rgba(96, 165, 250, 0.15)');
+            gradient.addColorStop(0.5, 'rgba(168, 85, 247, 0.08)');
+            gradient.addColorStop(1, 'rgba(251, 146, 60, 0)');
+            
+            this.ctx.fillStyle = gradient;
+            this.ctx.beginPath();
+            this.ctx.arc(x, y, size, 0, Math.PI * 2);
+            this.ctx.fill();
+          }
         }
 
         drawStars() {
@@ -814,7 +889,7 @@
 
       // Scroll reveal functionality
       function setupScrollReveal() {
-        const revealElements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right');
+        const revealElements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .card-flip');
         
         const revealObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
@@ -967,8 +1042,10 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             ${data.sections.projects.items
               .map((project, idx) => {
+                // Alternate between card-flip and scroll-reveal for variety
+                const animClass = idx % 2 === 0 ? 'card-flip' : 'scroll-reveal';
                 return `
-            <div class="group border-2 border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden card-interactive hover:border-gray-400 dark:hover:border-blue-500 scroll-reveal" data-delay="${idx * 0.1}">
+            <div class="group border-2 border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden card-interactive hover:border-gray-400 dark:hover:border-blue-500 ${animClass}" data-delay="${idx * 0.15}">
               <div class="p-6">
                 <h3 class="font-semibold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-gray-700 dark:group-hover:text-blue-400 transition-colors duration-300">${project.title}</h3>
                 <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">${project.description}</p>
