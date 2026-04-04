@@ -11,23 +11,22 @@
           extend: {
             fontFamily: {
               "space-grotesk": ["Space Grotesk", "sans-serif"],
+              "orbitron": ["Orbitron", "sans-serif"],
             },
             animation: {
               "blur-in": "blurIn 0.7s ease-out forwards",
               "fade-in": "fadeIn 0.5s ease-out forwards",
               "slide-up": "slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
-              "slide-in-left": "slideInLeft 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
-              "slide-in-right": "slideInRight 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              "slide-in-left": "slideInLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              "slide-in-right": "slideInRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
               "scale-in": "scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)",
               "fade-in-scale": "fadeInScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
               "float": "float 3s ease-in-out infinite",
               "pulse-glow": "pulseGlow 2s ease-in-out infinite",
-              "scan": "scan 2s linear infinite",
-              "flip-in": "flipIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
-              "rotate-appear": "rotateAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
-              "bounce-in": "bounceIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
-              "gradient-shift": "gradientShift 8s ease infinite",
-              "particle-float": "particleFloat 20s linear infinite",
+              "rotate-in": "rotateIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              "swirl-in": "swirlIn 1s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              "flip-in": "flipIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              "shimmer": "shimmer 2s linear infinite",
             },
             keyframes: {
               blurIn: {
@@ -43,15 +42,15 @@
                 "100%": { opacity: "1", transform: "translateY(0)" },
               },
               slideInLeft: {
-                "0%": { opacity: "0", transform: "translateX(-60px)" },
-                "100%": { opacity: "1", transform: "translateX(0)" },
+                "0%": { opacity: "0", transform: "translateX(-60px) rotate(-5deg)" },
+                "100%": { opacity: "1", transform: "translateX(0) rotate(0deg)" },
               },
               slideInRight: {
-                "0%": { opacity: "0", transform: "translateX(60px)" },
-                "100%": { opacity: "1", transform: "translateX(0)" },
+                "0%": { opacity: "0", transform: "translateX(60px) rotate(5deg)" },
+                "100%": { opacity: "1", transform: "translateX(0) rotate(0deg)" },
               },
               scaleIn: {
-                "0%": { opacity: "0", transform: "scale(0.95)" },
+                "0%": { opacity: "0", transform: "scale(0.8)" },
                 "100%": { opacity: "1", transform: "scale(1)" },
               },
               fadeInScale: {
@@ -63,36 +62,24 @@
                 "50%": { transform: "translateY(-10px)" },
               },
               pulseGlow: {
-                "0%, 100%": { boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)" },
-                "50%": { boxShadow: "0 0 40px rgba(59, 130, 246, 0.6)" },
+                "0%, 100%": { boxShadow: "0 0 20px rgba(59, 130, 246, 0.5)" },
+                "50%": { boxShadow: "0 0 40px rgba(59, 130, 246, 0.8)" },
               },
-              scan: {
-                "0%": { transform: "translateY(-100%)" },
-                "100%": { transform: "translateY(100%)" },
+              rotateIn: {
+                "0%": { opacity: "0", transform: "perspective(1000px) rotateY(-15deg) scale(0.9)" },
+                "100%": { opacity: "1", transform: "perspective(1000px) rotateY(0deg) scale(1)" },
+              },
+              swirlIn: {
+                "0%": { opacity: "0", transform: "perspective(1000px) rotateX(-20deg) rotateZ(-10deg) scale(0.8)" },
+                "100%": { opacity: "1", transform: "perspective(1000px) rotateX(0deg) rotateZ(0deg) scale(1)" },
               },
               flipIn: {
-                "0%": { opacity: "0", transform: "perspective(1000px) rotateY(90deg)" },
-                "100%": { opacity: "1", transform: "perspective(1000px) rotateY(0deg)" },
+                "0%": { opacity: "0", transform: "perspective(1000px) rotateX(90deg)" },
+                "100%": { opacity: "1", transform: "perspective(1000px) rotateX(0deg)" },
               },
-              rotateAppear: {
-                "0%": { opacity: "0", transform: "perspective(1000px) rotateX(-15deg) rotateY(20deg) scale(0.9)" },
-                "100%": { opacity: "1", transform: "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)" },
-              },
-              bounceIn: {
-                "0%": { opacity: "0", transform: "scale(0.3)" },
-                "50%": { opacity: "1", transform: "scale(1.05)" },
-                "70%": { transform: "scale(0.9)" },
-                "100%": { transform: "scale(1)" },
-              },
-              gradientShift: {
-                "0%, 100%": { backgroundPosition: "0% 50%" },
-                "50%": { backgroundPosition: "100% 50%" },
-              },
-              particleFloat: {
-                "0%": { transform: "translateY(0) translateX(0)" },
-                "33%": { transform: "translateY(-30px) translateX(20px)" },
-                "66%": { transform: "translateY(-10px) translateX(-20px)" },
-                "100%": { transform: "translateY(0) translateX(0)" },
+              shimmer: {
+                "0%": { backgroundPosition: "-1000px 0" },
+                "100%": { backgroundPosition: "1000px 0" },
               },
             },
           },
@@ -103,7 +90,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@400;500;700;900&display=swap"
       rel="stylesheet"
     />
     <link rel="canonical" href="" id="canonical-link" />
@@ -117,7 +104,6 @@
         padding: 0;
         width: 100%;
         height: 100%;
-        user-select: none;
       }
 
       body {
@@ -126,79 +112,15 @@
       }
 
       /* Custom Crosshair Cursor */
-      .crosshair-cursor {
-        cursor: crosshair !important;
+      body, body * {
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="2" fill="rgba(59, 130, 246, 0.8)"/><line x1="16" y1="4" x2="16" y2="12" stroke="rgba(59, 130, 246, 0.8)" stroke-width="2"/><line x1="16" y1="20" x2="16" y2="28" stroke="rgba(59, 130, 246, 0.8)" stroke-width="2"/><line x1="4" y1="16" x2="12" y2="16" stroke="rgba(59, 130, 246, 0.8)" stroke-width="2"/><line x1="20" y1="16" x2="28" y2="16" stroke="rgba(59, 130, 246, 0.8)" stroke-width="2"/></svg>') 16 16, auto !important;
       }
 
-      .crosshair-cursor * {
-        cursor: crosshair !important;
+      button, a, input, textarea, select {
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="8" fill="none" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/><circle cx="16" cy="16" r="2" fill="rgba(239, 68, 68, 0.8)"/><line x1="16" y1="0" x2="16" y2="8" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/><line x1="16" y1="24" x2="16" y2="32" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/><line x1="0" y1="16" x2="8" y2="16" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/><line x1="24" y1="16" x2="32" y2="16" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/></svg>') 16 16, pointer !important;
       }
 
-      /* Subtle border highlight for interactive elements - NO RED BOXES */
-      .target-element {
-        position: relative;
-        transition: all 0.3s ease;
-      }
-
-      .target-element:hover {
-        border-color: rgba(59, 130, 246, 0.6) !important;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-      }
-
-      .dark .target-element:hover {
-        border-color: rgba(96, 165, 250, 0.8) !important;
-        box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
-      }
-
-      /* Scan line effect */
-      .scan-line {
-        position: absolute;
-        width: 100%;
-        height: 2px;
-        background: linear-gradient(90deg, 
-          transparent, 
-          rgba(59, 130, 246, 0.6), 
-          transparent);
-        pointer-events: none;
-        animation: scan 2s linear infinite;
-      }
-
-      /* HUD corners */
-      .hud-corners {
-        position: relative;
-      }
-
-      .hud-corners::before,
-      .hud-corners::after {
-        content: '';
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        border: 2px solid currentColor;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      .hud-corners::before {
-        top: -2px;
-        left: -2px;
-        border-right: none;
-        border-bottom: none;
-      }
-
-      .hud-corners::after {
-        bottom: -2px;
-        right: -2px;
-        border-left: none;
-        border-top: none;
-      }
-
-      .hud-corners:hover::before,
-      .hud-corners:hover::after {
-        opacity: 0.5;
-      }
-
-      /* Disable text selection highlight */
+      /* Text selection */
       ::selection {
         background-color: rgba(59, 130, 246, 0.3);
         color: inherit;
@@ -207,6 +129,67 @@
       ::-moz-selection {
         background-color: rgba(59, 130, 246, 0.3);
         color: inherit;
+      }
+
+      /* Loading Screen */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      .loading-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: #3b82f6;
+        text-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+        letter-spacing: 4px;
+      }
+
+      .loading-bar-container {
+        width: 400px;
+        height: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid #3b82f6;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+      }
+
+      .loading-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #3b82f6);
+        background-size: 200% 100%;
+        animation: shimmer 2s linear infinite;
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+
+      .loading-text {
+        font-family: 'Orbitron', sans-serif;
+        color: #93c5fd;
+        font-size: 1rem;
+        letter-spacing: 2px;
+      }
+
+      @media (max-width: 640px) {
+        .loading-title {
+          font-size: 1.8rem;
+        }
+        .loading-bar-container {
+          width: 280px;
+          height: 24px;
+        }
       }
 
       /* Background canvas */
@@ -226,41 +209,59 @@
       }
 
       .section-enter {
-        animation: slideUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         opacity: 0;
       }
 
-      /* Enhanced button interactions */
-      .btn-interactive {
+      /* RPG Button Style */
+      .rpg-button {
         position: relative;
         overflow: hidden;
         transition: all 0.3s ease;
       }
 
-      .btn-interactive::before {
+      .rpg-button::before {
         content: '';
         position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(59, 130, 246, 0.2);
-        transform: translate(-50%, -50%);
-        transition: width 0.6s ease, height 0.6s ease;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+        transition: left 0.5s ease;
       }
 
-      .btn-interactive:hover::before {
-        width: 300px;
-        height: 300px;
+      .rpg-button:hover::before {
+        left: 100%;
       }
 
-      .btn-interactive:hover {
+      .rpg-button:hover {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5), inset 0 0 20px rgba(59, 130, 246, 0.1);
         transform: translateY(-2px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       }
 
-      /* Enhanced card interactions */
+      /* Target Lock Animation */
+      .target-lock {
+        position: relative;
+      }
+
+      .target-lock::after {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border: 2px solid #ef4444;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+
+      .target-lock:hover::after {
+        opacity: 1;
+      }
+
+      /* Card Interactive with rotation */
       .card-interactive {
         transform: translateY(0);
         transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -271,127 +272,124 @@
       .card-interactive::before {
         content: '';
         position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, 
-          transparent, 
-          rgba(255, 255, 255, 0.1), 
-          transparent);
-        transition: left 0.5s ease;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+        background-size: 300% 300%;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        border-radius: inherit;
       }
 
       .card-interactive:hover::before {
-        left: 100%;
+        opacity: 1;
+        animation: shimmer 3s linear infinite;
       }
 
       .card-interactive:hover {
         transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
       }
 
-      /* Glassmorphism effect for light mode */
-      .card-interactive:hover {
-        background: rgba(255, 255, 255, 0.7) !important;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+      /* Profile Image Animation */
+      .profile-image-container {
+        animation: float 3s ease-in-out infinite;
       }
 
-      .dark .card-interactive {
-        background: transparent;
-      }
-
-      .dark .card-interactive:hover {
-        box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
-        background: rgba(15, 23, 42, 0.6) !important;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-      }
-
-      .img-interactive {
-        transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-
-      .img-interactive:hover {
+      .profile-image-container:hover {
+        animation-play-state: paused;
         transform: scale(1.05);
       }
 
-      .link-underline {
-        position: relative;
-        text-decoration: none;
-      }
-
-      .link-underline::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background-color: currentColor;
-        transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-
-      .link-underline:hover::after {
-        width: 100%;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      /* Scroll reveal animations */
+      /* Scroll Reveal Animations */
       .scroll-reveal {
         opacity: 0;
-        transform: perspective(1000px) translateY(40px) rotateX(-10deg);
-        transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: translateY(50px);
+        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
       .scroll-reveal.revealed {
         opacity: 1;
-        transform: perspective(1000px) translateY(0) rotateX(0deg);
+        transform: translateY(0);
       }
 
       .scroll-reveal-left {
         opacity: 0;
-        transform: perspective(1000px) translateX(-60px) rotateY(15deg);
-        transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: translateX(-60px) rotate(-5deg);
+        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
       .scroll-reveal-left.revealed {
         opacity: 1;
-        transform: perspective(1000px) translateX(0) rotateY(0deg);
+        transform: translateX(0) rotate(0deg);
       }
 
       .scroll-reveal-right {
         opacity: 0;
-        transform: perspective(1000px) translateX(60px) rotateY(-15deg);
-        transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: translateX(60px) rotate(5deg);
+        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
       .scroll-reveal-right.revealed {
         opacity: 1;
-        transform: perspective(1000px) translateX(0) rotateY(0deg);
+        transform: translateX(0) rotate(0deg);
       }
 
-      /* Add rotation flip for cards */
-      .card-flip {
+      .scroll-reveal-scale {
         opacity: 0;
-        transform: perspective(1000px) rotateY(180deg) scale(0.8);
-        transition: opacity 1s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                    transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: scale(0.8);
+        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
-      .card-flip.revealed {
+      .scroll-reveal-scale.revealed {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .scroll-reveal-rotate {
+        opacity: 0;
+        transform: perspective(1000px) rotateY(-15deg) scale(0.9);
+        transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .scroll-reveal-rotate.revealed {
         opacity: 1;
         transform: perspective(1000px) rotateY(0deg) scale(1);
       }
 
-      /* Responsive header */
+      .scroll-reveal-swirl {
+        opacity: 0;
+        transform: perspective(1000px) rotateX(-20deg) rotateZ(-10deg) scale(0.8);
+        transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .scroll-reveal-swirl.revealed {
+        opacity: 1;
+        transform: perspective(1000px) rotateX(0deg) rotateZ(0deg) scale(1);
+      }
+
+      .scroll-reveal-flip {
+        opacity: 0;
+        transform: perspective(1000px) rotateX(90deg);
+        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .scroll-reveal-flip.revealed {
+        opacity: 1;
+        transform: perspective(1000px) rotateX(0deg);
+      }
+
+      /* Stagger Animation Delays */
+      .stagger-1 { transition-delay: 0.1s; }
+      .stagger-2 { transition-delay: 0.2s; }
+      .stagger-3 { transition-delay: 0.3s; }
+      .stagger-4 { transition-delay: 0.4s; }
+      .stagger-5 { transition-delay: 0.5s; }
+
+      /* Responsive adjustments */
       @media (max-width: 768px) {
         .nav-desktop {
           display: none !important;
@@ -404,7 +402,6 @@
         }
       }
 
-      /* Responsive image sizing */
       @media (max-width: 640px) {
         .profile-image-container {
           width: 160px !important;
@@ -417,30 +414,74 @@
         }
       }
 
-      /* Parallax effect */
-      .parallax {
-        transition: transform 0.1s ease-out;
+      /* Glitch Effect for Headers */
+      .glitch {
+        position: relative;
+        display: inline-block;
+      }
+
+      .glitch:hover::before,
+      .glitch:hover::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .glitch:hover::before {
+        animation: glitch-1 0.3s infinite;
+        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        transform: translate(-2px, -2px);
+        opacity: 0.8;
+        color: #3b82f6;
+      }
+
+      .glitch:hover::after {
+        animation: glitch-2 0.3s infinite;
+        clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+        transform: translate(2px, 2px);
+        opacity: 0.8;
+        color: #ec4899;
+      }
+
+      @keyframes glitch-1 {
+        0%, 100% { transform: translate(0); }
+        33% { transform: translate(-2px, -2px); }
+        66% { transform: translate(2px, 2px); }
+      }
+
+      @keyframes glitch-2 {
+        0%, 100% { transform: translate(0); }
+        33% { transform: translate(2px, 2px); }
+        66% { transform: translate(-2px, -2px); }
       }
     </style>
   </head>
   <body
-    class="bg-white text-gray-800 dark:bg-[#0a0e27] dark:text-gray-300 font-space-grotesk antialiased transition-colors duration-300"
+    class="bg-gray-50 text-gray-800 dark:bg-[#0a0e27] dark:text-gray-300 font-space-grotesk antialiased transition-colors duration-300"
   >
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+      <div class="loading-title">INITIALIZING</div>
+      <div class="loading-bar-container">
+        <div class="loading-bar" id="loading-bar"></div>
+      </div>
+      <div class="loading-text" id="loading-text">LOADING ASSETS... 0%</div>
+    </div>
+
     <canvas id="background-canvas"></canvas>
     <div id="app"></div>
     <script>
-      // Loading screen manager
-
-
-      // Enhanced Background Animation System with Stars.js-like effect
-      class BackgroundAnimationSystem {
+      // Enhanced Starfield Background System (with particles in both modes)
+      class StarfieldSystem {
         constructor() {
           this.canvas = document.getElementById('background-canvas');
           this.ctx = this.canvas.getContext('2d');
-          this.particles = [];
           this.stars = [];
-          this.constellations = [];
           this.shootingStars = [];
+          this.particles = [];
           this.mouseX = window.innerWidth / 2;
           this.mouseY = window.innerHeight / 2;
           this.isDarkMode = true;
@@ -448,10 +489,8 @@
           
           this.resize();
           this.initStars();
-          this.initConstellations();
           this.setupEventListeners();
           this.animate();
-          
         }
 
         resize() {
@@ -463,56 +502,42 @@
           const starCount = Math.min(500, Math.floor(window.innerWidth / 4));
           this.stars = [];
           
-          // Create layered stars for depth
           for (let i = 0; i < starCount; i++) {
-            const depth = Math.random();
+            const layer = Math.random();
             this.stars.push({
               x: Math.random() * this.canvas.width,
               y: Math.random() * this.canvas.height,
-              z: depth,
-              radius: Math.random() * 1.5 * (1 + depth),
+              radius: Math.random() * 2.5,
               opacity: Math.random() * 0.8 + 0.2,
               twinkleSpeed: Math.random() * 0.03 + 0.01,
               twinklePhase: Math.random() * Math.PI * 2,
-              brightness: Math.random() * 0.6 + 0.4,
-              color: this.getStarColor(),
-              vx: (Math.random() - 0.5) * 0.1 * depth,
-              vy: (Math.random() - 0.5) * 0.1 * depth,
+              brightness: Math.random() * 0.7 + 0.3,
+              layer: layer,
+              color: this.getStarColor(Math.random()),
+              pulseSpeed: Math.random() * 0.02 + 0.01,
             });
           }
         }
 
-        getStarColor() {
-          const colors = [
-            { r: 255, g: 255, b: 255 }, // White
-            { r: 147, g: 197, b: 253 }, // Blue
-            { r: 251, g: 207, b: 232 }, // Pink
-            { r: 253, g: 230, b: 138 }, // Yellow
-          ];
-          return colors[Math.floor(Math.random() * colors.length)];
-        }
-
-        initConstellations() {
-          // Create subtle constellation connections
-          const constellationCount = 8;
-          for (let i = 0; i < constellationCount; i++) {
-            const starCount = Math.floor(Math.random() * 3) + 3;
-            const constellation = [];
-            for (let j = 0; j < starCount; j++) {
-              constellation.push(this.stars[Math.floor(Math.random() * this.stars.length)]);
-            }
-            this.constellations.push(constellation);
-          }
+        getStarColor(random) {
+          if (random < 0.7) return { r: 255, g: 255, b: 255 };
+          if (random < 0.85) return { r: 147, g: 197, b: 253 };
+          if (random < 0.95) return { r: 251, g: 207, b: 232 };
+          return { r: 254, g: 240, b: 138 };
         }
 
         createShootingStar() {
           if (Math.random() > 0.98 && this.shootingStars.length < 3) {
+            const startX = Math.random() * this.canvas.width;
+            const startY = Math.random() * (this.canvas.height / 2);
+            const angle = Math.PI / 4 + Math.random() * Math.PI / 6;
+            
             this.shootingStars.push({
-              x: Math.random() * this.canvas.width,
-              y: Math.random() * this.canvas.height * 0.5,
-              vx: (Math.random() * 5 + 3) * (Math.random() > 0.5 ? 1 : -1),
-              vy: Math.random() * 3 + 2,
-              length: Math.random() * 80 + 40,
+              x: startX,
+              y: startY,
+              vx: Math.cos(angle) * 8,
+              vy: Math.sin(angle) * 8,
+              length: Math.random() * 60 + 40,
               opacity: 1,
               decay: 0.98,
             });
@@ -524,48 +549,40 @@
             this.mouseX = e.clientX;
             this.mouseY = e.clientY;
             
-            // Create subtle particles on mouse move in dark mode
-            if (this.isDarkMode && Math.random() > 0.85) {
-              this.createParticle(e.clientX, e.clientY);
+            if (Math.random() > 0.85) {
+              this.createInteractionParticles(e.clientX, e.clientY);
             }
           });
 
-          window.addEventListener('resize', () => this.resize());
+          window.addEventListener('resize', () => {
+            this.resize();
+            this.initStars();
+          });
 
           const observer = new MutationObserver(() => {
             this.isDarkMode = document.documentElement.classList.contains('dark');
-            if (this.isDarkMode) {
-              this.initStars();
-              this.initConstellations();
-            }
           });
           observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
         }
 
-        createParticle(x, y) {
-          const particle = {
-            x: x,
-            y: y,
-            vx: (Math.random() - 0.5) * 2,
-            vy: (Math.random() - 0.5) * 2 - 0.5,
-            radius: Math.random() * 1 + 0.3,
-            opacity: 0.6,
-            decay: 0.97,
-            life: 1,
-            color: { r: 147, g: 197, b: 253 },
-          };
-          this.particles.push(particle);
-        }
-
-        updateParticles() {
-          this.particles = this.particles.filter(p => p.life > 0.01);
+        createInteractionParticles(x, y) {
+          const particleCount = 3;
+          const colors = this.isDarkMode ? 
+            [{ r: 147, g: 197, b: 253 }, { r: 168, g: 85, b: 247 }, { r: 236, g: 72, b: 153 }] :
+            [{ r: 59, g: 130, b: 246 }, { r: 249, g: 115, b: 22 }, { r: 139, g: 92, b: 246 }];
           
-          for (let particle of this.particles) {
-            particle.x += particle.vx;
-            particle.y += particle.vy;
-            particle.vy += 0.05;
-            particle.opacity *= particle.decay;
-            particle.life *= particle.decay;
+          for (let i = 0; i < particleCount; i++) {
+            this.particles.push({
+              x: x,
+              y: y,
+              vx: (Math.random() - 0.5) * 4,
+              vy: (Math.random() - 0.5) * 4 - 1,
+              radius: Math.random() * 2 + 1,
+              opacity: this.isDarkMode ? 0.8 : 0.6,
+              decay: 0.96,
+              life: 1,
+              color: colors[Math.floor(Math.random() * colors.length)],
+            });
           }
         }
 
@@ -573,24 +590,17 @@
           for (let star of this.stars) {
             star.twinklePhase += star.twinkleSpeed;
             const twinkle = Math.sin(star.twinklePhase);
-            star.opacity = (twinkle * 0.4 + 0.6) * star.brightness;
+            star.opacity = (twinkle * 0.5 + 0.5) * star.brightness;
             
-            // Subtle parallax movement
-            const dx = (this.mouseX - this.canvas.width / 2) * 0.0001 * star.z;
-            const dy = (this.mouseY - this.canvas.height / 2) * 0.0001 * star.z;
-            star.x += star.vx + dx;
-            star.y += star.vy + dy;
-            
-            // Wrap around
-            if (star.x < 0) star.x = this.canvas.width;
-            if (star.x > this.canvas.width) star.x = 0;
-            if (star.y < 0) star.y = this.canvas.height;
-            if (star.y > this.canvas.height) star.y = 0;
+            const parallaxX = (this.mouseX - this.canvas.width / 2) * star.layer * 0.01;
+            const parallaxY = (this.mouseY - this.canvas.height / 2) * star.layer * 0.01;
+            star.parallaxX = parallaxX;
+            star.parallaxY = parallaxY;
           }
         }
 
         updateShootingStars() {
-          this.shootingStars = this.shootingStars.filter(s => s.opacity > 0.01);
+          this.shootingStars = this.shootingStars.filter(star => star.opacity > 0.01);
           
           for (let star of this.shootingStars) {
             star.x += star.vx;
@@ -599,122 +609,99 @@
           }
         }
 
+        updateParticles() {
+          this.particles = this.particles.filter(p => p.life > 0.01);
+          
+          for (let particle of this.particles) {
+            particle.x += particle.vx;
+            particle.y += particle.vy;
+            particle.vy += 0.15;
+            particle.opacity *= particle.decay;
+            particle.life *= particle.decay;
+          }
+        }
+
         drawBackground() {
           if (this.isDarkMode) {
-            // Deep space gradient
-            const gradient = this.ctx.createRadialGradient(
-              this.canvas.width / 2, this.canvas.height / 2, 0,
-              this.canvas.width / 2, this.canvas.height / 2, this.canvas.width
-            );
-            gradient.addColorStop(0, '#0a0e27');
-            gradient.addColorStop(0.5, '#050a1a');
+            const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
+            gradient.addColorStop(0, '#000510');
+            gradient.addColorStop(0.5, '#0a0e27');
             gradient.addColorStop(1, '#020617');
             this.ctx.fillStyle = gradient;
           } else {
-            // Animated vibrant gradient for light mode
-            const time = this.time * 0.001;
-            const gradient = this.ctx.createLinearGradient(
-              0, 
-              0, 
-              this.canvas.width * Math.cos(time), 
-              this.canvas.height * Math.sin(time)
-            );
-            gradient.addColorStop(0, '#e0f2fe'); // Sky blue
-            gradient.addColorStop(0.25, '#fae8ff'); // Light purple
-            gradient.addColorStop(0.5, '#fef3c7'); // Light yellow
-            gradient.addColorStop(0.75, '#fce7f3'); // Light pink
-            gradient.addColorStop(1, '#e0e7ff'); // Light indigo
+            const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
+            gradient.addColorStop(0, '#f8fafc');
+            gradient.addColorStop(0.5, '#f1f5f9');
+            gradient.addColorStop(1, '#e2e8f0');
             this.ctx.fillStyle = gradient;
-            
-            // Add floating orbs
-            this.drawLightModeOrbs();
           }
           this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         }
 
-        drawLightModeOrbs() {
-          if (this.isDarkMode) return;
-          
-          const orbCount = 8;
-          for (let i = 0; i < orbCount; i++) {
-            const angle = (this.time * 0.0003 + i * Math.PI / 4);
-            const radius = Math.min(this.canvas.width, this.canvas.height) * 0.3;
-            const x = this.canvas.width / 2 + Math.cos(angle) * radius;
-            const y = this.canvas.height / 2 + Math.sin(angle) * radius;
-            const size = 60 + Math.sin(this.time * 0.002 + i) * 20;
-            
-            const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, size);
-            gradient.addColorStop(0, 'rgba(96, 165, 250, 0.15)');
-            gradient.addColorStop(0.5, 'rgba(168, 85, 247, 0.08)');
-            gradient.addColorStop(1, 'rgba(251, 146, 60, 0)');
-            
-            this.ctx.fillStyle = gradient;
-            this.ctx.beginPath();
-            this.ctx.arc(x, y, size, 0, Math.PI * 2);
-            this.ctx.fill();
-          }
-        }
-
         drawStars() {
+          if (!this.isDarkMode) return;
+          
           for (let star of this.stars) {
-            const size = star.radius * (1 + star.z * 0.5);
+            const x = star.x + (star.parallaxX || 0);
+            const y = star.y + (star.parallaxY || 0);
             
-            // Draw star glow
-            const gradient = this.ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, size * 4);
-            gradient.addColorStop(0, `rgba(${star.color.r}, ${star.color.g}, ${star.color.b}, ${star.opacity * 0.8})`);
-            gradient.addColorStop(0.3, `rgba(${star.color.r}, ${star.color.g}, ${star.color.b}, ${star.opacity * 0.4})`);
-            gradient.addColorStop(1, `rgba(${star.color.r}, ${star.color.g}, ${star.color.b}, 0)`);
-            
-            this.ctx.fillStyle = gradient;
-            this.ctx.beginPath();
-            this.ctx.arc(star.x, star.y, size * 4, 0, Math.PI * 2);
-            this.ctx.fill();
-            
-            // Draw star core
             this.ctx.fillStyle = `rgba(${star.color.r}, ${star.color.g}, ${star.color.b}, ${star.opacity})`;
             this.ctx.beginPath();
-            this.ctx.arc(star.x, star.y, size, 0, Math.PI * 2);
+            this.ctx.arc(x, y, star.radius, 0, Math.PI * 2);
             this.ctx.fill();
-          }
-        }
 
-        drawConstellations() {
-          this.ctx.strokeStyle = 'rgba(147, 197, 253, 0.15)';
-          this.ctx.lineWidth = 1;
-          
-          for (let constellation of this.constellations) {
-            for (let i = 0; i < constellation.length - 1; i++) {
-              const star1 = constellation[i];
-              const star2 = constellation[i + 1];
-              const distance = Math.sqrt(
-                Math.pow(star2.x - star1.x, 2) + Math.pow(star2.y - star1.y, 2)
-              );
+            if (star.opacity > 0.5 && star.radius > 1) {
+              const glowGradient = this.ctx.createRadialGradient(x, y, 0, x, y, star.radius * 4);
+              glowGradient.addColorStop(0, `rgba(${star.color.r}, ${star.color.g}, ${star.color.b}, ${star.opacity * 0.4})`);
+              glowGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+              this.ctx.fillStyle = glowGradient;
+              this.ctx.beginPath();
+              this.ctx.arc(x, y, star.radius * 4, 0, Math.PI * 2);
+              this.ctx.fill();
+            }
+
+            if (star.opacity > 0.7 && star.radius > 1.5) {
+              this.ctx.strokeStyle = `rgba(${star.color.r}, ${star.color.g}, ${star.color.b}, ${star.opacity * 0.6})`;
+              this.ctx.lineWidth = 0.5;
+              const sparkleSize = star.radius * 3;
               
-              if (distance < 200) {
-                this.ctx.beginPath();
-                this.ctx.moveTo(star1.x, star1.y);
-                this.ctx.lineTo(star2.x, star2.y);
-                this.ctx.stroke();
-              }
+              this.ctx.beginPath();
+              this.ctx.moveTo(x - sparkleSize, y);
+              this.ctx.lineTo(x + sparkleSize, y);
+              this.ctx.stroke();
+              
+              this.ctx.beginPath();
+              this.ctx.moveTo(x, y - sparkleSize);
+              this.ctx.lineTo(x, y + sparkleSize);
+              this.ctx.stroke();
             }
           }
         }
 
         drawShootingStars() {
+          if (!this.isDarkMode) return;
+          
           for (let star of this.shootingStars) {
             const gradient = this.ctx.createLinearGradient(
               star.x, star.y,
-              star.x - star.vx * 10, star.y - star.vy * 10
+              star.x - star.vx * 5, star.y - star.vy * 5
             );
             gradient.addColorStop(0, `rgba(255, 255, 255, ${star.opacity})`);
-            gradient.addColorStop(0.5, `rgba(147, 197, 253, ${star.opacity * 0.5})`);
-            gradient.addColorStop(1, 'rgba(147, 197, 253, 0)');
+            gradient.addColorStop(0.5, `rgba(147, 197, 253, ${star.opacity * 0.6})`);
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
             
             this.ctx.strokeStyle = gradient;
             this.ctx.lineWidth = 2;
             this.ctx.beginPath();
             this.ctx.moveTo(star.x, star.y);
-            this.ctx.lineTo(star.x - star.vx * 10, star.y - star.vy * 10);
+            this.ctx.lineTo(star.x - star.vx * 5, star.y - star.vy * 5);
+            this.ctx.stroke();
+            
+            this.ctx.strokeStyle = `rgba(147, 197, 253, ${star.opacity * 0.3})`;
+            this.ctx.lineWidth = 4;
+            this.ctx.beginPath();
+            this.ctx.moveTo(star.x, star.y);
+            this.ctx.lineTo(star.x - star.vx * 3, star.y - star.vy * 3);
             this.ctx.stroke();
           }
         }
@@ -725,6 +712,17 @@
             this.ctx.beginPath();
             this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
             this.ctx.fill();
+
+            const glowGradient = this.ctx.createRadialGradient(
+              particle.x, particle.y, 0,
+              particle.x, particle.y, particle.radius * 3
+            );
+            glowGradient.addColorStop(0, `rgba(${particle.color.r}, ${particle.color.g}, ${particle.color.b}, ${particle.opacity * 0.5})`);
+            glowGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            this.ctx.fillStyle = glowGradient;
+            this.ctx.beginPath();
+            this.ctx.arc(particle.x, particle.y, particle.radius * 3, 0, Math.PI * 2);
+            this.ctx.fill();
           }
         }
 
@@ -734,21 +732,102 @@
           
           if (this.isDarkMode) {
             this.updateStars();
-            this.drawConstellations();
             this.drawStars();
-            this.createShootingStar();
+            
+            if (this.time % 3 === 0) {
+              this.createShootingStar();
+            }
             this.updateShootingStars();
             this.drawShootingStars();
           }
 
           this.updateParticles();
           this.drawParticles();
-          
+
           requestAnimationFrame(() => this.animate());
         }
       }
 
-      let bgAnimation = null;
+      // Loading Screen Manager
+      class LoadingManager {
+        constructor() {
+          this.loadingScreen = document.getElementById('loading-screen');
+          this.loadingBar = document.getElementById('loading-bar');
+          this.loadingText = document.getElementById('loading-text');
+          this.progress = 0;
+          this.messages = [
+            'INITIALIZING SYSTEMS',
+            'LOADING NEURAL NETWORK',
+            'CALIBRATING VISUAL SYSTEMS',
+            'ESTABLISHING CONNECTION',
+            'READY FOR DEPLOYMENT'
+          ];
+          this.currentMessage = 0;
+        }
+
+        updateProgress(progress) {
+          this.progress = Math.min(progress, 100);
+          this.loadingBar.style.width = this.progress + '%';
+          
+          const messageIndex = Math.floor(this.progress / 25);
+          if (messageIndex !== this.currentMessage && messageIndex < this.messages.length) {
+            this.currentMessage = messageIndex;
+            this.loadingText.textContent = this.messages[messageIndex] + '... ' + Math.floor(this.progress) + '%';
+          } else {
+            this.loadingText.textContent = this.messages[this.currentMessage] + '... ' + Math.floor(this.progress) + '%';
+          }
+        }
+
+        complete() {
+          this.updateProgress(100);
+          setTimeout(() => {
+            this.loadingScreen.style.opacity = '0';
+            this.loadingScreen.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+              this.loadingScreen.style.display = 'none';
+            }, 500);
+          }, 500);
+        }
+      }
+
+      // Scroll Animation Manager
+      class ScrollAnimationManager {
+        constructor() {
+          this.observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+          };
+          this.observer = new IntersectionObserver(
+            this.handleIntersection.bind(this),
+            this.observerOptions
+          );
+          this.init();
+        }
+
+        init() {
+          setTimeout(() => {
+            const elements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .scroll-reveal-rotate, .scroll-reveal-swirl, .scroll-reveal-flip');
+            elements.forEach(el => this.observer.observe(el));
+          }, 100);
+        }
+
+        handleIntersection(entries) {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              this.observer.unobserve(entry.target);
+            }
+          });
+        }
+
+        refresh() {
+          this.init();
+        }
+      }
+
+      let starfield = null;
+      let loadingManager = null;
+      let scrollAnimationManager = null;
       let portfolioData = null;
 
       async function loadPortfolioData() {
@@ -761,18 +840,14 @@
           return portfolioData;
         } catch (error) {
           console.error("Error loading portfolio data:", error);
-          document.getElementById("app").innerHTML =
-            '<div class="text-red-500 p-8">Error loading portfolio data. Please make sure portfolio-data.json exists in the same directory.</div>';
           throw error;
         }
       }
 
       function getIconSVG(name) {
         const icons = {
-          linkedin:
-            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>',
-          github:
-            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>',
+          linkedin: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>',
+          github: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>',
           sun: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>',
           moon: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>',
           external: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg>',
@@ -782,10 +857,10 @@
 
       function createSectionDivider(title) {
         return `
-    <div class="flex items-center my-12 scroll-reveal" data-delay="0.1">
-      <div class="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
-      <h2 class="font-bold text-2xl text-gray-900 dark:text-white mx-4">${title}</h2>
-      <div class="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
+    <div class="flex items-center my-12 scroll-reveal">
+      <div class="flex-grow border-t-2 border-gray-300 dark:border-gray-700"></div>
+      <h2 class="font-bold text-2xl md:text-3xl text-gray-900 dark:text-white mx-6 glitch" data-text="${title}">${title}</h2>
+      <div class="flex-grow border-t-2 border-gray-300 dark:border-gray-700"></div>
     </div>
   `;
       }
@@ -810,156 +885,125 @@
       }
 
       function setTheme(theme) {
-        localStorage.setItem("theme", theme);
-        if (theme === "dark") {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-        }
-        const toggle = document.getElementById("theme-toggle");
-        const toggleMobile = document.getElementById("theme-toggle-mobile");
-        if (toggle) {
-          toggle.innerHTML = getIconSVG(theme === "dark" ? "sun" : "moon");
-        }
-        if (toggleMobile) {
-          toggleMobile.innerHTML = getIconSVG(theme === "dark" ? "sun" : "moon");
+        try {
+          localStorage.setItem("theme", theme);
+          if (theme === "dark") {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
+          const toggle = document.getElementById("theme-toggle");
+          const toggleMobile = document.getElementById("theme-toggle-mobile");
+          if (toggle) {
+            toggle.innerHTML = getIconSVG(theme === "dark" ? "sun" : "moon");
+          }
+          if (toggleMobile) {
+            toggleMobile.innerHTML = getIconSVG(theme === "dark" ? "sun" : "moon");
+          }
+        } catch (e) {
+          console.warn('Theme setting failed:', e);
         }
       }
 
       function setupTheme() {
-        const savedTheme = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-        const defaultTheme = savedTheme || (prefersDark ? "dark" : "light");
-        setTheme(defaultTheme);
+        try {
+          const savedTheme = localStorage.getItem("theme");
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const defaultTheme = savedTheme || (prefersDark ? "dark" : "light");
+          setTheme(defaultTheme);
 
-        const toggle = document.getElementById("theme-toggle");
-        if (toggle) {
-          toggle.addEventListener("click", () => {
-            const currentTheme = localStorage.getItem("theme") || "light";
-            setTheme(currentTheme === "dark" ? "light" : "dark");
-          });
-        }
+          const toggle = document.getElementById("theme-toggle");
+          if (toggle) {
+            toggle.addEventListener("click", () => {
+              const currentTheme = localStorage.getItem("theme") || "light";
+              setTheme(currentTheme === "dark" ? "light" : "dark");
+            });
+          }
 
-        const toggleMobile = document.getElementById("theme-toggle-mobile");
-        if (toggleMobile) {
-          toggleMobile.addEventListener("click", () => {
-            const currentTheme = localStorage.getItem("theme") || "light";
-            setTheme(currentTheme === "dark" ? "light" : "dark");
-          });
+          const toggleMobile = document.getElementById("theme-toggle-mobile");
+          if (toggleMobile) {
+            toggleMobile.addEventListener("click", () => {
+              const currentTheme = localStorage.getItem("theme") || "light";
+              setTheme(currentTheme === "dark" ? "light" : "dark");
+            });
+          }
+        } catch (e) {
+          console.warn('Theme setup failed:', e);
         }
       }
 
       function setMetaTags(data) {
-        const pageTitle = `${data.settings.name} - ${data.settings.title}`;
-        const pageDescription = data.settings.summary;
-        const pageImage = data.settings.profileImage;
-        const pageUrl = window.location.href;
+        try {
+          const pageTitle = `${data.settings.name} - ${data.settings.title}`;
+          const pageDescription = data.settings.summary;
+          const pageImage = data.settings.profileImage;
+          const pageUrl = window.location.href;
 
-        document.title = pageTitle;
+          document.title = pageTitle;
 
-        const createOrUpdateMeta = (property, content, isNameAttribute = false) => {
-          const attribute = isNameAttribute ? "name" : "property";
-          let element = document.querySelector(`meta[${attribute}="${property}"]`);
-          if (!element) {
-            element = document.createElement("meta");
-            element.setAttribute(attribute, property);
-            document.head.appendChild(element);
-          }
-          element.setAttribute("content", content);
-        };
-
-        createOrUpdateMeta("description", pageDescription, true);
-        createOrUpdateMeta("og:title", pageTitle);
-        createOrUpdateMeta("og:description", pageDescription);
-        createOrUpdateMeta("og:image", pageImage);
-        createOrUpdateMeta("og:url", pageUrl);
-        createOrUpdateMeta("og:type", "website");
-        createOrUpdateMeta("twitter:card", "summary_large_image", true);
-        createOrUpdateMeta("twitter:title", pageTitle, true);
-        createOrUpdateMeta("twitter:description", pageDescription, true);
-        createOrUpdateMeta("twitter:image", pageImage, true);
-
-        const canonical = document.getElementById("canonical-link");
-        if (canonical) {
-          canonical.setAttribute("href", pageUrl.split("#")[0]);
-        }
-      }
-
-      // Scroll reveal functionality
-      function setupScrollReveal() {
-        const revealElements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .card-flip');
-        
-        const revealObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const delay = entry.target.dataset.delay || 0;
-              setTimeout(() => {
-                entry.target.classList.add('revealed');
-              }, parseFloat(delay) * 1000);
+          const createOrUpdateMeta = (property, content, isNameAttribute = false) => {
+            const attribute = isNameAttribute ? "name" : "property";
+            let element = document.querySelector(`meta[${attribute}="${property}"]`);
+            if (!element) {
+              element = document.createElement("meta");
+              element.setAttribute(attribute, property);
+              document.head.appendChild(element);
             }
-          });
-        }, {
-          threshold: 0.1,
-          rootMargin: '0px 0px -50px 0px'
-        });
+            element.setAttribute("content", content);
+          };
 
-        revealElements.forEach(el => {
-          revealObserver.observe(el);
-        });
-      }
+          createOrUpdateMeta("description", pageDescription, true);
+          createOrUpdateMeta("og:title", pageTitle);
+          createOrUpdateMeta("og:description", pageDescription);
+          createOrUpdateMeta("og:image", pageImage);
+          createOrUpdateMeta("og:url", pageUrl);
+          createOrUpdateMeta("og:type", "website");
+          createOrUpdateMeta("twitter:card", "summary_large_image", true);
+          createOrUpdateMeta("twitter:title", pageTitle, true);
+          createOrUpdateMeta("twitter:description", pageDescription, true);
+          createOrUpdateMeta("twitter:image", pageImage, true);
 
-      // Parallax effect for hero section
-      function setupParallax() {
-        let ticking = false;
-        
-        window.addEventListener('scroll', () => {
-          if (!ticking) {
-            window.requestAnimationFrame(() => {
-              const scrolled = window.pageYOffset;
-              const parallaxElements = document.querySelectorAll('.parallax');
-              
-              parallaxElements.forEach(el => {
-                const speed = el.dataset.speed || 0.5;
-                el.style.transform = `translateY(${scrolled * speed}px)`;
-              });
-              
-              ticking = false;
-            });
-            ticking = true;
+          const canonical = document.getElementById("canonical-link");
+          if (canonical) {
+            canonical.setAttribute("href", pageUrl.split("#")[0]);
           }
-        });
+        } catch (e) {
+          console.warn('Meta tags setup failed:', e);
+        }
       }
 
       async function renderPortfolio() {
         try {
           const data = await loadPortfolioData();
+          loadingManager.updateProgress(30);
+          
           setMetaTags(data);
 
           let socialLinksHTML = "";
           if (data.sections.social && data.sections.social.enabled) {
             socialLinksHTML = data.sections.social.items
               .map((item, idx) => `
-        <a href="${ensureUrl(item.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all duration-300 hover:scale-110 link-underline target-element hud-corners" style="animation-delay: ${idx * 0.1}s">
+        <a href="${ensureUrl(item.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all duration-300 hover:scale-110 target-lock">
           ${getIconSVG(item.platform)}
           <span class="hidden sm:inline">${item.platform.charAt(0).toUpperCase() + item.platform.slice(1)}</span>
         </a>`)
-              .join('<span class="text-gray-500">/</span>');
+              .join('<span class="text-gray-400 dark:text-gray-600">/</span>');
           }
+
+          loadingManager.updateProgress(40);
 
           let headerHTML = "";
           if (data.navigation && data.navigation.enabled) {
             const navLinks = data.navigation.items
               .map((item, idx) => `
-        <a href="${item.url}" class="px-3 py-2 text-sm rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 link-underline whitespace-nowrap target-element" style="animation-delay: ${idx * 0.05}s">${item.name}</a>`)
+        <a href="${item.url}" class="px-4 py-2 text-sm rounded-full hover:bg-gray-200/80 dark:hover:bg-gray-700/50 transition-all duration-300 whitespace-nowrap target-lock rpg-button">${item.name}</a>`)
               .join("");
 
             headerHTML = `
-        <!-- Desktop Header - Fixed Centered -->
+        <!-- Desktop Header -->
         <header class="nav-desktop fixed top-4 z-50 w-full flex justify-center animate-fade-in">
-          <nav class="flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-lg rounded-full px-4 py-3 border border-gray-200 dark:border-gray-700 flex-wrap justify-center max-w-5xl">
-            <div class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-blue-500 dark:to-blue-600 text-white rounded-full font-bold text-xs tracking-wider animate-pulse-glow flex-shrink-0">
+          <nav class="flex items-center gap-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl shadow-2xl rounded-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 flex-wrap justify-center max-w-5xl">
+            <div class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-full font-bold text-xs tracking-wider animate-pulse-glow flex-shrink-0 font-orbitron">
               ${generateInitials(data.settings.name)}
             </div>
             ${navLinks}
@@ -967,28 +1011,28 @@
         </header>
 
         <!-- Mobile Header -->
-        <header class="nav-mobile fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+        <header class="nav-mobile fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-b-2 border-gray-200 dark:border-gray-700">
           <div class="flex items-center justify-between px-4 py-4">
             <div class="flex items-center gap-2">
-              <button id="hamburger-menu" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 target-element">
+              <button id="hamburger-menu" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 rpg-button target-lock">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
               </button>
-              <div class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-blue-500 dark:to-blue-600 text-white rounded-full font-bold text-xs tracking-wider">
+              <div class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-full font-bold text-xs tracking-wider font-orbitron">
                 ${generateInitials(data.settings.name)}
               </div>
             </div>
-            <button id="theme-toggle-mobile" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 target-element"></button>
+            <button id="theme-toggle-mobile" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 rpg-button target-lock"></button>
           </div>
         </header>
 
-        <div id="mobile-sidebar" class="nav-mobile fixed top-16 left-0 right-0 bottom-0 bg-white dark:bg-gray-900 shadow-xl transform -translate-x-full transition-transform z-40 duration-300 overflow-y-auto">
+        <div id="mobile-sidebar" class="nav-mobile fixed top-16 left-0 right-0 bottom-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-2xl transform -translate-x-full transition-transform z-40 duration-300 overflow-y-auto border-r-2 border-gray-300 dark:border-gray-700">
           <div class="p-6">
             <nav class="flex flex-col gap-4">
               ${data.navigation.items
                 .map((item, idx) => `
-                <a href="${item.url}" class="text-lg hover:text-gray-900 dark:hover:text-white transition-all duration-300 link-underline py-2 target-element" style="animation-delay: ${idx * 0.05}s">${item.name}</a>`)
+                <a href="${item.url}" class="text-lg hover:text-gray-900 dark:hover:text-white transition-all duration-300 py-2 rpg-button target-lock px-4 rounded-lg">${item.name}</a>`)
                 .join("")}
             </nav>
           </div>
@@ -996,23 +1040,27 @@
       `;
           }
 
+          loadingManager.updateProgress(50);
+
           let ctaButtonsHTML = "";
           if (data.sections.hero && data.sections.hero.enabled) {
             ctaButtonsHTML = data.sections.hero.ctaButtons
               .map((btn, idx) => `
-        <a href="${btn.url}" ${btn.url.startsWith('mailto:') ? '' : `target="_blank" rel="noopener noreferrer" ${btn.url.startsWith('./') ? 'download' : ''}`} class="inline-flex items-center gap-2 px-6 py-3 text-sm border-2 border-gray-300 dark:border-blue-500 rounded-lg hover:bg-gray-900 dark:hover:bg-blue-500 hover:text-white transition-all duration-400 btn-interactive target-element hud-corners group scroll-reveal" data-delay="${idx * 0.15}">
+        <a href="${btn.url}" ${btn.url.startsWith('mailto:') ? '' : `target="_blank" rel="noopener noreferrer" ${btn.url.startsWith('./') ? 'download' : ''}`} class="inline-flex items-center gap-2 px-6 py-3 text-sm border-2 border-gray-400 dark:border-gray-600 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white hover:border-transparent dark:hover:from-blue-600 dark:hover:to-purple-700 transition-all duration-400 rpg-button target-lock group font-medium">
           ${btn.url.startsWith('./') ? getIconSVG('external') : ''} 
           <span>${btn.text}</span>
         </a>`)
               .join("");
           }
 
+          loadingManager.updateProgress(60);
+
           let aboutHTML = "";
           if (data.sections.about && data.sections.about.enabled) {
             aboutHTML = `
-              <div class="mt-20 scroll-reveal" id="about" data-delay="0.2">
-                <h2 class="font-bold text-2xl text-gray-900 dark:text-white mb-8">About Me</h2>
-                <p class="text-gray-600 dark:text-gray-400 text-base leading-relaxed max-w-3xl">${data.sections.about.content || data.settings.summary}</p>
+              <div class="mt-20 scroll-reveal" id="about">
+                <h2 class="font-bold text-2xl md:text-3xl text-gray-900 dark:text-white mb-8 glitch" data-text="About Me">About Me</h2>
+                <p class="text-gray-700 dark:text-gray-400 text-base md:text-lg leading-relaxed max-w-3xl">${data.sections.about.content || data.settings.summary}</p>
               </div>
             `;
           }
@@ -1021,12 +1069,12 @@
           if (data.sections.about && data.sections.about.enabled) {
             if (data.sections.about.skills && data.sections.about.skills.enabled) {
               skillsHTML = `
-          <div class="mt-20 scroll-reveal" data-delay="0.3">
-              <h2 class="font-bold text-2xl text-gray-900 dark:text-white mb-8">${data.sections.about.skills.title}</h2>
+          <div class="mt-20 scroll-reveal">
+              <h2 class="font-bold text-2xl md:text-3xl text-gray-900 dark:text-white mb-8 glitch" data-text="${data.sections.about.skills.title}">${data.sections.about.skills.title}</h2>
               <div class="flex flex-wrap gap-3">
                   ${data.sections.about.skills.items
                     .map((skill, idx) =>
-                      `<span class="text-sm px-4 py-2 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 text-gray-700 dark:text-gray-200 font-mono hover:scale-110 transition-transform duration-300 cursor-default target-element scroll-reveal" data-delay="${idx * 0.02}">${skill}</span>`)
+                      `<span class="scroll-reveal-scale stagger-${(idx % 5) + 1} text-sm px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 dark:from-gray-800 dark:to-gray-700 text-gray-800 dark:text-gray-200 font-mono hover:scale-110 hover:shadow-lg transition-all duration-300 target-lock border border-gray-300 dark:border-gray-600">${skill}</span>`)
                     .join("")}
               </div>
           </div>
@@ -1034,31 +1082,32 @@
             }
           }
 
+          loadingManager.updateProgress(70);
+
           let projectsHTML = "";
           if (data.sections.projects && data.sections.projects.enabled) {
             projectsHTML = `
-        <div class="mt-20 scroll-reveal" id="projects" data-delay="0.4">
+        <div class="mt-20" id="projects">
           ${createSectionDivider(data.sections.projects.title)}
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             ${data.sections.projects.items
               .map((project, idx) => {
-                // Alternate between card-flip and scroll-reveal for variety
-                const animClass = idx % 2 === 0 ? 'card-flip' : 'scroll-reveal';
+                const isEven = idx % 2 === 0;
                 return `
-            <div class="group border-2 border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden card-interactive hover:border-gray-400 dark:hover:border-blue-500 ${animClass}" data-delay="${idx * 0.15}">
+            <div class="group border-2 border-gray-300 dark:border-gray-700 rounded-xl overflow-hidden card-interactive hover:border-blue-500 dark:hover:border-blue-600 bg-white dark:bg-gray-800/50 scroll-reveal-${isEven ? 'left' : 'right'} stagger-${(idx % 5) + 1}">
               <div class="p-6">
-                <h3 class="font-semibold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-gray-700 dark:group-hover:text-blue-400 transition-colors duration-300">${project.title}</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">${project.description}</p>
+                <h3 class="font-semibold text-lg md:text-xl text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 glitch" data-text="${project.title}">${project.title}</h3>
+                <p class="text-gray-700 dark:text-gray-400 text-sm md:text-base leading-relaxed mb-4">${project.description}</p>
                 <div class="flex flex-wrap gap-2 mb-4">
                   ${project.tags
-                    .map((tag) =>
-                      `<span class="text-xs px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-mono hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-300">${tag}</span>`)
+                    .map(tag =>
+                      `<span class="text-xs px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 font-mono hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 border border-gray-300 dark:border-gray-600">${tag}</span>`)
                     .join("")}
                 </div>
                 <div class="flex items-center gap-4 text-sm pt-4 border-t border-gray-200 dark:border-gray-700">
                   ${
                     project.repoUrl
-                      ? `<a href="${ensureUrl(project.repoUrl)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all duration-300 link-underline target-element">
+                      ? `<a href="${ensureUrl(project.repoUrl)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 target-lock rpg-button px-3 py-1 rounded-lg">
                          ${getIconSVG("github")}
                          <span>View Code</span>
                        </a>`
@@ -1070,8 +1119,8 @@
               })
               .join("")}
           </div>
-          <div class="text-center mt-12 scroll-reveal" data-delay="0.5">
-            <a href="https://github.com/Shrenik811rp" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-8 py-4 text-sm border-2 border-gray-300 dark:border-blue-500 rounded-lg hover:bg-gray-900 dark:hover:bg-blue-500 hover:text-white transition-all duration-400 btn-interactive target-element hud-corners">
+          <div class="text-center mt-12 scroll-reveal">
+            <a href="https://github.com/Shrenik811rp" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-8 py-4 text-sm border-2 border-gray-400 dark:border-gray-600 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white hover:border-transparent dark:hover:from-blue-600 dark:hover:to-purple-700 transition-all duration-400 rpg-button target-lock font-medium">
               View More Projects on GitHub
               ${getIconSVG("external")}
             </a>
@@ -1080,22 +1129,24 @@
       `;
           }
 
+          loadingManager.updateProgress(80);
+
           let experienceHTML = "";
           if (data.sections.experience && data.sections.experience.enabled) {
             const experienceItemsHTML = data.sections.experience.items
               .map((item, idx) => `
-        <div class="mb-12 pb-12 border-b border-gray-200 dark:border-gray-700 last:border-b-0 scroll-reveal-${idx % 2 === 0 ? 'left' : 'right'} group hover:bg-gray-50 dark:hover:bg-gray-800/30 rounded-lg p-4 transition-colors duration-300" data-delay="${idx * 0.15}">
+        <div class="mb-12 pb-12 border-b border-gray-200 dark:border-gray-700 last:border-b-0 scroll-reveal-swirl stagger-${(idx % 5) + 1} group hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-purple-50/50 dark:hover:from-gray-800/50 dark:hover:to-gray-700/50 rounded-lg p-6 transition-all duration-300">
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2 gap-2">
-            <h3 class="font-semibold text-lg sm:text-xl text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-blue-400 transition-colors duration-300">${item.position}</h3>
-            <span class="text-xs text-gray-500 dark:text-gray-500 font-mono whitespace-nowrap">${item.period}</span>
+            <h3 class="font-semibold text-lg sm:text-xl text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">${item.position}</h3>
+            <span class="text-xs text-gray-600 dark:text-gray-500 font-mono whitespace-nowrap px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">${item.period}</span>
           </div>
-          <p class="text-gray-600 dark:text-gray-400 text-base mb-3 font-medium">${item.company}</p>
-          <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed whitespace-pre-line">${item.description}</p>
+          <p class="text-gray-700 dark:text-gray-400 text-base mb-3 font-medium">${item.company}</p>
+          <p class="text-gray-700 dark:text-gray-400 text-sm leading-relaxed whitespace-pre-line">${item.description}</p>
         </div>`)
               .join("");
 
             experienceHTML = `
-        <div class="mt-20 scroll-reveal" id="experience" data-delay="0.5">
+        <div class="mt-20" id="experience">
             ${createSectionDivider(data.sections.experience.title)}
             ${experienceItemsHTML}
         </div>
@@ -1106,36 +1157,38 @@
           if (data.sections.education && data.sections.education.enabled) {
             const educationItemsHTML = data.sections.education.items
               .map((item, idx) => `
-        <div class="mb-10 pb-10 border-b border-gray-200 dark:border-gray-700 last:border-b-0 group hover:bg-gray-50 dark:hover:bg-gray-800/30 rounded-lg p-4 transition-colors duration-300 scroll-reveal" data-delay="${idx * 0.1}">
+        <div class="mb-10 pb-10 border-b border-gray-200 dark:border-gray-700 last:border-b-0 scroll-reveal-rotate stagger-${(idx % 5) + 1} group hover:bg-gradient-to-r hover:from-purple-50/50 hover:to-pink-50/50 dark:hover:from-gray-800/50 dark:hover:to-gray-700/50 rounded-lg p-6 transition-all duration-300">
             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-3 gap-2">
-                <h3 class="font-semibold text-lg text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-blue-400 transition-colors duration-300">${item.degree}</h3>
-                <div class="text-sm text-gray-500 dark:text-gray-500 font-mono">${item.period}</div>
+                <h3 class="font-semibold text-lg text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">${item.degree}</h3>
+                <div class="text-sm text-gray-600 dark:text-gray-500 font-mono px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">${item.period}</div>
             </div>
-            <p class="text-gray-600 dark:text-gray-400 text-base mb-2 font-medium">${item.institution}</p>
-            ${item.details ? `<p class="text-gray-500 dark:text-gray-500 text-sm">${item.details}</p>` : ''}
+            <p class="text-gray-700 dark:text-gray-400 text-base mb-2 font-medium">${item.institution}</p>
+            ${item.details ? `<p class="text-gray-600 dark:text-gray-500 text-sm">${item.details}</p>` : ''}
         </div>`)
               .join("");
 
             educationHTML = `
-        <div class="mt-20 scroll-reveal" id="education" data-delay="0.6">
+        <div class="mt-20" id="education">
             ${createSectionDivider(data.sections.education.title)}
             ${educationItemsHTML}
         </div>
       `;
           }
 
+          loadingManager.updateProgress(90);
+
           let achievementsHTML = "";
           if (data.sections.achievements && data.sections.achievements.enabled) {
             const achievementItemsHTML = data.sections.achievements.items
               .map((item, idx) => `
-        <div class="rounded-lg border-2 border-gray-200 dark:border-gray-700 p-6 card-interactive group hover:border-gray-400 dark:hover:border-blue-500 scroll-reveal" data-delay="${idx * 0.1}">
-          <h3 class="font-semibold text-base text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-blue-400 transition-colors duration-300 mb-2">${item.title}</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">${item.description}</p>
+        <div class="rounded-lg border-2 border-gray-300 dark:border-gray-700 p-6 card-interactive group hover:border-blue-500 dark:hover:border-blue-600 bg-white dark:bg-gray-800/50 scroll-reveal-flip stagger-${(idx % 5) + 1}">
+          <h3 class="font-semibold text-base text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 mb-2">${item.title}</h3>
+          <p class="text-gray-700 dark:text-gray-400 text-sm">${item.description}</p>
         </div>`)
               .join("");
 
             achievementsHTML = `
-        <div class="mt-20 scroll-reveal" id="achievements" data-delay="0.7">
+        <div class="mt-20" id="achievements">
           ${createSectionDivider(data.sections.achievements.title)}
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             ${achievementItemsHTML}
@@ -1165,23 +1218,23 @@
             ]
               .filter((item) => item.value)
               .map((item, idx) =>
-                `<div class="text-center group cursor-pointer scroll-reveal" data-delay="${idx * 0.1}">
-                  <p class="text-gray-500 dark:text-gray-500 text-xs uppercase tracking-widest mb-2 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">${item.label}</p>
-                  <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all duration-300 hover:scale-105 inline-block link-underline font-medium text-sm target-element">${item.value}</a>
+                `<div class="text-center group target-lock scroll-reveal-scale stagger-${idx + 1}">
+                  <p class="text-gray-600 dark:text-gray-500 text-xs uppercase tracking-widest mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 font-orbitron">${item.label}</p>
+                  <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-105 inline-block font-medium text-sm">${item.value}</a>
                 </div>`)
               .join("");
 
             const contactFormHTML = data.sections.contact.showContactForm ? `
-              <div class="mt-16 max-w-2xl mx-auto scroll-reveal" data-delay="0.8">
-                <h3 class="font-semibold text-xl text-gray-900 dark:text-white mb-8 text-center">Send Me a Message</h3>
+              <div class="mt-16 max-w-2xl mx-auto scroll-reveal">
+                <h3 class="font-semibold text-xl text-gray-900 dark:text-white mb-8 text-center glitch" data-text="Send Me a Message">Send Me a Message</h3>
                 <form class="space-y-5" onsubmit="handleContactForm(event)">
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <input type="text" placeholder="Your Name" required class="px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-300 hover:border-gray-400 dark:hover:border-gray-600 target-element">
-                    <input type="email" placeholder="Your Email" required class="px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-300 hover:border-gray-400 dark:hover:border-gray-600 target-element">
+                    <input type="text" placeholder="Your Name" required class="px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-transparent transition-all duration-300 hover:border-blue-400 dark:hover:border-blue-600 rpg-button">
+                    <input type="email" placeholder="Your Email" required class="px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-transparent transition-all duration-300 hover:border-blue-400 dark:hover:border-blue-600 rpg-button">
                   </div>
-                  <input type="text" placeholder="Subject" required class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-300 hover:border-gray-400 dark:hover:border-gray-600 target-element">
-                  <textarea rows="6" placeholder="Your Message" required class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-300 hover:border-gray-400 dark:hover:border-gray-600 resize-none target-element"></textarea>
-                  <button type="submit" class="w-full px-6 py-4 bg-gradient-to-r from-gray-800 to-gray-900 dark:from-blue-600 dark:to-blue-700 text-white rounded-lg hover:shadow-lg transition-all duration-300 font-semibold btn-interactive target-element hud-corners">
+                  <input type="text" placeholder="Subject" required class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-transparent transition-all duration-300 hover:border-blue-400 dark:hover:border-blue-600 rpg-button">
+                  <textarea rows="6" placeholder="Your Message" required class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-transparent transition-all duration-300 hover:border-blue-400 dark:hover:border-blue-600 resize-none rpg-button"></textarea>
+                  <button type="submit" class="w-full px-6 py-4 bg-gradient-to-r from-blue-500 to-purple-600 dark:from-blue-600 dark:to-purple-700 text-white rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 font-semibold rpg-button target-lock">
                     Send Message
                   </button>
                 </form>
@@ -1189,14 +1242,14 @@
             ` : '';
 
             contactHTML = `
-        <div class="mt-20 scroll-reveal" id="contact" data-delay="0.8">
+        <div class="mt-20" id="contact">
            ${createSectionDivider(data.sections.contact.title)}
-           ${data.sections.contact.subtitle ? `<p class="text-gray-600 dark:text-gray-400 text-center mb-12 max-w-2xl mx-auto">${data.sections.contact.subtitle}</p>` : ''}
+           ${data.sections.contact.subtitle ? `<p class="text-gray-700 dark:text-gray-400 text-center mb-12 max-w-2xl mx-auto scroll-reveal">${data.sections.contact.subtitle}</p>` : ''}
             <div class="flex flex-col items-center gap-8 text-sm mb-8">
                 <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-x-12 gap-y-6 w-full">
                   ${contactItems}
                 </div>
-                <div class="flex items-center gap-4 flex-wrap justify-center">
+                <div class="flex items-center gap-4 flex-wrap justify-center scroll-reveal">
                   ${socialLinksHTML}
                 </div>
             </div>
@@ -1208,29 +1261,29 @@
           let footerHTML = "";
           if (data.footer && data.footer.enabled) {
             footerHTML = `
-        <footer class="py-8 text-center text-sm text-gray-500 dark:text-gray-600 border-t border-gray-200 dark:border-gray-700 mt-20">
-            <p class="animate-fade-in">${data.footer.copyright}</p>
+        <footer class="py-8 text-center text-sm text-gray-600 dark:text-gray-600 border-t-2 border-gray-200 dark:border-gray-700 mt-20">
+            <p class="animate-fade-in font-orbitron">${data.footer.copyright}</p>
         </footer>
       `;
           }
 
           const content = `
     ${headerHTML}
-    <div class="flex flex-col min-h-screen relative nav-mobile:pt-20 crosshair-cursor">
+    <div class="flex flex-col min-h-screen relative nav-mobile:pt-20">
       <div class="nav-desktop fixed top-4 right-4 z-50 animate-fade-in">
-          <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-110 target-element hud-corners"></button>
+          <button id="theme-toggle" class="p-3 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-110 rpg-button target-lock shadow-lg"></button>
       </div>
       <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-12 animate-blur-in nav-mobile:pt-8">
-        <header class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 items-center mb-16 sm:mb-20 scroll-reveal">
-            <div class="sm:col-span-1 flex justify-center animate-float parallax" data-speed="0.2">
+        <header class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 items-center mb-16 sm:mb-20">
+            <div class="sm:col-span-1 flex justify-center scroll-reveal-scale">
               <div class="relative group">
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 dark:from-blue-500 dark:to-blue-700 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500 animate-pulse-glow"></div>
-                <img src="${data.settings.profileImage}" alt="${data.settings.name}" class="profile-image-container relative rounded-full w-40 h-40 sm:w-48 sm:h-48 object-cover border-4 border-white dark:border-gray-800 shadow-2xl img-interactive" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-2xl opacity-60 group-hover:opacity-90 transition-opacity duration-500 animate-pulse-glow"></div>
+                <img src="${data.settings.profileImage}" alt="${data.settings.name}" class="profile-image-container relative rounded-full w-40 h-40 sm:w-48 sm:h-48 object-cover border-4 border-white dark:border-gray-800 shadow-2xl" loading="lazy">
               </div>
             </div>
-            <div class="sm:col-span-2 scroll-reveal text-center sm:text-left" data-delay="0.1">
-                <h1 class="text-3xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2">Hey, I'm ${data.settings.name}</h1>
-                <p class="text-base sm:text-xl text-gray-700 dark:text-gray-300 mb-6">${data.settings.title} • ${data.settings.location}</p>
+            <div class="sm:col-span-2 scroll-reveal text-center sm:text-left">
+                <h1 class="text-3xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2 glitch" data-text="Hey, I'm ${data.settings.name}">Hey, I'm ${data.settings.name}</h1>
+                <p class="text-base sm:text-xl text-gray-700 dark:text-gray-300 mb-6 font-medium">${data.settings.title} • ${data.settings.location}</p>
                  <div class="flex flex-wrap gap-4 mt-8 justify-center sm:justify-start">
                   ${ctaButtonsHTML}
                 </div>
@@ -1252,10 +1305,11 @@
 
           document.getElementById("app").innerHTML = content;
           
+          loadingManager.updateProgress(95);
           
           setupTheme();
-          setupScrollReveal();
-          setupParallax();
+          
+          scrollAnimationManager = new ScrollAnimationManager();
 
           try {
             const personSchema = {
@@ -1332,35 +1386,50 @@
               }
             });
           }
-
-          setTimeout(() => {
-          }, 500);
+          
+          loadingManager.complete();
         } catch (err) {
-          document.getElementById("app").innerHTML = `<div class="text-red-500 p-8">Error: ${err.message}</div>`;
+          document.getElementById("app").innerHTML = `<div class="text-red-500 p-8 text-center">Error: ${err.message}</div>`;
           console.error(err);
+          loadingManager.complete();
         }
       }
 
       function handleContactForm(event) {
-        event.preventDefault();
-        const form = event.target;
-        
-        const successMsg = document.createElement('div');
-        successMsg.className = 'fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-slide-up';
-        successMsg.textContent = '✓ Message sent successfully! Thank you for reaching out.';
-        document.body.appendChild(successMsg);
-        
-        setTimeout(() => {
-          successMsg.style.animation = 'fadeOut 0.5s ease-out forwards';
-          setTimeout(() => successMsg.remove(), 500);
-        }, 4000);
-        
-        form.reset();
+        try {
+          event.preventDefault();
+          const form = event.target;
+          
+          const successMsg = document.createElement('div');
+          successMsg.className = 'fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-lg shadow-2xl animate-slide-up font-orbitron';
+          successMsg.textContent = '✓ MESSAGE SENT SUCCESSFULLY';
+          document.body.appendChild(successMsg);
+          
+          setTimeout(() => {
+            successMsg.style.animation = 'fadeOut 0.5s ease-out forwards';
+            setTimeout(() => successMsg.remove(), 500);
+          }, 4000);
+          
+          form.reset();
+        } catch (e) {
+          console.warn('Form submission handling failed:', e);
+        }
       }
 
       document.addEventListener("DOMContentLoaded", () => {
-        bgAnimation = new BackgroundAnimationSystem();
-        renderPortfolio();
+        try {
+          loadingManager = new LoadingManager();
+          loadingManager.updateProgress(10);
+          
+          starfield = new StarfieldSystem();
+          loadingManager.updateProgress(20);
+          
+          renderPortfolio();
+        } catch (e) {
+          console.error('Initialization failed:', e);
+          document.getElementById('loading-screen').style.display = 'none';
+          document.getElementById("app").innerHTML = `<div class="text-red-500 p-8 text-center">Failed to initialize portfolio. Please refresh the page.</div>`;
+        }
       });
     </script>
   </body>
