@@ -215,61 +215,6 @@
         z-index: 10;
       }
 
-      /* Loading screen */
-      #loading-screen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
-        z-index: 9999;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        transition: opacity 0.5s ease-out;
-      }
-
-      #loading-screen.hidden {
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      .loading-text {
-        font-family: 'Space Grotesk', monospace;
-        font-size: 1.5rem;
-        color: #60a5fa;
-        margin-bottom: 2rem;
-        text-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
-      }
-
-      .loading-bar-container {
-        width: 300px;
-        height: 8px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-        overflow: hidden;
-        position: relative;
-        border: 1px solid rgba(96, 165, 250, 0.3);
-      }
-
-      .loading-bar {
-        height: 100%;
-        background: linear-gradient(90deg, 
-          transparent,
-          rgba(96, 165, 250, 0.8),
-          transparent);
-        animation: loading-bar 2s ease-in-out infinite;
-      }
-
-      .loading-stats {
-        margin-top: 1rem;
-        font-family: 'Space Grotesk', monospace;
-        font-size: 0.875rem;
-        color: rgba(255, 255, 255, 0.6);
-      }
-
       .section-enter {
         animation: slideUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         opacity: 0;
@@ -441,62 +386,11 @@
   <body
     class="bg-white text-gray-800 dark:bg-[#0a0e27] dark:text-gray-300 font-space-grotesk antialiased transition-colors duration-300"
   >
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-      <div class="loading-text">INITIALIZING PORTFOLIO</div>
-      <div class="loading-bar-container">
-        <div class="loading-bar"></div>
-      </div>
-      <div class="loading-stats">
-        <span id="loading-progress">0%</span> | 
-        <span id="loading-status">Loading assets...</span>
-      </div>
-    </div>
-
     <canvas id="background-canvas"></canvas>
     <div id="app"></div>
     <script>
       // Loading screen manager
-      class LoadingManager {
-        constructor() {
-          this.progress = 0;
-          this.loadingScreen = document.getElementById('loading-screen');
-          this.progressEl = document.getElementById('loading-progress');
-          this.statusEl = document.getElementById('loading-status');
-          this.statuses = [
-            'Loading assets...',
-            'Initializing systems...',
-            'Compiling shaders...',
-            'Ready to deploy...'
-          ];
-        }
 
-        updateProgress(value) {
-          this.progress = Math.min(value, 100);
-          if (this.progressEl) {
-            this.progressEl.textContent = Math.floor(this.progress) + '%';
-          }
-          
-          const statusIndex = Math.min(Math.floor(this.progress / 25), 3);
-          if (this.statusEl) {
-            this.statusEl.textContent = this.statuses[statusIndex];
-          }
-        }
-
-        complete() {
-          this.updateProgress(100);
-          setTimeout(() => {
-            if (this.loadingScreen) {
-              this.loadingScreen.classList.add('hidden');
-              setTimeout(() => {
-                this.loadingScreen.style.display = 'none';
-              }, 500);
-            }
-          }, 500);
-        }
-      }
-
-      const loadingManager = new LoadingManager();
 
       // Enhanced Background Animation System with Stars.js-like effect
       class BackgroundAnimationSystem {
@@ -518,7 +412,6 @@
           this.setupEventListeners();
           this.animate();
           
-          loadingManager.updateProgress(30);
         }
 
         resize() {
@@ -790,7 +683,6 @@
             throw new Error("HTTP error! status: " + response.status);
           }
           portfolioData = await response.json();
-          loadingManager.updateProgress(60);
           return portfolioData;
         } catch (error) {
           console.error("Error loading portfolio data:", error);
@@ -969,7 +861,6 @@
         try {
           const data = await loadPortfolioData();
           setMetaTags(data);
-          loadingManager.updateProgress(80);
 
           let socialLinksHTML = "";
           if (data.sections.social && data.sections.social.enabled) {
@@ -1284,7 +1175,6 @@
 
           document.getElementById("app").innerHTML = content;
           
-          loadingManager.updateProgress(90);
           
           setupTheme();
           setupScrollReveal();
@@ -1366,14 +1256,11 @@
             });
           }
 
-          loadingManager.updateProgress(100);
           setTimeout(() => {
-            loadingManager.complete();
           }, 500);
         } catch (err) {
           document.getElementById("app").innerHTML = `<div class="text-red-500 p-8">Error: ${err.message}</div>`;
           console.error(err);
-          loadingManager.complete();
         }
       }
 
@@ -1395,7 +1282,6 @@
       }
 
       document.addEventListener("DOMContentLoaded", () => {
-        loadingManager.updateProgress(10);
         bgAnimation = new BackgroundAnimationSystem();
         renderPortfolio();
       });
