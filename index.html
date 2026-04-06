@@ -27,6 +27,7 @@
               "swirl-in": "swirlIn 1s cubic-bezier(0.34, 1.56, 0.64, 1)",
               "flip-in": "flipIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
               "shimmer": "shimmer 2s linear infinite",
+              "bounce-up": "bounceUp 0.5s ease-out",
             },
             keyframes: {
               blurIn: {
@@ -81,6 +82,11 @@
                 "0%": { backgroundPosition: "-1000px 0" },
                 "100%": { backgroundPosition: "1000px 0" },
               },
+              bounceUp: {
+                "0%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-10px)" },
+                "100%": { transform: "translateY(0)" },
+              },
             },
           },
         },
@@ -111,13 +117,26 @@
         position: relative;
       }
 
-      /* Custom Crosshair Cursor */
-      body, body * {
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="2" fill="rgba(59, 130, 246, 0.8)"/><line x1="16" y1="4" x2="16" y2="12" stroke="rgba(59, 130, 246, 0.8)" stroke-width="2"/><line x1="16" y1="20" x2="16" y2="28" stroke="rgba(59, 130, 246, 0.8)" stroke-width="2"/><line x1="4" y1="16" x2="12" y2="16" stroke="rgba(59, 130, 246, 0.8)" stroke-width="2"/><line x1="20" y1="16" x2="28" y2="16" stroke="rgba(59, 130, 246, 0.8)" stroke-width="2"/></svg>') 16 16, auto !important;
+      /* Custom Crosshair Cursor for Desktop */
+      @media (hover: hover) and (pointer: fine) {
+        body, body * {
+          cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="2" fill="rgba(59, 130, 246, 0.8)"/><line x1="16" y1="4" x2="16" y2="12" stroke="rgba(59, 130, 246, 0.8)" stroke-width="2"/><line x1="16" y1="20" x2="16" y2="28" stroke="rgba(59, 130, 246, 0.8)" stroke-width="2"/><line x1="4" y1="16" x2="12" y2="16" stroke="rgba(59, 130, 246, 0.8)" stroke-width="2"/><line x1="20" y1="16" x2="28" y2="16" stroke="rgba(59, 130, 246, 0.8)" stroke-width="2"/></svg>') 16 16, auto !important;
+        }
+
+        button, a, input, textarea, select {
+          cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="8" fill="none" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/><circle cx="16" cy="16" r="2" fill="rgba(239, 68, 68, 0.8)"/><line x1="16" y1="0" x2="16" y2="8" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/><line x1="16" y1="24" x2="16" y2="32" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/><line x1="0" y1="16" x2="8" y2="16" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/><line x1="24" y1="16" x2="32" y2="16" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/></svg>') 16 16, pointer !important;
+        }
       }
 
-      button, a, input, textarea, select {
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="8" fill="none" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/><circle cx="16" cy="16" r="2" fill="rgba(239, 68, 68, 0.8)"/><line x1="16" y1="0" x2="16" y2="8" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/><line x1="16" y1="24" x2="16" y2="32" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/><line x1="0" y1="16" x2="8" y2="16" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/><line x1="24" y1="16" x2="32" y2="16" stroke="rgba(239, 68, 68, 0.8)" stroke-width="2"/></svg>') 16 16, pointer !important;
+      /* Touch-friendly cursor for mobile/tablet */
+      @media (hover: none) and (pointer: coarse) {
+        body, body * {
+          cursor: auto !important;
+        }
+        
+        button, a, input, textarea, select {
+          cursor: pointer !important;
+        }
       }
 
       /* Text selection */
@@ -131,7 +150,7 @@
         color: inherit;
       }
 
-      /* Loading Screen */
+      /* Loading Screen - Dynamically Centered */
       #loading-screen {
         position: fixed;
         top: 0;
@@ -145,6 +164,7 @@
         justify-content: center;
         flex-direction: column;
         gap: 30px;
+        padding: 20px;
       }
 
       .loading-title {
@@ -154,10 +174,12 @@
         color: #3b82f6;
         text-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
         letter-spacing: 4px;
+        text-align: center;
       }
 
       .loading-bar-container {
-        width: 400px;
+        width: min(400px, 90vw);
+        max-width: 400px;
         height: 30px;
         background: rgba(255, 255, 255, 0.1);
         border: 2px solid #3b82f6;
@@ -180,135 +202,132 @@
         color: #93c5fd;
         font-size: 1rem;
         letter-spacing: 2px;
+        text-align: center;
       }
 
       @media (max-width: 640px) {
         .loading-title {
-          font-size: 1.8rem;
+          font-size: 1.5rem;
+          letter-spacing: 2px;
         }
         .loading-bar-container {
-          width: 280px;
           height: 24px;
+        }
+        .loading-text {
+          font-size: 0.875rem;
         }
       }
 
-      /* Background canvas */
-      #background-canvas {
+      /* Vector Background Images for Light Mode */
+      body:not(.dark) #vector-background {
+        display: block !important;
+      }
+
+      body.dark #vector-background {
+        display: none !important;
+      }
+
+      #vector-background {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 0;
         pointer-events: none;
-      }
-
-      #app {
-        position: relative;
-        z-index: 10;
-      }
-
-      .section-enter {
-        opacity: 0;
-      }
-
-      /* RPG Button Style */
-      .rpg-button {
-        position: relative;
+        z-index: 0;
+        opacity: 0.08;
         overflow: hidden;
+        display: none;
+      }
+
+      .vector-shape {
+        position: absolute;
+        opacity: 0.5;
+      }
+
+      /* Starfield */
+      #starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0;
+        animation: twinkle 3s infinite ease-in-out;
+      }
+
+      @keyframes twinkle {
+        0%, 100% { opacity: 0; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.2); }
+      }
+
+      /* Quirky Heading Hover Animations */
+      .heading-quirky {
+        display: inline-block;
+        position: relative;
         transition: all 0.3s ease;
       }
 
-      .rpg-button::before {
+      .heading-quirky::before {
         content: '';
         position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
-        transition: left 0.5s ease;
-      }
-
-      .rpg-button:hover::before {
-        left: 100%;
-      }
-
-      .rpg-button:hover {
-        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5), inset 0 0 20px rgba(59, 130, 246, 0.1);
-        transform: translateY(-2px);
-      }
-
-      /* Target Lock Animation */
-      .target-lock {
-        position: relative;
-      }
-
-      .target-lock::after {
-        content: '';
-        position: absolute;
-        top: -4px;
-        left: -4px;
-        right: -4px;
-        bottom: -4px;
-        border: 2px solid #ef4444;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-      }
-
-      .target-lock:hover::after {
-        opacity: 1;
-      }
-
-      /* Card Interactive with rotation */
-      .card-interactive {
-        transform: translateY(0);
-        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .card-interactive::before {
-        content: '';
-        position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
-        background-size: 300% 300%;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.4s ease, height 0.4s ease;
         z-index: -1;
-        opacity: 0;
-        transition: opacity 0.4s ease;
-        border-radius: inherit;
       }
 
-      .card-interactive:hover::before {
-        opacity: 1;
-        animation: shimmer 3s linear infinite;
+      .heading-quirky:hover::before {
+        width: 120%;
+        height: 120%;
       }
 
-      .card-interactive:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+      .heading-quirky:hover {
+        transform: rotate(-2deg) scale(1.05);
+        color: #3b82f6;
       }
 
-      /* Profile Image Animation */
-      .profile-image-container {
-        animation: float 3s ease-in-out infinite;
+      .dark .heading-quirky:hover {
+        color: #60a5fa;
       }
 
-      .profile-image-container:hover {
-        animation-play-state: paused;
-        transform: scale(1.05);
+      .heading-quirky span {
+        display: inline-block;
+        transition: transform 0.1s ease;
       }
 
-      /* Scroll Reveal Animations */
+      .heading-quirky:hover span {
+        animation: wave 0.6s ease-in-out;
+      }
+
+      .heading-quirky:hover span:nth-child(even) {
+        animation-delay: 0.1s;
+      }
+
+      @keyframes wave {
+        0%, 100% { transform: translateY(0); }
+        25% { transform: translateY(-8px); }
+        75% { transform: translateY(4px); }
+      }
+
+      /* Scroll reveal animations */
       .scroll-reveal {
         opacity: 0;
-        transform: translateY(50px);
-        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
       }
 
       .scroll-reveal.revealed {
@@ -316,32 +335,15 @@
         transform: translateY(0);
       }
 
-      .scroll-reveal-left {
+      .scroll-reveal.un-revealed {
         opacity: 0;
-        transform: translateX(-60px) rotate(-5deg);
-        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-
-      .scroll-reveal-left.revealed {
-        opacity: 1;
-        transform: translateX(0) rotate(0deg);
-      }
-
-      .scroll-reveal-right {
-        opacity: 0;
-        transform: translateX(60px) rotate(5deg);
-        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-
-      .scroll-reveal-right.revealed {
-        opacity: 1;
-        transform: translateX(0) rotate(0deg);
+        transform: translateY(30px);
       }
 
       .scroll-reveal-scale {
         opacity: 0;
-        transform: scale(0.8);
-        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: scale(0.9);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
       }
 
       .scroll-reveal-scale.revealed {
@@ -349,897 +351,772 @@
         transform: scale(1);
       }
 
-      .scroll-reveal-rotate {
+      .scroll-reveal-scale.un-revealed {
         opacity: 0;
-        transform: perspective(1000px) rotateY(-15deg) scale(0.9);
-        transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: scale(0.9);
       }
 
-      .scroll-reveal-rotate.revealed {
-        opacity: 1;
-        transform: perspective(1000px) rotateY(0deg) scale(1);
-      }
-
-      .scroll-reveal-swirl {
+      .scroll-reveal-left {
         opacity: 0;
-        transform: perspective(1000px) rotateX(-20deg) rotateZ(-10deg) scale(0.8);
-        transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: translateX(-50px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
       }
 
-      .scroll-reveal-swirl.revealed {
+      .scroll-reveal-left.revealed {
         opacity: 1;
-        transform: perspective(1000px) rotateX(0deg) rotateZ(0deg) scale(1);
+        transform: translateX(0);
       }
 
-      .scroll-reveal-flip {
+      .scroll-reveal-left.un-revealed {
         opacity: 0;
-        transform: perspective(1000px) rotateX(90deg);
-        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: translateX(-50px);
       }
 
-      .scroll-reveal-flip.revealed {
+      .scroll-reveal-right {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+
+      .scroll-reveal-right.revealed {
         opacity: 1;
-        transform: perspective(1000px) rotateX(0deg);
+        transform: translateX(0);
       }
 
-      /* Stagger Animation Delays */
-      .stagger-1 { transition-delay: 0.1s; }
-      .stagger-2 { transition-delay: 0.2s; }
-      .stagger-3 { transition-delay: 0.3s; }
-      .stagger-4 { transition-delay: 0.4s; }
-      .stagger-5 { transition-delay: 0.5s; }
-
-      /* Responsive adjustments */
-      @media (max-width: 768px) {
-        .nav-desktop {
-          display: none !important;
-        }
+      .scroll-reveal-right.un-revealed {
+        opacity: 0;
+        transform: translateX(50px);
       }
 
-      @media (min-width: 769px) {
-        .nav-mobile {
-          display: none !important;
-        }
-      }
-
-      @media (max-width: 640px) {
-        .profile-image-container {
-          width: 160px !important;
-          height: 160px !important;
-        }
-
-        .profile-image-container img {
-          width: 160px !important;
-          height: 160px !important;
-        }
-      }
-
-      /* Glitch Effect for Headers */
-      .glitch {
+      /* Skills pill - matching nav button animation */
+      .skill-pill {
         position: relative;
-        display: inline-block;
+        overflow: hidden;
+        transition: all 0.3s ease;
       }
 
-      .glitch:hover::before,
-      .glitch:hover::after {
-        content: attr(data-text);
+      .skill-pill::before {
+        content: '';
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(59, 130, 246, 0.15);
+        border-radius: 9999px;
+        transform: translate(-50%, -50%);
+        transition: width 0.4s ease, height 0.4s ease;
+      }
+
+      .skill-pill:hover::before {
         width: 100%;
         height: 100%;
       }
 
-      .glitch:hover::before {
-        animation: glitch-1 0.3s infinite;
-        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-        transform: translate(-2px, -2px);
-        opacity: 0.8;
-        color: #3b82f6;
+      .skill-pill:hover {
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        transform: translateY(-2px);
       }
 
-      .glitch:hover::after {
-        animation: glitch-2 0.3s infinite;
-        clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-        transform: translate(2px, 2px);
-        opacity: 0.8;
-        color: #ec4899;
+      .dark .skill-pill::before {
+        background: rgba(96, 165, 250, 0.15);
       }
 
-      @keyframes glitch-1 {
-        0%, 100% { transform: translate(0); }
-        33% { transform: translate(-2px, -2px); }
-        66% { transform: translate(2px, 2px); }
+      .dark .skill-pill:hover {
+        box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.5);
       }
 
-      @keyframes glitch-2 {
-        0%, 100% { transform: translate(0); }
-        33% { transform: translate(2px, 2px); }
-        66% { transform: translate(-2px, -2px); }
+      /* Back to top button */
+      #back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        color: white;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        z-index: 1000;
+        transition: all 0.3s ease;
+        border: none;
+        font-size: 24px;
+      }
+
+      #back-to-top:hover {
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+      }
+
+      #back-to-top.show {
+        display: flex;
+        animation: bounceUp 0.5s ease-out;
+      }
+
+      @media (max-width: 640px) {
+        #back-to-top {
+          width: 45px;
+          height: 45px;
+          bottom: 20px;
+          right: 20px;
+          font-size: 20px;
+        }
+      }
+
+      /* Glitch effect */
+      .glitch {
+        position: relative;
+        animation: none;
+      }
+
+      /* Navigation */
+      .nav-desktop {
+        display: block;
+      }
+
+      .nav-mobile {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .nav-desktop {
+          display: none;
+        }
+
+        .nav-mobile {
+          display: block;
+        }
+      }
+
+      @media (min-width: 769px) {
+        .nav-mobile\:pt-20 {
+          padding-top: 0 !important;
+        }
+
+        .nav-mobile\:pt-8 {
+          padding-top: 0 !important;
+        }
+      }
+
+      .rpg-button {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .rpg-button::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.4s ease, height 0.4s ease;
+      }
+
+      .rpg-button:hover::before {
+        width: 200%;
+        height: 200%;
+      }
+
+      .rpg-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .target-lock {
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+      }
+
+      .target-lock:hover {
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 10px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .profile-image-container {
+        transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .profile-image-container:hover {
+        transform: scale(1.05) rotate(5deg);
       }
     </style>
   </head>
-  <body
-    class="bg-gray-50 text-gray-800 dark:bg-[#0a0e27] dark:text-gray-300 font-space-grotesk antialiased transition-colors duration-300"
-  >
-    <!-- Loading Screen -->
+  <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-space-grotesk">
     <div id="loading-screen">
-      <div class="loading-title">INITIALIZING</div>
+      <div class="loading-title">SHRENIK PILLAI</div>
       <div class="loading-bar-container">
         <div class="loading-bar" id="loading-bar"></div>
       </div>
-      <div class="loading-text" id="loading-text">LOADING ASSETS... 0%</div>
+      <div class="loading-text" id="loading-text">INITIALIZING...</div>
     </div>
 
-    <canvas id="background-canvas"></canvas>
+    <div id="starfield"></div>
+    
+    <!-- Vector Background for Light Mode -->
+    <div id="vector-background">
+      <!-- Abstract geometric shapes -->
+      <svg class="vector-shape" style="top: 10%; left: 5%; width: 200px; height: 200px;">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.3"/>
+        <circle cx="100" cy="100" r="60" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0.3"/>
+        <circle cx="100" cy="100" r="40" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.3"/>
+      </svg>
+      
+      <svg class="vector-shape" style="top: 60%; right: 8%; width: 250px; height: 250px;">
+        <polygon points="125,20 230,100 200,200 50,200 20,100" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.3"/>
+        <polygon points="125,50 200,110 180,180 70,180 50,110" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0.3"/>
+      </svg>
+      
+      <svg class="vector-shape" style="top: 30%; right: 20%; width: 150px; height: 150px;">
+        <rect x="25" y="25" width="100" height="100" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.3" transform="rotate(45 75 75)"/>
+        <rect x="40" y="40" width="70" height="70" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0.3" transform="rotate(45 75 75)"/>
+      </svg>
+      
+      <svg class="vector-shape" style="bottom: 15%; left: 15%; width: 180px; height: 180px;">
+        <path d="M90,10 L170,90 L90,170 L10,90 Z" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.3"/>
+        <path d="M90,30 L150,90 L90,150 L30,90 Z" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0.3"/>
+      </svg>
+      
+      <svg class="vector-shape" style="top: 45%; left: 30%; width: 120px; height: 120px;">
+        <circle cx="60" cy="60" r="50" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.3"/>
+        <line x1="10" y1="60" x2="110" y2="60" stroke="#8b5cf6" stroke-width="2" opacity="0.3"/>
+        <line x1="60" y1="10" x2="60" y2="110" stroke="#8b5cf6" stroke-width="2" opacity="0.3"/>
+      </svg>
+    </div>
+
     <div id="app"></div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" aria-label="Back to top">↑</button>
+
     <script>
-      // Enhanced Starfield Background System (with particles in both modes)
-      class StarfieldSystem {
-        constructor() {
-          this.canvas = document.getElementById('background-canvas');
-          this.ctx = this.canvas.getContext('2d');
-          this.stars = [];
-          this.shootingStars = [];
-          this.particles = [];
-          this.mouseX = window.innerWidth / 2;
-          this.mouseY = window.innerHeight / 2;
-          this.isDarkMode = true;
-          this.time = 0;
-          
-          this.resize();
-          this.initStars();
-          this.setupEventListeners();
-          this.animate();
-        }
+      let starfield = null;
+      let loadingManager = null;
+      let scrollAnimationManager = null;
 
-        resize() {
-          this.canvas.width = window.innerWidth;
-          this.canvas.height = window.innerHeight;
-        }
-
-        initStars() {
-          const starCount = Math.min(500, Math.floor(window.innerWidth / 4));
-          this.stars = [];
-          
-          for (let i = 0; i < starCount; i++) {
-            const layer = Math.random();
-            this.stars.push({
-              x: Math.random() * this.canvas.width,
-              y: Math.random() * this.canvas.height,
-              radius: Math.random() * 2.5,
-              opacity: Math.random() * 0.8 + 0.2,
-              twinkleSpeed: Math.random() * 0.03 + 0.01,
-              twinklePhase: Math.random() * Math.PI * 2,
-              brightness: Math.random() * 0.7 + 0.3,
-              layer: layer,
-              color: this.getStarColor(Math.random()),
-              pulseSpeed: Math.random() * 0.02 + 0.01,
-            });
-          }
-        }
-
-        getStarColor(random) {
-          if (random < 0.7) return { r: 255, g: 255, b: 255 };
-          if (random < 0.85) return { r: 147, g: 197, b: 253 };
-          if (random < 0.95) return { r: 251, g: 207, b: 232 };
-          return { r: 254, g: 240, b: 138 };
-        }
-
-        createShootingStar() {
-          if (Math.random() > 0.98 && this.shootingStars.length < 3) {
-            const startX = Math.random() * this.canvas.width;
-            const startY = Math.random() * (this.canvas.height / 2);
-            const angle = Math.PI / 4 + Math.random() * Math.PI / 6;
-            
-            this.shootingStars.push({
-              x: startX,
-              y: startY,
-              vx: Math.cos(angle) * 8,
-              vy: Math.sin(angle) * 8,
-              length: Math.random() * 60 + 40,
-              opacity: 1,
-              decay: 0.98,
-            });
-          }
-        }
-
-        setupEventListeners() {
-          window.addEventListener('mousemove', (e) => {
-            this.mouseX = e.clientX;
-            this.mouseY = e.clientY;
-            
-            if (Math.random() > 0.85) {
-              this.createInteractionParticles(e.clientX, e.clientY);
-            }
-          });
-
-          window.addEventListener('resize', () => {
-            this.resize();
-            this.initStars();
-          });
-
-          const observer = new MutationObserver(() => {
-            this.isDarkMode = document.documentElement.classList.contains('dark');
-          });
-          observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-        }
-
-        createInteractionParticles(x, y) {
-          const particleCount = 3;
-          const colors = this.isDarkMode ? 
-            [{ r: 147, g: 197, b: 253 }, { r: 168, g: 85, b: 247 }, { r: 236, g: 72, b: 153 }] :
-            [{ r: 59, g: 130, b: 246 }, { r: 249, g: 115, b: 22 }, { r: 139, g: 92, b: 246 }];
-          
-          for (let i = 0; i < particleCount; i++) {
-            this.particles.push({
-              x: x,
-              y: y,
-              vx: (Math.random() - 0.5) * 4,
-              vy: (Math.random() - 0.5) * 4 - 1,
-              radius: Math.random() * 2 + 1,
-              opacity: this.isDarkMode ? 0.8 : 0.6,
-              decay: 0.96,
-              life: 1,
-              color: colors[Math.floor(Math.random() * colors.length)],
-            });
-          }
-        }
-
-        updateStars() {
-          for (let star of this.stars) {
-            star.twinklePhase += star.twinkleSpeed;
-            const twinkle = Math.sin(star.twinklePhase);
-            star.opacity = (twinkle * 0.5 + 0.5) * star.brightness;
-            
-            const parallaxX = (this.mouseX - this.canvas.width / 2) * star.layer * 0.01;
-            const parallaxY = (this.mouseY - this.canvas.height / 2) * star.layer * 0.01;
-            star.parallaxX = parallaxX;
-            star.parallaxY = parallaxY;
-          }
-        }
-
-        updateShootingStars() {
-          this.shootingStars = this.shootingStars.filter(star => star.opacity > 0.01);
-          
-          for (let star of this.shootingStars) {
-            star.x += star.vx;
-            star.y += star.vy;
-            star.opacity *= star.decay;
-          }
-        }
-
-        updateParticles() {
-          this.particles = this.particles.filter(p => p.life > 0.01);
-          
-          for (let particle of this.particles) {
-            particle.x += particle.vx;
-            particle.y += particle.vy;
-            particle.vy += 0.15;
-            particle.opacity *= particle.decay;
-            particle.life *= particle.decay;
-          }
-        }
-
-        drawBackground() {
-          if (this.isDarkMode) {
-            const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-            gradient.addColorStop(0, '#000510');
-            gradient.addColorStop(0.5, '#0a0e27');
-            gradient.addColorStop(1, '#020617');
-            this.ctx.fillStyle = gradient;
-          } else {
-            const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-            gradient.addColorStop(0, '#f8fafc');
-            gradient.addColorStop(0.5, '#f1f5f9');
-            gradient.addColorStop(1, '#e2e8f0');
-            this.ctx.fillStyle = gradient;
-          }
-          this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        }
-
-        drawStars() {
-          if (!this.isDarkMode) return;
-          
-          for (let star of this.stars) {
-            const x = star.x + (star.parallaxX || 0);
-            const y = star.y + (star.parallaxY || 0);
-            
-            this.ctx.fillStyle = `rgba(${star.color.r}, ${star.color.g}, ${star.color.b}, ${star.opacity})`;
-            this.ctx.beginPath();
-            this.ctx.arc(x, y, star.radius, 0, Math.PI * 2);
-            this.ctx.fill();
-
-            if (star.opacity > 0.5 && star.radius > 1) {
-              const glowGradient = this.ctx.createRadialGradient(x, y, 0, x, y, star.radius * 4);
-              glowGradient.addColorStop(0, `rgba(${star.color.r}, ${star.color.g}, ${star.color.b}, ${star.opacity * 0.4})`);
-              glowGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-              this.ctx.fillStyle = glowGradient;
-              this.ctx.beginPath();
-              this.ctx.arc(x, y, star.radius * 4, 0, Math.PI * 2);
-              this.ctx.fill();
-            }
-
-            if (star.opacity > 0.7 && star.radius > 1.5) {
-              this.ctx.strokeStyle = `rgba(${star.color.r}, ${star.color.g}, ${star.color.b}, ${star.opacity * 0.6})`;
-              this.ctx.lineWidth = 0.5;
-              const sparkleSize = star.radius * 3;
-              
-              this.ctx.beginPath();
-              this.ctx.moveTo(x - sparkleSize, y);
-              this.ctx.lineTo(x + sparkleSize, y);
-              this.ctx.stroke();
-              
-              this.ctx.beginPath();
-              this.ctx.moveTo(x, y - sparkleSize);
-              this.ctx.lineTo(x, y + sparkleSize);
-              this.ctx.stroke();
-            }
-          }
-        }
-
-        drawShootingStars() {
-          if (!this.isDarkMode) return;
-          
-          for (let star of this.shootingStars) {
-            const gradient = this.ctx.createLinearGradient(
-              star.x, star.y,
-              star.x - star.vx * 5, star.y - star.vy * 5
-            );
-            gradient.addColorStop(0, `rgba(255, 255, 255, ${star.opacity})`);
-            gradient.addColorStop(0.5, `rgba(147, 197, 253, ${star.opacity * 0.6})`);
-            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-            
-            this.ctx.strokeStyle = gradient;
-            this.ctx.lineWidth = 2;
-            this.ctx.beginPath();
-            this.ctx.moveTo(star.x, star.y);
-            this.ctx.lineTo(star.x - star.vx * 5, star.y - star.vy * 5);
-            this.ctx.stroke();
-            
-            this.ctx.strokeStyle = `rgba(147, 197, 253, ${star.opacity * 0.3})`;
-            this.ctx.lineWidth = 4;
-            this.ctx.beginPath();
-            this.ctx.moveTo(star.x, star.y);
-            this.ctx.lineTo(star.x - star.vx * 3, star.y - star.vy * 3);
-            this.ctx.stroke();
-          }
-        }
-
-        drawParticles() {
-          for (let particle of this.particles) {
-            this.ctx.fillStyle = `rgba(${particle.color.r}, ${particle.color.g}, ${particle.color.b}, ${particle.opacity})`;
-            this.ctx.beginPath();
-            this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-            this.ctx.fill();
-
-            const glowGradient = this.ctx.createRadialGradient(
-              particle.x, particle.y, 0,
-              particle.x, particle.y, particle.radius * 3
-            );
-            glowGradient.addColorStop(0, `rgba(${particle.color.r}, ${particle.color.g}, ${particle.color.b}, ${particle.opacity * 0.5})`);
-            glowGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-            this.ctx.fillStyle = glowGradient;
-            this.ctx.beginPath();
-            this.ctx.arc(particle.x, particle.y, particle.radius * 3, 0, Math.PI * 2);
-            this.ctx.fill();
-          }
-        }
-
-        animate() {
-          this.time++;
-          this.drawBackground();
-          
-          if (this.isDarkMode) {
-            this.updateStars();
-            this.drawStars();
-            
-            if (this.time % 3 === 0) {
-              this.createShootingStar();
-            }
-            this.updateShootingStars();
-            this.drawShootingStars();
-          }
-
-          this.updateParticles();
-          this.drawParticles();
-
-          requestAnimationFrame(() => this.animate());
-        }
-      }
-
-      // Loading Screen Manager
       class LoadingManager {
         constructor() {
-          this.loadingScreen = document.getElementById('loading-screen');
-          this.loadingBar = document.getElementById('loading-bar');
-          this.loadingText = document.getElementById('loading-text');
+          this.screen = document.getElementById('loading-screen');
+          this.bar = document.getElementById('loading-bar');
+          this.text = document.getElementById('loading-text');
           this.progress = 0;
-          this.messages = [
-            'INITIALIZING SYSTEMS',
-            'LOADING NEURAL NETWORK',
-            'CALIBRATING VISUAL SYSTEMS',
-            'ESTABLISHING CONNECTION',
-            'READY FOR DEPLOYMENT'
-          ];
-          this.currentMessage = 0;
         }
 
-        updateProgress(progress) {
-          this.progress = Math.min(progress, 100);
-          this.loadingBar.style.width = this.progress + '%';
-          
-          const messageIndex = Math.floor(this.progress / 25);
-          if (messageIndex !== this.currentMessage && messageIndex < this.messages.length) {
-            this.currentMessage = messageIndex;
-            this.loadingText.textContent = this.messages[messageIndex] + '... ' + Math.floor(this.progress) + '%';
-          } else {
-            this.loadingText.textContent = this.messages[this.currentMessage] + '... ' + Math.floor(this.progress) + '%';
+        updateProgress(value) {
+          try {
+            this.progress = Math.min(value, 100);
+            if (this.bar) this.bar.style.width = this.progress + '%';
+            
+            if (this.text) {
+              if (this.progress < 30) this.text.textContent = 'INITIALIZING...';
+              else if (this.progress < 60) this.text.textContent = 'LOADING ASSETS...';
+              else if (this.progress < 90) this.text.textContent = 'PREPARING INTERFACE...';
+              else this.text.textContent = 'ALMOST READY...';
+            }
+          } catch (e) {
+            console.warn('Loading progress update failed:', e);
           }
         }
 
         complete() {
-          this.updateProgress(100);
-          setTimeout(() => {
-            this.loadingScreen.style.opacity = '0';
-            this.loadingScreen.style.transition = 'opacity 0.5s ease';
+          try {
+            this.updateProgress(100);
             setTimeout(() => {
-              this.loadingScreen.style.display = 'none';
-            }, 500);
-          }, 500);
+              if (this.screen) {
+                this.screen.style.opacity = '0';
+                this.screen.style.transition = 'opacity 0.5s ease-out';
+                setTimeout(() => {
+                  if (this.screen) this.screen.style.display = 'none';
+                }, 500);
+              }
+            }, 300);
+          } catch (e) {
+            console.warn('Loading completion failed:', e);
+            if (this.screen) this.screen.style.display = 'none';
+          }
         }
       }
 
-      // Scroll Animation Manager
+      class StarfieldSystem {
+        constructor() {
+          try {
+            this.container = document.getElementById('starfield');
+            if (!this.container) return;
+            
+            this.stars = [];
+            this.starCount = window.innerWidth < 768 ? 50 : 100;
+            this.createStars();
+            
+            window.addEventListener('resize', () => this.handleResize());
+          } catch (e) {
+            console.warn('Starfield initialization failed:', e);
+          }
+        }
+
+        createStars() {
+          try {
+            if (!this.container) return;
+            this.container.innerHTML = '';
+            this.stars = [];
+            
+            for (let i = 0; i < this.starCount; i++) {
+              const star = document.createElement('div');
+              star.className = 'star';
+              const size = Math.random() * 2 + 1;
+              star.style.width = size + 'px';
+              star.style.height = size + 'px';
+              star.style.left = Math.random() * 100 + '%';
+              star.style.top = Math.random() * 100 + '%';
+              star.style.animationDelay = Math.random() * 3 + 's';
+              star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+              
+              this.container.appendChild(star);
+              this.stars.push(star);
+            }
+          } catch (e) {
+            console.warn('Star creation failed:', e);
+          }
+        }
+
+        handleResize() {
+          try {
+            const newStarCount = window.innerWidth < 768 ? 50 : 100;
+            if (newStarCount !== this.starCount) {
+              this.starCount = newStarCount;
+              this.createStars();
+            }
+          } catch (e) {
+            console.warn('Starfield resize failed:', e);
+          }
+        }
+      }
+
       class ScrollAnimationManager {
         constructor() {
-          this.observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-          };
-          this.observer = new IntersectionObserver(
-            this.handleIntersection.bind(this),
-            this.observerOptions
-          );
-          this.init();
+          try {
+            this.elements = [];
+            this.lastScrollY = window.scrollY;
+            this.isScrollingDown = true;
+            
+            this.observeElements();
+            this.handleScroll();
+            
+            window.addEventListener('scroll', () => this.handleScroll(), { passive: true });
+            window.addEventListener('resize', () => this.observeElements());
+          } catch (e) {
+            console.warn('ScrollAnimationManager initialization failed:', e);
+          }
         }
 
-        init() {
-          setTimeout(() => {
-            const elements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .scroll-reveal-rotate, .scroll-reveal-swirl, .scroll-reveal-flip');
-            elements.forEach(el => this.observer.observe(el));
-          }, 100);
+        observeElements() {
+          try {
+            this.elements = Array.from(document.querySelectorAll('.scroll-reveal, .scroll-reveal-scale, .scroll-reveal-left, .scroll-reveal-right'));
+          } catch (e) {
+            console.warn('Element observation failed:', e);
+          }
         }
 
-        handleIntersection(entries) {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('revealed');
-              this.observer.unobserve(entry.target);
+        handleScroll() {
+          try {
+            const currentScrollY = window.scrollY;
+            this.isScrollingDown = currentScrollY > this.lastScrollY;
+            this.lastScrollY = currentScrollY;
+
+            const windowHeight = window.innerHeight;
+            const triggerPoint = windowHeight * 0.85;
+
+            this.elements.forEach(element => {
+              try {
+                const rect = element.getBoundingClientRect();
+                const elementTop = rect.top;
+                const elementBottom = rect.bottom;
+
+                // Element is in viewport
+                if (this.isScrollingDown) {
+                  // Scrolling down - reveal when entering from bottom
+                  if (elementTop < triggerPoint && elementBottom > 0) {
+                    element.classList.add('revealed');
+                    element.classList.remove('un-revealed');
+                  }
+                } else {
+                  // Scrolling up - reveal when entering from top
+                  if (elementTop < windowHeight && elementBottom > windowHeight * 0.15) {
+                    element.classList.add('revealed');
+                    element.classList.remove('un-revealed');
+                  } else if (elementBottom < windowHeight * 0.15) {
+                    // Element is above viewport - un-reveal it
+                    element.classList.remove('revealed');
+                    element.classList.add('un-revealed');
+                  }
+                }
+
+                // Un-reveal when element completely leaves viewport
+                if (elementBottom < 0 || elementTop > windowHeight) {
+                  if (this.isScrollingDown && elementBottom < 0) {
+                    element.classList.remove('revealed');
+                    element.classList.add('un-revealed');
+                  } else if (!this.isScrollingDown && elementTop > windowHeight) {
+                    element.classList.remove('revealed');
+                    element.classList.add('un-revealed');
+                  }
+                }
+              } catch (e) {
+                console.warn('Element scroll handling failed:', e);
+              }
+            });
+
+            // Handle back-to-top button
+            const backToTop = document.getElementById('back-to-top');
+            if (backToTop) {
+              if (currentScrollY > 300) {
+                backToTop.classList.add('show');
+              } else {
+                backToTop.classList.remove('show');
+              }
             }
-          });
-        }
-
-        refresh() {
-          this.init();
-        }
-      }
-
-      let starfield = null;
-      let loadingManager = null;
-      let scrollAnimationManager = null;
-      let portfolioData = null;
-
-      async function loadPortfolioData() {
-        try {
-          const response = await fetch("./portfolio-data.json");
-          if (!response.ok) {
-            throw new Error("HTTP error! status: " + response.status);
+          } catch (e) {
+            console.warn('Scroll handling failed:', e);
           }
-          portfolioData = await response.json();
-          return portfolioData;
-        } catch (error) {
-          console.error("Error loading portfolio data:", error);
-          throw error;
-        }
-      }
-
-      function getIconSVG(name) {
-        const icons = {
-          linkedin: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>',
-          github: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>',
-          sun: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>',
-          moon: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>',
-          external: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg>',
-        };
-        return icons[name] || "";
-      }
-
-      function createSectionDivider(title) {
-        return `
-    <div class="flex items-center my-12 scroll-reveal">
-      <div class="flex-grow border-t-2 border-gray-300 dark:border-gray-700"></div>
-      <h2 class="font-bold text-2xl md:text-3xl text-gray-900 dark:text-white mx-6 glitch" data-text="${title}">${title}</h2>
-      <div class="flex-grow border-t-2 border-gray-300 dark:border-gray-700"></div>
-    </div>
-  `;
-      }
-
-      function generateInitials(name) {
-        const words = name.trim().split(" ");
-        if (words.length === 1) {
-          return words[0].charAt(0).toUpperCase();
-        } else {
-          return words
-            .slice(0, 2)
-            .map((word) => word.charAt(0).toUpperCase())
-            .join("");
-        }
-      }
-
-      function ensureUrl(url) {
-        if (!url || url.startsWith('./') || url.startsWith('/') || url.startsWith('mailto:') || url.startsWith('tel:') || url.match(/^https?:\/\//)) {
-          return url;
-        }
-        return `https://${url}`;
-      }
-
-      function setTheme(theme) {
-        try {
-          localStorage.setItem("theme", theme);
-          if (theme === "dark") {
-            document.documentElement.classList.add("dark");
-          } else {
-            document.documentElement.classList.remove("dark");
-          }
-          const toggle = document.getElementById("theme-toggle");
-          const toggleMobile = document.getElementById("theme-toggle-mobile");
-          if (toggle) {
-            toggle.innerHTML = getIconSVG(theme === "dark" ? "sun" : "moon");
-          }
-          if (toggleMobile) {
-            toggleMobile.innerHTML = getIconSVG(theme === "dark" ? "sun" : "moon");
-          }
-        } catch (e) {
-          console.warn('Theme setting failed:', e);
         }
       }
 
       function setupTheme() {
         try {
+          const toggle = document.getElementById("theme-toggle");
+          if (!toggle) return;
+
           const savedTheme = localStorage.getItem("theme");
           const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-          const defaultTheme = savedTheme || (prefersDark ? "dark" : "light");
-          setTheme(defaultTheme);
+          const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
 
-          const toggle = document.getElementById("theme-toggle");
-          if (toggle) {
-            toggle.addEventListener("click", () => {
-              const currentTheme = localStorage.getItem("theme") || "light";
-              setTheme(currentTheme === "dark" ? "light" : "dark");
-            });
+          if (initialTheme === "dark") {
+            document.documentElement.classList.add("dark");
+            toggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>`;
+          } else {
+            document.documentElement.classList.remove("dark");
+            toggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>`;
           }
 
-          const toggleMobile = document.getElementById("theme-toggle-mobile");
-          if (toggleMobile) {
-            toggleMobile.addEventListener("click", () => {
-              const currentTheme = localStorage.getItem("theme") || "light";
-              setTheme(currentTheme === "dark" ? "light" : "dark");
-            });
-          }
+          toggle.addEventListener("click", () => {
+            try {
+              const isDark = document.documentElement.classList.toggle("dark");
+              localStorage.setItem("theme", isDark ? "dark" : "light");
+              toggle.innerHTML = isDark
+                ? `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>`
+                : `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>`;
+            } catch (e) {
+              console.warn('Theme toggle failed:', e);
+            }
+          });
         } catch (e) {
           console.warn('Theme setup failed:', e);
         }
       }
 
-      function setMetaTags(data) {
+      function ensureUrl(val) {
         try {
-          const pageTitle = `${data.settings.name} - ${data.settings.title}`;
-          const pageDescription = data.settings.summary;
-          const pageImage = data.settings.profileImage;
-          const pageUrl = window.location.href;
-
-          document.title = pageTitle;
-
-          const createOrUpdateMeta = (property, content, isNameAttribute = false) => {
-            const attribute = isNameAttribute ? "name" : "property";
-            let element = document.querySelector(`meta[${attribute}="${property}"]`);
-            if (!element) {
-              element = document.createElement("meta");
-              element.setAttribute(attribute, property);
-              document.head.appendChild(element);
-            }
-            element.setAttribute("content", content);
-          };
-
-          createOrUpdateMeta("description", pageDescription, true);
-          createOrUpdateMeta("og:title", pageTitle);
-          createOrUpdateMeta("og:description", pageDescription);
-          createOrUpdateMeta("og:image", pageImage);
-          createOrUpdateMeta("og:url", pageUrl);
-          createOrUpdateMeta("og:type", "website");
-          createOrUpdateMeta("twitter:card", "summary_large_image", true);
-          createOrUpdateMeta("twitter:title", pageTitle, true);
-          createOrUpdateMeta("twitter:description", pageDescription, true);
-          createOrUpdateMeta("twitter:image", pageImage, true);
-
-          const canonical = document.getElementById("canonical-link");
-          if (canonical) {
-            canonical.setAttribute("href", pageUrl.split("#")[0]);
-          }
+          if (!val) return "";
+          if (val.startsWith("http://") || val.startsWith("https://") || val.startsWith("mailto:")) return val;
+          if (val.startsWith("./")) return val;
+          return val;
         } catch (e) {
-          console.warn('Meta tags setup failed:', e);
+          console.warn('URL validation failed:', e);
+          return val || "";
         }
+      }
+
+      function wrapHeadingText(text) {
+        try {
+          return text.split('').map(char => {
+            if (char === ' ') return ' ';
+            return `<span>${char}</span>`;
+          }).join('');
+        } catch (e) {
+          console.warn('Text wrapping failed:', e);
+          return text;
+        }
+      }
+
+      function createSectionDivider(title) {
+        const wrappedTitle = wrapHeadingText(title);
+        return `
+          <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12 scroll-reveal">
+            <span class="heading-quirky inline-block font-orbitron bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">${wrappedTitle}</span>
+          </h2>
+        `;
       }
 
       async function renderPortfolio() {
         try {
-          const data = await loadPortfolioData();
           loadingManager.updateProgress(30);
-          
-          setMetaTags(data);
 
-          let socialLinksHTML = "";
-          if (data.sections.social && data.sections.social.enabled) {
-            socialLinksHTML = data.sections.social.items
-              .map((item, idx) => `
-        <a href="${ensureUrl(item.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all duration-300 hover:scale-110 target-lock">
-          ${getIconSVG(item.platform)}
-          <span class="hidden sm:inline">${item.platform.charAt(0).toUpperCase() + item.platform.slice(1)}</span>
-        </a>`)
-              .join('<span class="text-gray-400 dark:text-gray-600">/</span>');
-          }
-
-          loadingManager.updateProgress(40);
-
-          let headerHTML = "";
-          if (data.navigation && data.navigation.enabled) {
-            const navLinks = data.navigation.items
-              .map((item, idx) => `
-        <a href="${item.url}" class="px-4 py-2 text-sm rounded-full hover:bg-gray-200/80 dark:hover:bg-gray-700/50 transition-all duration-300 whitespace-nowrap target-lock rpg-button">${item.name}</a>`)
-              .join("");
-
-            headerHTML = `
-        <!-- Desktop Header -->
-        <header class="nav-desktop fixed top-4 z-50 w-full flex justify-center animate-fade-in">
-          <nav class="flex items-center gap-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl shadow-2xl rounded-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 flex-wrap justify-center max-w-5xl">
-            <div class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-full font-bold text-xs tracking-wider animate-pulse-glow flex-shrink-0 font-orbitron">
-              ${generateInitials(data.settings.name)}
-            </div>
-            ${navLinks}
-          </nav>
-        </header>
-
-        <!-- Mobile Header -->
-        <header class="nav-mobile fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-b-2 border-gray-200 dark:border-gray-700">
-          <div class="flex items-center justify-between px-4 py-4">
-            <div class="flex items-center gap-2">
-              <button id="hamburger-menu" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 rpg-button target-lock">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-              </button>
-              <div class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-full font-bold text-xs tracking-wider font-orbitron">
-                ${generateInitials(data.settings.name)}
-              </div>
-            </div>
-            <button id="theme-toggle-mobile" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 rpg-button target-lock"></button>
-          </div>
-        </header>
-
-        <div id="mobile-sidebar" class="nav-mobile fixed top-16 left-0 right-0 bottom-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-2xl transform -translate-x-full transition-transform z-40 duration-300 overflow-y-auto border-r-2 border-gray-300 dark:border-gray-700">
-          <div class="p-6">
-            <nav class="flex flex-col gap-4">
-              ${data.navigation.items
-                .map((item, idx) => `
-                <a href="${item.url}" class="text-lg hover:text-gray-900 dark:hover:text-white transition-all duration-300 py-2 rpg-button target-lock px-4 rounded-lg">${item.name}</a>`)
-                .join("")}
-            </nav>
-          </div>
-        </div>
-      `;
-          }
+          const response = await fetch("./portfolio-datac5.json");
+          if (!response.ok) throw new Error("Failed to load portfolio data");
+          const data = await response.json();
 
           loadingManager.updateProgress(50);
 
-          let ctaButtonsHTML = "";
-          if (data.sections.hero && data.sections.hero.enabled) {
-            ctaButtonsHTML = data.sections.hero.ctaButtons
-              .map((btn, idx) => `
-        <a href="${btn.url}" ${btn.url.startsWith('mailto:') ? '' : `target="_blank" rel="noopener noreferrer" ${btn.url.startsWith('./') ? 'download' : ''}`} class="inline-flex items-center gap-2 px-6 py-3 text-sm border-2 border-gray-400 dark:border-gray-600 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white hover:border-transparent dark:hover:from-blue-600 dark:hover:to-purple-700 transition-all duration-400 rpg-button target-lock group font-medium">
-          ${btn.url.startsWith('./') ? getIconSVG('external') : ''} 
-          <span>${btn.text}</span>
-        </a>`)
+          const canonicalLink = document.getElementById("canonical-link");
+          if (canonicalLink) canonicalLink.href = window.location.href;
+
+          document.title = `${data.settings.name} - ${data.settings.title}`;
+
+          let headerHTML = "";
+          if (data.navigation && data.navigation.enabled) {
+            const navLinks = (data.navigation.items || [])
+              .map(
+                (item) =>
+                  `<a href="${ensureUrl(item.url)}" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-sm font-medium rpg-button px-4 py-2 rounded-full">${item.name}</a>`
+              )
               .join("");
+
+            headerHTML = `
+      <nav class="nav-mobile fixed top-0 left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-lg z-50 py-3 px-4">
+        <div class="flex items-center justify-between">
+          <h1 class="text-lg font-bold font-orbitron bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">${data.settings.name}</h1>
+          <button id="hamburger-menu" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors rpg-button">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </nav>
+      
+      <div id="mobile-sidebar" class="nav-mobile fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-900 shadow-2xl z-[60] transform -translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-8">
+            <h2 class="text-xl font-bold font-orbitron bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">Menu</h2>
+            <button id="theme-toggle-mobile" class="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-all rpg-button"></button>
+          </div>
+          <div class="flex flex-col gap-4">
+            ${navLinks}
+          </div>
+        </div>
+      </div>
+
+      <nav class="nav-desktop fixed top-4 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
+        <div class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm rounded-full px-6 py-3 shadow-2xl border-2 border-gray-200 dark:border-gray-700">
+          <div class="flex items-center gap-6">
+            ${navLinks}
+          </div>
+        </div>
+      </nav>
+    `;
           }
 
           loadingManager.updateProgress(60);
 
+          let ctaButtonsHTML = "";
+          if (data.sections.hero && data.sections.hero.enabled && data.sections.hero.ctaButtons) {
+            ctaButtonsHTML = data.sections.hero.ctaButtons
+              .map(
+                (btn) =>
+                  `<a href="${ensureUrl(btn.url)}" class="rpg-button target-lock px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-2xl font-orbitron text-sm">${btn.text}</a>`
+              )
+              .join("");
+          }
+
           let aboutHTML = "";
           if (data.sections.about && data.sections.about.enabled) {
             aboutHTML = `
-              <div class="mt-20 scroll-reveal" id="about">
-                <h2 class="font-bold text-2xl md:text-3xl text-gray-900 dark:text-white mb-8 glitch" data-text="About Me">About Me</h2>
-                <p class="text-gray-700 dark:text-gray-400 text-base md:text-lg leading-relaxed max-w-3xl">${data.sections.about.content || data.settings.summary}</p>
-              </div>
-            `;
+      <div class="mt-20" id="about">
+        ${createSectionDivider("About Me")}
+        <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 sm:p-8 shadow-xl border-2 border-gray-200 dark:border-gray-700 scroll-reveal">
+          <p class="text-base sm:text-lg leading-relaxed text-gray-700 dark:text-gray-300">${data.sections.about.content}</p>
+        </div>
+      </div>
+    `;
           }
 
           let skillsHTML = "";
-          if (data.sections.about && data.sections.about.enabled) {
-            if (data.sections.about.skills && data.sections.about.skills.enabled) {
-              skillsHTML = `
-          <div class="mt-20 scroll-reveal">
-              <h2 class="font-bold text-2xl md:text-3xl text-gray-900 dark:text-white mb-8 glitch" data-text="${data.sections.about.skills.title}">${data.sections.about.skills.title}</h2>
-              <div class="flex flex-wrap gap-3">
-                  ${data.sections.about.skills.items
-                    .map((skill, idx) =>
-                      `<span class="scroll-reveal-scale stagger-${(idx % 5) + 1} text-sm px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 dark:from-gray-800 dark:to-gray-700 text-gray-800 dark:text-gray-200 font-mono hover:scale-110 hover:shadow-lg transition-all duration-300 target-lock border border-gray-300 dark:border-gray-600">${skill}</span>`)
-                    .join("")}
-              </div>
-          </div>
-        `;
-            }
+          if (data.sections.about && data.sections.about.skills && data.sections.about.skills.enabled) {
+            const skillTags = (data.sections.about.skills.items || [])
+              .map(
+                (skill, index) =>
+                  `<span class="skill-pill px-4 py-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-full text-sm font-medium shadow-md border-2 border-gray-200 dark:border-gray-700 scroll-reveal" style="animation-delay: ${index * 0.05}s">${skill}</span>`
+              )
+              .join("");
+
+            skillsHTML = `
+      <div class="mt-20">
+        ${createSectionDivider(data.sections.about.skills.title || "Technical Skills")}
+        <div class="flex flex-wrap gap-3 justify-center">
+          ${skillTags}
+        </div>
+      </div>
+    `;
           }
 
           loadingManager.updateProgress(70);
 
           let projectsHTML = "";
           if (data.sections.projects && data.sections.projects.enabled) {
+            const projectCards = (data.sections.projects.items || [])
+              .map(
+                (project, index) => {
+                  const tags = (project.tags || [])
+                    .map((tag) => `<span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium">${tag}</span>`)
+                    .join("");
+
+                  const animClass = index % 2 === 0 ? "scroll-reveal-left" : "scroll-reveal-right";
+
+                  return `
+          <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 group ${animClass}">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors font-orbitron">${project.title}</h3>
+            <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">${project.description}</p>
+            <div class="flex flex-wrap gap-2 mb-4">${tags}</div>
+            ${project.repoUrl ? `<a href="${ensureUrl(project.repoUrl)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors rpg-button">View Project <span>→</span></a>` : ""}
+          </div>
+        `;
+                }
+              )
+              .join("");
+
             projectsHTML = `
-        <div class="mt-20" id="projects">
-          ${createSectionDivider(data.sections.projects.title)}
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            ${data.sections.projects.items
-              .map((project, idx) => {
-                const isEven = idx % 2 === 0;
-                return `
-            <div class="group border-2 border-gray-300 dark:border-gray-700 rounded-xl overflow-hidden card-interactive hover:border-blue-500 dark:hover:border-blue-600 bg-white dark:bg-gray-800/50 scroll-reveal-${isEven ? 'left' : 'right'} stagger-${(idx % 5) + 1}">
-              <div class="p-6">
-                <h3 class="font-semibold text-lg md:text-xl text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 glitch" data-text="${project.title}">${project.title}</h3>
-                <p class="text-gray-700 dark:text-gray-400 text-sm md:text-base leading-relaxed mb-4">${project.description}</p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  ${project.tags
-                    .map(tag =>
-                      `<span class="text-xs px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 font-mono hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 border border-gray-300 dark:border-gray-600">${tag}</span>`)
-                    .join("")}
-                </div>
-                <div class="flex items-center gap-4 text-sm pt-4 border-t border-gray-200 dark:border-gray-700">
-                  ${
-                    project.repoUrl
-                      ? `<a href="${ensureUrl(project.repoUrl)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 target-lock rpg-button px-3 py-1 rounded-lg">
-                         ${getIconSVG("github")}
-                         <span>View Code</span>
-                       </a>`
-                      : ""
-                  }
-                </div>
-              </div>
-            </div>`;
-              })
-              .join("")}
-          </div>
-          <div class="text-center mt-12 scroll-reveal">
-            <a href="https://github.com/Shrenik811rp" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-8 py-4 text-sm border-2 border-gray-400 dark:border-gray-600 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white hover:border-transparent dark:hover:from-blue-600 dark:hover:to-purple-700 transition-all duration-400 rpg-button target-lock font-medium">
-              View More Projects on GitHub
-              ${getIconSVG("external")}
-            </a>
-          </div>
+      <div class="mt-20" id="projects">
+        ${createSectionDivider(data.sections.projects.title)}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          ${projectCards}
         </div>
-      `;
+      </div>
+    `;
           }
 
           loadingManager.updateProgress(80);
 
           let experienceHTML = "";
           if (data.sections.experience && data.sections.experience.enabled) {
-            const experienceItemsHTML = data.sections.experience.items
-              .map((item, idx) => `
-        <div class="mb-12 pb-12 border-b border-gray-200 dark:border-gray-700 last:border-b-0 scroll-reveal-swirl stagger-${(idx % 5) + 1} group hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-purple-50/50 dark:hover:from-gray-800/50 dark:hover:to-gray-700/50 rounded-lg p-6 transition-all duration-300">
-          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2 gap-2">
-            <h3 class="font-semibold text-lg sm:text-xl text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">${item.position}</h3>
-            <span class="text-xs text-gray-600 dark:text-gray-500 font-mono whitespace-nowrap px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">${item.period}</span>
+            const experienceItems = (data.sections.experience.items || [])
+              .map(
+                (exp, index) => `
+        <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 shadow-xl border-2 border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-all duration-500 scroll-reveal" style="animation-delay: ${index * 0.1}s">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-2">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white font-orbitron">${exp.position}</h3>
+            <span class="text-sm text-gray-600 dark:text-gray-400 font-medium shrink-0">${exp.period}</span>
           </div>
-          <p class="text-gray-700 dark:text-gray-400 text-base mb-3 font-medium">${item.company}</p>
-          <p class="text-gray-700 dark:text-gray-400 text-sm leading-relaxed whitespace-pre-line">${item.description}</p>
-        </div>`)
+          <p class="text-base font-semibold text-blue-600 dark:text-blue-400 mb-3">${exp.company}</p>
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${exp.description}</p>
+        </div>
+      `
+              )
               .join("");
 
             experienceHTML = `
-        <div class="mt-20" id="experience">
-            ${createSectionDivider(data.sections.experience.title)}
-            ${experienceItemsHTML}
+      <div class="mt-20" id="experience">
+        ${createSectionDivider(data.sections.experience.title)}
+        <div class="space-y-6">
+          ${experienceItems}
         </div>
-      `;
+      </div>
+    `;
           }
 
           let educationHTML = "";
           if (data.sections.education && data.sections.education.enabled) {
-            const educationItemsHTML = data.sections.education.items
-              .map((item, idx) => `
-        <div class="mb-10 pb-10 border-b border-gray-200 dark:border-gray-700 last:border-b-0 scroll-reveal-rotate stagger-${(idx % 5) + 1} group hover:bg-gradient-to-r hover:from-purple-50/50 hover:to-pink-50/50 dark:hover:from-gray-800/50 dark:hover:to-gray-700/50 rounded-lg p-6 transition-all duration-300">
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-3 gap-2">
-                <h3 class="font-semibold text-lg text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">${item.degree}</h3>
-                <div class="text-sm text-gray-600 dark:text-gray-500 font-mono px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">${item.period}</div>
-            </div>
-            <p class="text-gray-700 dark:text-gray-400 text-base mb-2 font-medium">${item.institution}</p>
-            ${item.details ? `<p class="text-gray-600 dark:text-gray-500 text-sm">${item.details}</p>` : ''}
-        </div>`)
+            const educationItems = (data.sections.education.items || [])
+              .map(
+                (edu, index) => `
+        <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 shadow-xl border-2 border-gray-200 dark:border-gray-700 hover:border-green-500 dark:hover:border-green-400 transition-all duration-500 scroll-reveal" style="animation-delay: ${index * 0.1}s">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-2">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white font-orbitron">${edu.degree}</h3>
+            <span class="text-sm text-gray-600 dark:text-gray-400 font-medium shrink-0">${edu.period}</span>
+          </div>
+          <p class="text-base font-semibold text-green-600 dark:text-green-400 mb-3">${edu.institution}</p>
+          ${edu.details ? `<p class="text-gray-700 dark:text-gray-300 leading-relaxed">${edu.details}</p>` : ""}
+        </div>
+      `
+              )
               .join("");
 
             educationHTML = `
-        <div class="mt-20" id="education">
-            ${createSectionDivider(data.sections.education.title)}
-            ${educationItemsHTML}
+      <div class="mt-20" id="education">
+        ${createSectionDivider(data.sections.education.title)}
+        <div class="space-y-6">
+          ${educationItems}
         </div>
-      `;
+      </div>
+    `;
+          }
+
+          loadingManager.updateProgress(85);
+
+          let achievementsHTML = "";
+          if (data.sections.achievements && data.sections.achievements.enabled) {
+            const achievementItems = (data.sections.achievements.items || [])
+              .map(
+                (item, index) => `
+        <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 shadow-xl border-2 border-gray-200 dark:border-gray-700 hover:border-yellow-500 dark:hover:border-yellow-400 transition-all duration-500 scroll-reveal" style="animation-delay: ${index * 0.05}s">
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 font-orbitron">${item.title}</h3>
+          <p class="text-gray-700 dark:text-gray-300">${item.description}</p>
+        </div>
+      `
+              )
+              .join("");
+
+            achievementsHTML = `
+      <div class="mt-20" id="achievements">
+        ${createSectionDivider(data.sections.achievements.title)}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          ${achievementItems}
+        </div>
+      </div>
+    `;
           }
 
           loadingManager.updateProgress(90);
 
-          let achievementsHTML = "";
-          if (data.sections.achievements && data.sections.achievements.enabled) {
-            const achievementItemsHTML = data.sections.achievements.items
-              .map((item, idx) => `
-        <div class="rounded-lg border-2 border-gray-300 dark:border-gray-700 p-6 card-interactive group hover:border-blue-500 dark:hover:border-blue-600 bg-white dark:bg-gray-800/50 scroll-reveal-flip stagger-${(idx % 5) + 1}">
-          <h3 class="font-semibold text-base text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 mb-2">${item.title}</h3>
-          <p class="text-gray-700 dark:text-gray-400 text-sm">${item.description}</p>
-        </div>`)
-              .join("");
-
-            achievementsHTML = `
-        <div class="mt-20" id="achievements">
-          ${createSectionDivider(data.sections.achievements.title)}
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            ${achievementItemsHTML}
-          </div>
-        </div>
-      `;
-          }
-
           let contactHTML = "";
           if (data.sections.contact && data.sections.contact.enabled) {
             const contactItems = [
-              {
-                value: data.sections.contact.email,
-                link: `mailto:${data.sections.contact.email}`,
-                label: "Email"
-              },
-              {
-                value: data.sections.contact.phone,
-                link: `tel:${data.sections.contact.phone}`,
-                label: "Phone"
-              },
-              {
-                value: data.sections.contact.location,
-                link: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.sections.contact.location)}`,
-                label: "Location"
-              },
+              data.sections.contact.email ? `<div class="flex items-center gap-3 scroll-reveal"><svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg><a href="mailto:${data.sections.contact.email}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors rpg-button">${data.sections.contact.email}</a></div>` : "",
+              data.sections.contact.phone ? `<div class="flex items-center gap-3 scroll-reveal"><svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg><a href="tel:${data.sections.contact.phone}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors rpg-button">${data.sections.contact.phone}</a></div>` : "",
+              data.sections.contact.location ? `<div class="flex items-center gap-3 scroll-reveal"><svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg><span>${data.sections.contact.location}</span></div>` : "",
             ]
-              .filter((item) => item.value)
-              .map((item, idx) =>
-                `<div class="text-center group target-lock scroll-reveal-scale stagger-${idx + 1}">
-                  <p class="text-gray-600 dark:text-gray-500 text-xs uppercase tracking-widest mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 font-orbitron">${item.label}</p>
-                  <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-105 inline-block font-medium text-sm">${item.value}</a>
-                </div>`)
+              .filter(Boolean)
               .join("");
 
-            const contactFormHTML = data.sections.contact.showContactForm ? `
-              <div class="mt-16 max-w-2xl mx-auto scroll-reveal">
-                <h3 class="font-semibold text-xl text-gray-900 dark:text-white mb-8 text-center glitch" data-text="Send Me a Message">Send Me a Message</h3>
-                <form class="space-y-5" onsubmit="handleContactForm(event)">
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <input type="text" placeholder="Your Name" required class="px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-transparent transition-all duration-300 hover:border-blue-400 dark:hover:border-blue-600 rpg-button">
-                    <input type="email" placeholder="Your Email" required class="px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-transparent transition-all duration-300 hover:border-blue-400 dark:hover:border-blue-600 rpg-button">
-                  </div>
-                  <input type="text" placeholder="Subject" required class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-transparent transition-all duration-300 hover:border-blue-400 dark:hover:border-blue-600 rpg-button">
-                  <textarea rows="6" placeholder="Your Message" required class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-transparent transition-all duration-300 hover:border-blue-400 dark:hover:border-blue-600 resize-none rpg-button"></textarea>
-                  <button type="submit" class="w-full px-6 py-4 bg-gradient-to-r from-blue-500 to-purple-600 dark:from-blue-600 dark:to-purple-700 text-white rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 font-semibold rpg-button target-lock">
-                    Send Message
-                  </button>
-                </form>
-              </div>
-            ` : '';
+            let socialLinksHTML = "";
+            if (data.sections.social && data.sections.social.enabled) {
+              const socialIcons = {
+                linkedin: `<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
+                github: `<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>`,
+              };
+
+              socialLinksHTML = (data.sections.social.items || [])
+                .map(
+                  (social) => `
+          <a href="${ensureUrl(social.url)}" target="_blank" rel="noopener noreferrer" class="p-3 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-full text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl rpg-button target-lock" aria-label="${social.platform}">
+            ${socialIcons[social.platform] || ""}
+          </a>
+        `
+                )
+                .join("");
+            }
+
+            let contactFormHTML = "";
+            if (data.sections.contact.showContactForm) {
+              contactFormHTML = `
+        <div class="mt-12">
+          <h3 class="text-xl sm:text-2xl font-bold text-center mb-6 scroll-reveal">
+            <span class="heading-quirky inline-block font-orbitron bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">${wrapHeadingText("Send me a Message")}</span>
+          </h3>
+          <form onsubmit="handleContactForm(event)" class="max-w-2xl mx-auto space-y-6 scroll-reveal">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <input type="text" name="name" placeholder="Your Name" required class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-colors" />
+              <input type="email" name="email" placeholder="Your Email" required class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-colors" />
+            </div>
+            <input type="text" name="subject" placeholder="Subject" required class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-colors" />
+            <textarea name="message" placeholder="Your Message" rows="5" required class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-colors resize-none"></textarea>
+            <button type="submit" class="w-full rpg-button target-lock px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-2xl font-orbitron">Send Message</button>
+          </form>
+        </div>
+      `;
+            }
 
             contactHTML = `
         <div class="mt-20" id="contact">
@@ -1273,7 +1150,7 @@
       <div class="nav-desktop fixed top-4 right-4 z-50 animate-fade-in">
           <button id="theme-toggle" class="p-3 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-110 rpg-button target-lock shadow-lg"></button>
       </div>
-      <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-12 animate-blur-in nav-mobile:pt-8">
+      <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-12 animate-blur-in nav-mobile:pt-8 relative z-10">
         <header class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 items-center mb-16 sm:mb-20">
             <div class="sm:col-span-1 flex justify-center scroll-reveal-scale">
               <div class="relative group">
@@ -1282,7 +1159,7 @@
               </div>
             </div>
             <div class="sm:col-span-2 scroll-reveal text-center sm:text-left">
-                <h1 class="text-3xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2 glitch" data-text="Hey, I'm ${data.settings.name}">Hey, I'm ${data.settings.name}</h1>
+                <h1 class="text-3xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2"><span class="heading-quirky">${wrapHeadingText(`Hey, I'm ${data.settings.name}`)}</span></h1>
                 <p class="text-base sm:text-xl text-gray-700 dark:text-gray-300 mb-6 font-medium">${data.settings.title} • ${data.settings.location}</p>
                  <div class="flex flex-wrap gap-4 mt-8 justify-center sm:justify-start">
                   ${ctaButtonsHTML}
@@ -1309,7 +1186,45 @@
           
           setupTheme();
           
+          // Setup mobile theme toggle
+          const mobileToggle = document.getElementById("theme-toggle-mobile");
+          if (mobileToggle) {
+            const updateMobileToggle = () => {
+              const isDark = document.documentElement.classList.contains("dark");
+              mobileToggle.innerHTML = isDark
+                ? `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>`
+                : `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>`;
+            };
+            
+            updateMobileToggle();
+            
+            mobileToggle.addEventListener("click", () => {
+              const isDark = document.documentElement.classList.toggle("dark");
+              localStorage.setItem("theme", isDark ? "dark" : "light");
+              updateMobileToggle();
+              const desktopToggle = document.getElementById("theme-toggle");
+              if (desktopToggle) {
+                desktopToggle.innerHTML = isDark
+                  ? `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>`
+                  : `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>`;
+              }
+            });
+          }
+          
+          // Initialize scroll animations
           scrollAnimationManager = new ScrollAnimationManager();
+
+          // Back to top button functionality
+          const backToTopBtn = document.getElementById('back-to-top');
+          if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+              });
+            });
+          }
 
           try {
             const personSchema = {
