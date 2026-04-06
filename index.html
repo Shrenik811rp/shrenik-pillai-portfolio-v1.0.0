@@ -169,12 +169,13 @@
 
       .loading-title {
         font-family: 'Orbitron', sans-serif;
-        font-size: 2.5rem;
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
         font-weight: 900;
         color: #3b82f6;
         text-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
         letter-spacing: 4px;
         text-align: center;
+        word-break: break-word;
       }
 
       .loading-bar-container {
@@ -190,240 +191,233 @@
 
       .loading-bar {
         height: 100%;
+        width: 0%;
         background: linear-gradient(90deg, #3b82f6, #8b5cf6, #3b82f6);
         background-size: 200% 100%;
         animation: shimmer 2s linear infinite;
-        width: 0%;
         transition: width 0.3s ease;
       }
 
       .loading-text {
         font-family: 'Orbitron', sans-serif;
+        font-size: clamp(0.875rem, 3vw, 1rem);
         color: #93c5fd;
-        font-size: 1rem;
         letter-spacing: 2px;
         text-align: center;
       }
 
-      @media (max-width: 640px) {
-        .loading-title {
-          font-size: 1.5rem;
-          letter-spacing: 2px;
-        }
-        .loading-bar-container {
-          height: 24px;
-        }
-        .loading-text {
-          font-size: 0.875rem;
-        }
-      }
-
-      /* Vector Background Images for Light Mode */
-      body:not(.dark) #vector-background {
-        display: block !important;
-      }
-
-      body.dark #vector-background {
-        display: none !important;
-      }
-
-      #vector-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 0;
-        opacity: 0.08;
-        overflow: hidden;
-        display: none;
-      }
-
-      .vector-shape {
-        position: absolute;
-        opacity: 0.5;
-      }
-
-      /* Starfield */
+      /* Starfield Background */
       #starfield {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
+        z-index: -1;
         pointer-events: none;
-        z-index: 0;
       }
 
       .star {
         position: absolute;
         background: white;
         border-radius: 50%;
-        opacity: 0;
+        opacity: 0.8;
         animation: twinkle 3s infinite ease-in-out;
       }
 
       @keyframes twinkle {
-        0%, 100% { opacity: 0; transform: scale(1); }
-        50% { opacity: 0.8; transform: scale(1.2); }
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.2); }
       }
 
-      /* Quirky Heading Hover Animations */
-      .heading-quirky {
-        display: inline-block;
-        position: relative;
-        transition: all 0.3s ease;
+      /* Light mode vector background */
+      body:not(.dark) #vector-bg {
+        display: block;
       }
 
-      .heading-quirky::before {
-        content: '';
+      body.dark #vector-bg {
+        display: none;
+      }
+
+      #vector-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        pointer-events: none;
+        opacity: 0.05;
+        overflow: hidden;
+      }
+
+      .vector-shape {
         position: absolute;
-        top: 50%;
-        left: 50%;
+        opacity: 0.6;
+      }
+
+      .vector-circle {
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        border: 3px solid #3b82f6;
+      }
+
+      .vector-triangle {
         width: 0;
         height: 0;
-        background: radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        transition: width 0.4s ease, height 0.4s ease;
-        z-index: -1;
+        border-left: 150px solid transparent;
+        border-right: 150px solid transparent;
+        border-bottom: 260px solid #8b5cf6;
       }
 
-      .heading-quirky:hover::before {
-        width: 120%;
-        height: 120%;
-      }
-
-      .heading-quirky:hover {
-        transform: rotate(-2deg) scale(1.05);
-        color: #3b82f6;
-      }
-
-      .dark .heading-quirky:hover {
-        color: #60a5fa;
-      }
-
-      .heading-quirky span {
-        display: inline-block;
-        transition: transform 0.1s ease;
-      }
-
-      .heading-quirky:hover span {
-        animation: wave 0.6s ease-in-out;
-      }
-
-      .heading-quirky:hover span:nth-child(even) {
-        animation-delay: 0.1s;
-      }
-
-      @keyframes wave {
-        0%, 100% { transform: translateY(0); }
-        25% { transform: translateY(-8px); }
-        75% { transform: translateY(4px); }
+      .vector-square {
+        width: 200px;
+        height: 200px;
+        border: 3px solid #ec4899;
+        transform: rotate(45deg);
       }
 
       /* Scroll reveal animations */
+      .scroll-reveal,
+      .scroll-reveal-scale,
+      .scroll-reveal-left,
+      .scroll-reveal-right {
+        opacity: 0;
+        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
       .scroll-reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-      }
-
-      .scroll-reveal.revealed {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .scroll-reveal.un-revealed {
-        opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(50px);
       }
 
       .scroll-reveal-scale {
-        opacity: 0;
-        transform: scale(0.9);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        transform: scale(0.8);
       }
 
-      .scroll-reveal-scale.revealed {
+      .scroll-reveal-left {
+        transform: translateX(-60px);
+      }
+
+      .scroll-reveal-right {
+        transform: translateX(60px);
+      }
+
+      .scroll-reveal.revealed,
+      .scroll-reveal-scale.revealed,
+      .scroll-reveal-left.revealed,
+      .scroll-reveal-right.revealed {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(0) translateX(0) scale(1);
+      }
+
+      /* Unrevealed state for reverse scroll */
+      .scroll-reveal.un-revealed {
+        opacity: 0;
+        transform: translateY(50px);
       }
 
       .scroll-reveal-scale.un-revealed {
         opacity: 0;
-        transform: scale(0.9);
-      }
-
-      .scroll-reveal-left {
-        opacity: 0;
-        transform: translateX(-50px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-      }
-
-      .scroll-reveal-left.revealed {
-        opacity: 1;
-        transform: translateX(0);
+        transform: scale(0.8);
       }
 
       .scroll-reveal-left.un-revealed {
         opacity: 0;
-        transform: translateX(-50px);
-      }
-
-      .scroll-reveal-right {
-        opacity: 0;
-        transform: translateX(50px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-      }
-
-      .scroll-reveal-right.revealed {
-        opacity: 1;
-        transform: translateX(0);
+        transform: translateX(-60px);
       }
 
       .scroll-reveal-right.un-revealed {
         opacity: 0;
-        transform: translateX(50px);
+        transform: translateX(60px);
       }
 
-      /* Skills pill - matching nav button animation */
-      .skill-pill {
+      /* Quirky heading hover animation - Jello wiggle */
+      .heading-quirky {
+        display: inline-block;
         position: relative;
-        overflow: hidden;
-        transition: all 0.3s ease;
       }
 
-      .skill-pill::before {
+      .heading-quirky span {
+        display: inline-block;
+        transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+
+      .heading-quirky:hover span {
+        animation: jelloWiggle 0.6s ease-in-out;
+      }
+
+      @keyframes jelloWiggle {
+        0%, 100% { transform: skewX(0deg) skewY(0deg); }
+        25% { transform: skewX(-12deg) skewY(-8deg) scale(1.05); }
+        50% { transform: skewX(10deg) skewY(6deg) scale(0.95); }
+        75% { transform: skewX(-8deg) skewY(-4deg) scale(1.02); }
+      }
+
+      .heading-quirky:hover span:nth-child(even) {
+        animation-delay: 0.05s;
+      }
+
+      .heading-quirky:hover span:nth-child(3n) {
+        animation-delay: 0.1s;
+      }
+
+      /* Navigation button underline animation */
+      nav a {
+        position: relative;
+        display: inline-block;
+      }
+
+      nav a::after {
         content: '';
         position: absolute;
-        top: 50%;
-        left: 50%;
+        bottom: -4px;
+        left: 0;
         width: 0;
-        height: 0;
-        background: rgba(59, 130, 246, 0.15);
-        border-radius: 9999px;
-        transform: translate(-50%, -50%);
-        transition: width 0.4s ease, height 0.4s ease;
+        height: 2px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        transition: width 0.3s ease;
       }
 
-      .skill-pill:hover::before {
+      nav a:hover::after {
         width: 100%;
-        height: 100%;
       }
 
-      .skill-pill:hover {
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+      /* Skill button animation matching nav buttons */
+      .skill-btn {
+        position: relative;
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 9999px;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        transition: all 0.3s ease;
+        overflow: hidden;
+      }
+
+      .dark .skill-btn {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+        border: 1px solid rgba(59, 130, 246, 0.4);
+      }
+
+      .skill-btn::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        transition: width 0.3s ease;
+      }
+
+      .skill-btn:hover {
         transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
       }
 
-      .dark .skill-pill::before {
-        background: rgba(96, 165, 250, 0.15);
-      }
-
-      .dark .skill-pill:hover {
-        box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.5);
+      .skill-btn:hover::before {
+        width: 100%;
       }
 
       /* Back to top button */
@@ -433,121 +427,67 @@
         right: 30px;
         width: 50px;
         height: 50px;
-        border-radius: 50%;
         background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-        color: white;
-        display: none;
+        border-radius: 50%;
+        display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-        z-index: 1000;
-        transition: all 0.3s ease;
-        border: none;
-        font-size: 24px;
-      }
-
-      #back-to-top:hover {
-        transform: translateY(-5px) scale(1.1);
-        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0);
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        z-index: 999;
       }
 
       #back-to-top.show {
-        display: flex;
-        animation: bounceUp 0.5s ease-out;
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
       }
 
+      #back-to-top:hover {
+        transform: scale(1.1) translateY(-3px);
+        box-shadow: 0 6px 25px rgba(59, 130, 246, 0.6);
+      }
+
+      #back-to-top svg {
+        width: 24px;
+        height: 24px;
+        color: white;
+      }
+
+      /* Mobile optimization */
       @media (max-width: 640px) {
         #back-to-top {
-          width: 45px;
-          height: 45px;
           bottom: 20px;
           right: 20px;
-          font-size: 20px;
+          width: 45px;
+          height: 45px;
         }
       }
 
-      /* Glitch effect */
-      .glitch {
-        position: relative;
-        animation: none;
-      }
-
-      /* Navigation */
-      .nav-desktop {
-        display: block;
-      }
-
-      .nav-mobile {
-        display: none;
-      }
-
-      @media (max-width: 768px) {
-        .nav-desktop {
-          display: none;
-        }
-
-        .nav-mobile {
-          display: block;
+      /* Ensure animations work on all devices */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
         }
       }
 
-      @media (min-width: 769px) {
-        .nav-mobile\:pt-20 {
-          padding-top: 0 !important;
-        }
-
-        .nav-mobile\:pt-8 {
-          padding-top: 0 !important;
-        }
-      }
-
-      .rpg-button {
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .rpg-button::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        background: radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        transition: width 0.4s ease, height 0.4s ease;
-      }
-
-      .rpg-button:hover::before {
-        width: 200%;
-        height: 200%;
-      }
-
-      .rpg-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-      }
-
-      .target-lock {
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
-      }
-
-      .target-lock:hover {
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 10px 25px rgba(0, 0, 0, 0.2);
-      }
-
-      .profile-image-container {
-        transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-
-      .profile-image-container:hover {
-        transform: scale(1.05) rotate(5deg);
+      /* Failsafe for broken animations */
+      .scroll-reveal.revealed,
+      .scroll-reveal-scale.revealed,
+      .scroll-reveal-left.revealed,
+      .scroll-reveal-right.revealed {
+        opacity: 1 !important;
+        transform: none !important;
       }
     </style>
   </head>
   <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-space-grotesk">
+    <!-- Loading Screen -->
     <div id="loading-screen">
       <div class="loading-title">SHRENIK PILLAI</div>
       <div class="loading-bar-container">
@@ -556,43 +496,26 @@
       <div class="loading-text" id="loading-text">INITIALIZING...</div>
     </div>
 
+    <!-- Starfield Background -->
     <div id="starfield"></div>
-    
+
     <!-- Vector Background for Light Mode -->
-    <div id="vector-background">
-      <!-- Abstract geometric shapes -->
-      <svg class="vector-shape" style="top: 10%; left: 5%; width: 200px; height: 200px;">
-        <circle cx="100" cy="100" r="80" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.3"/>
-        <circle cx="100" cy="100" r="60" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0.3"/>
-        <circle cx="100" cy="100" r="40" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.3"/>
-      </svg>
-      
-      <svg class="vector-shape" style="top: 60%; right: 8%; width: 250px; height: 250px;">
-        <polygon points="125,20 230,100 200,200 50,200 20,100" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.3"/>
-        <polygon points="125,50 200,110 180,180 70,180 50,110" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0.3"/>
-      </svg>
-      
-      <svg class="vector-shape" style="top: 30%; right: 20%; width: 150px; height: 150px;">
-        <rect x="25" y="25" width="100" height="100" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.3" transform="rotate(45 75 75)"/>
-        <rect x="40" y="40" width="70" height="70" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0.3" transform="rotate(45 75 75)"/>
-      </svg>
-      
-      <svg class="vector-shape" style="bottom: 15%; left: 15%; width: 180px; height: 180px;">
-        <path d="M90,10 L170,90 L90,170 L10,90 Z" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.3"/>
-        <path d="M90,30 L150,90 L90,150 L30,90 Z" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0.3"/>
-      </svg>
-      
-      <svg class="vector-shape" style="top: 45%; left: 30%; width: 120px; height: 120px;">
-        <circle cx="60" cy="60" r="50" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.3"/>
-        <line x1="10" y1="60" x2="110" y2="60" stroke="#8b5cf6" stroke-width="2" opacity="0.3"/>
-        <line x1="60" y1="10" x2="60" y2="110" stroke="#8b5cf6" stroke-width="2" opacity="0.3"/>
-      </svg>
+    <div id="vector-bg">
+      <div class="vector-shape vector-circle" style="top: 10%; left: 5%; animation: float 8s ease-in-out infinite;"></div>
+      <div class="vector-shape vector-triangle" style="top: 60%; right: 10%; animation: float 10s ease-in-out infinite 2s;"></div>
+      <div class="vector-shape vector-square" style="bottom: 20%; left: 15%; animation: float 12s ease-in-out infinite 4s;"></div>
+      <div class="vector-shape vector-circle" style="top: 40%; right: 20%; width: 200px; height: 200px; animation: float 9s ease-in-out infinite 1s;"></div>
+      <div class="vector-shape vector-square" style="top: 25%; left: 60%; width: 150px; height: 150px; animation: float 11s ease-in-out infinite 3s;"></div>
     </div>
 
-    <div id="app"></div>
-
     <!-- Back to Top Button -->
-    <button id="back-to-top" aria-label="Back to top">↑</button>
+    <button id="back-to-top" aria-label="Back to top">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
+
+    <div id="app" class="min-h-screen"></div>
 
     <script>
       let starfield = null;
@@ -702,11 +625,21 @@
             this.elements = [];
             this.lastScrollY = window.scrollY;
             this.isScrollingDown = true;
+            this.ticking = false;
             
             this.observeElements();
             this.handleScroll();
             
-            window.addEventListener('scroll', () => this.handleScroll(), { passive: true });
+            window.addEventListener('scroll', () => {
+              if (!this.ticking) {
+                window.requestAnimationFrame(() => {
+                  this.handleScroll();
+                  this.ticking = false;
+                });
+                this.ticking = true;
+              }
+            }, { passive: true });
+            
             window.addEventListener('resize', () => this.observeElements());
           } catch (e) {
             console.warn('ScrollAnimationManager initialization failed:', e);
@@ -748,25 +681,18 @@
                   if (elementTop < windowHeight && elementBottom > windowHeight * 0.15) {
                     element.classList.add('revealed');
                     element.classList.remove('un-revealed');
-                  } else if (elementBottom < windowHeight * 0.15) {
-                    // Element is above viewport - un-reveal it
-                    element.classList.remove('revealed');
-                    element.classList.add('un-revealed');
                   }
                 }
 
-                // Un-reveal when element completely leaves viewport
+                // Remove revealed state when element is completely out of viewport
                 if (elementBottom < 0 || elementTop > windowHeight) {
-                  if (this.isScrollingDown && elementBottom < 0) {
-                    element.classList.remove('revealed');
-                    element.classList.add('un-revealed');
-                  } else if (!this.isScrollingDown && elementTop > windowHeight) {
-                    element.classList.remove('revealed');
-                    element.classList.add('un-revealed');
-                  }
+                  element.classList.remove('revealed');
+                  element.classList.add('un-revealed');
                 }
               } catch (e) {
-                console.warn('Element scroll handling failed:', e);
+                console.warn('Element animation failed:', e);
+                // Failsafe: ensure element is visible
+                element.classList.add('revealed');
               }
             });
 
@@ -855,7 +781,7 @@
         try {
           loadingManager.updateProgress(30);
 
-          const response = await fetch("./portfolio-datac5.json");
+          const response = await fetch("./portfolio-datac6.json");
           if (!response.ok) throw new Error("Failed to load portfolio data");
           const data = await response.json();
 
@@ -868,302 +794,330 @@
 
           let headerHTML = "";
           if (data.navigation && data.navigation.enabled) {
-            const navLinks = (data.navigation.items || [])
+            const navItems = (data.navigation.items || [])
               .map(
                 (item) =>
-                  `<a href="${ensureUrl(item.url)}" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-sm font-medium rpg-button px-4 py-2 rounded-full">${item.name}</a>`
+                  `<a href="${ensureUrl(item.url)}" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300">${item.name}</a>`
               )
               .join("");
 
             headerHTML = `
-      <nav class="nav-mobile fixed top-0 left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-lg z-50 py-3 px-4">
-        <div class="flex items-center justify-between">
-          <h1 class="text-lg font-bold font-orbitron bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">${data.settings.name}</h1>
-          <button id="hamburger-menu" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors rpg-button">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-          </button>
-        </div>
-      </nav>
-      
-      <div id="mobile-sidebar" class="nav-mobile fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-900 shadow-2xl z-[60] transform -translate-x-full transition-transform duration-300 ease-in-out">
-        <div class="p-6">
-          <div class="flex items-center justify-between mb-8">
-            <h2 class="text-xl font-bold font-orbitron bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">Menu</h2>
-            <button id="theme-toggle-mobile" class="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-all rpg-button"></button>
-          </div>
-          <div class="flex flex-col gap-4">
-            ${navLinks}
-          </div>
-        </div>
-      </div>
-
-      <nav class="nav-desktop fixed top-4 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
-        <div class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm rounded-full px-6 py-3 shadow-2xl border-2 border-gray-200 dark:border-gray-700">
-          <div class="flex items-center gap-6">
-            ${navLinks}
-          </div>
-        </div>
-      </nav>
-    `;
-          }
-
-          loadingManager.updateProgress(60);
-
-          let ctaButtonsHTML = "";
-          if (data.sections.hero && data.sections.hero.enabled && data.sections.hero.ctaButtons) {
-            ctaButtonsHTML = data.sections.hero.ctaButtons
-              .map(
-                (btn) =>
-                  `<a href="${ensureUrl(btn.url)}" class="rpg-button target-lock px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-2xl font-orbitron text-sm">${btn.text}</a>`
-              )
-              .join("");
-          }
-
-          let aboutHTML = "";
-          if (data.sections.about && data.sections.about.enabled) {
-            aboutHTML = `
-      <div class="mt-20" id="about">
-        ${createSectionDivider("About Me")}
-        <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 sm:p-8 shadow-xl border-2 border-gray-200 dark:border-gray-700 scroll-reveal">
-          <p class="text-base sm:text-lg leading-relaxed text-gray-700 dark:text-gray-300">${data.sections.about.content}</p>
-        </div>
-      </div>
-    `;
-          }
-
-          let skillsHTML = "";
-          if (data.sections.about && data.sections.about.skills && data.sections.about.skills.enabled) {
-            const skillTags = (data.sections.about.skills.items || [])
-              .map(
-                (skill, index) =>
-                  `<span class="skill-pill px-4 py-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-full text-sm font-medium shadow-md border-2 border-gray-200 dark:border-gray-700 scroll-reveal" style="animation-delay: ${index * 0.05}s">${skill}</span>`
-              )
-              .join("");
-
-            skillsHTML = `
-      <div class="mt-20">
-        ${createSectionDivider(data.sections.about.skills.title || "Technical Skills")}
-        <div class="flex flex-wrap gap-3 justify-center">
-          ${skillTags}
-        </div>
-      </div>
-    `;
-          }
-
-          loadingManager.updateProgress(70);
-
-          let projectsHTML = "";
-          if (data.sections.projects && data.sections.projects.enabled) {
-            const projectCards = (data.sections.projects.items || [])
-              .map(
-                (project, index) => {
-                  const tags = (project.tags || [])
-                    .map((tag) => `<span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium">${tag}</span>`)
-                    .join("");
-
-                  const animClass = index % 2 === 0 ? "scroll-reveal-left" : "scroll-reveal-right";
-
-                  return `
-          <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 group ${animClass}">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors font-orbitron">${project.title}</h3>
-            <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">${project.description}</p>
-            <div class="flex flex-wrap gap-2 mb-4">${tags}</div>
-            ${project.repoUrl ? `<a href="${ensureUrl(project.repoUrl)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors rpg-button">View Project <span>→</span></a>` : ""}
-          </div>
-        `;
-                }
-              )
-              .join("");
-
-            projectsHTML = `
-      <div class="mt-20" id="projects">
-        ${createSectionDivider(data.sections.projects.title)}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          ${projectCards}
-        </div>
-      </div>
-    `;
-          }
-
-          loadingManager.updateProgress(80);
-
-          let experienceHTML = "";
-          if (data.sections.experience && data.sections.experience.enabled) {
-            const experienceItems = (data.sections.experience.items || [])
-              .map(
-                (exp, index) => `
-        <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 shadow-xl border-2 border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-all duration-500 scroll-reveal" style="animation-delay: ${index * 0.1}s">
-          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-2">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white font-orbitron">${exp.position}</h3>
-            <span class="text-sm text-gray-600 dark:text-gray-400 font-medium shrink-0">${exp.period}</span>
-          </div>
-          <p class="text-base font-semibold text-blue-600 dark:text-blue-400 mb-3">${exp.company}</p>
-          <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${exp.description}</p>
-        </div>
-      `
-              )
-              .join("");
-
-            experienceHTML = `
-      <div class="mt-20" id="experience">
-        ${createSectionDivider(data.sections.experience.title)}
-        <div class="space-y-6">
-          ${experienceItems}
-        </div>
-      </div>
-    `;
-          }
-
-          let educationHTML = "";
-          if (data.sections.education && data.sections.education.enabled) {
-            const educationItems = (data.sections.education.items || [])
-              .map(
-                (edu, index) => `
-        <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 shadow-xl border-2 border-gray-200 dark:border-gray-700 hover:border-green-500 dark:hover:border-green-400 transition-all duration-500 scroll-reveal" style="animation-delay: ${index * 0.1}s">
-          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-2">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white font-orbitron">${edu.degree}</h3>
-            <span class="text-sm text-gray-600 dark:text-gray-400 font-medium shrink-0">${edu.period}</span>
-          </div>
-          <p class="text-base font-semibold text-green-600 dark:text-green-400 mb-3">${edu.institution}</p>
-          ${edu.details ? `<p class="text-gray-700 dark:text-gray-300 leading-relaxed">${edu.details}</p>` : ""}
-        </div>
-      `
-              )
-              .join("");
-
-            educationHTML = `
-      <div class="mt-20" id="education">
-        ${createSectionDivider(data.sections.education.title)}
-        <div class="space-y-6">
-          ${educationItems}
-        </div>
-      </div>
-    `;
-          }
-
-          loadingManager.updateProgress(85);
-
-          let achievementsHTML = "";
-          if (data.sections.achievements && data.sections.achievements.enabled) {
-            const achievementItems = (data.sections.achievements.items || [])
-              .map(
-                (item, index) => `
-        <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 shadow-xl border-2 border-gray-200 dark:border-gray-700 hover:border-yellow-500 dark:hover:border-yellow-400 transition-all duration-500 scroll-reveal" style="animation-delay: ${index * 0.05}s">
-          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 font-orbitron">${item.title}</h3>
-          <p class="text-gray-700 dark:text-gray-300">${item.description}</p>
-        </div>
-      `
-              )
-              .join("");
-
-            achievementsHTML = `
-      <div class="mt-20" id="achievements">
-        ${createSectionDivider(data.sections.achievements.title)}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          ${achievementItems}
-        </div>
-      </div>
-    `;
-          }
-
-          loadingManager.updateProgress(90);
-
-          let contactHTML = "";
-          if (data.sections.contact && data.sections.contact.enabled) {
-            const contactItems = [
-              data.sections.contact.email ? `<div class="flex items-center gap-3 scroll-reveal"><svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg><a href="mailto:${data.sections.contact.email}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors rpg-button">${data.sections.contact.email}</a></div>` : "",
-              data.sections.contact.phone ? `<div class="flex items-center gap-3 scroll-reveal"><svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg><a href="tel:${data.sections.contact.phone}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors rpg-button">${data.sections.contact.phone}</a></div>` : "",
-              data.sections.contact.location ? `<div class="flex items-center gap-3 scroll-reveal"><svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg><span>${data.sections.contact.location}</span></div>` : "",
-            ]
-              .filter(Boolean)
-              .join("");
-
-            let socialLinksHTML = "";
-            if (data.sections.social && data.sections.social.enabled) {
-              const socialIcons = {
-                linkedin: `<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
-                github: `<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>`,
-              };
-
-              socialLinksHTML = (data.sections.social.items || [])
-                .map(
-                  (social) => `
-          <a href="${ensureUrl(social.url)}" target="_blank" rel="noopener noreferrer" class="p-3 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-full text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl rpg-button target-lock" aria-label="${social.platform}">
-            ${socialIcons[social.platform] || ""}
+      <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <a href="#" class="text-xl sm:text-2xl font-bold font-orbitron bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+            ${data.settings.name.split(' ')[0]}
           </a>
-        `
-                )
-                .join("");
-            }
-
-            let contactFormHTML = "";
-            if (data.sections.contact.showContactForm) {
-              contactFormHTML = `
-        <div class="mt-12">
-          <h3 class="text-xl sm:text-2xl font-bold text-center mb-6 scroll-reveal">
-            <span class="heading-quirky inline-block font-orbitron bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">${wrapHeadingText("Send me a Message")}</span>
-          </h3>
-          <form onsubmit="handleContactForm(event)" class="max-w-2xl mx-auto space-y-6 scroll-reveal">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <input type="text" name="name" placeholder="Your Name" required class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-colors" />
-              <input type="email" name="email" placeholder="Your Email" required class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-colors" />
-            </div>
-            <input type="text" name="subject" placeholder="Subject" required class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-colors" />
-            <textarea name="message" placeholder="Your Message" rows="5" required class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-colors resize-none"></textarea>
-            <button type="submit" class="w-full rpg-button target-lock px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-2xl font-orbitron">Send Message</button>
-          </form>
+          <div class="hidden lg:flex items-center gap-6 font-medium">
+            ${navItems}
+          </div>
+          <div class="flex items-center gap-4">
+            <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle theme">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+            </button>
+            <button id="hamburger-menu" class="lg:hidden p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors" aria-label="Menu">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
         </div>
-      `;
-            }
-
-            contactHTML = `
-        <div class="mt-20" id="contact">
-           ${createSectionDivider(data.sections.contact.title)}
-           ${data.sections.contact.subtitle ? `<p class="text-gray-700 dark:text-gray-400 text-center mb-12 max-w-2xl mx-auto scroll-reveal">${data.sections.contact.subtitle}</p>` : ''}
-            <div class="flex flex-col items-center gap-8 text-sm mb-8">
-                <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-x-12 gap-y-6 w-full">
-                  ${contactItems}
-                </div>
-                <div class="flex items-center gap-4 flex-wrap justify-center scroll-reveal">
-                  ${socialLinksHTML}
-                </div>
-            </div>
-            ${contactFormHTML}
+      </nav>
+      <aside id="mobile-sidebar" class="fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-50 transform -translate-x-full transition-transform duration-300 lg:hidden shadow-2xl">
+        <div class="p-6 flex flex-col gap-6">
+          <div class="flex items-center justify-between">
+            <span class="text-xl font-bold font-orbitron bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">Menu</span>
+            <button id="theme-toggle-mobile" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle theme">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+            </button>
+          </div>
+          <div class="flex flex-col gap-4 text-lg font-medium">
+            ${navItems.replace(/class="/g, 'class="block py-2 ')}
+          </div>
         </div>
-      `;
+      </aside>
+            `;
           }
 
           let footerHTML = "";
           if (data.footer && data.footer.enabled) {
             footerHTML = `
-        <footer class="py-8 text-center text-sm text-gray-600 dark:text-gray-600 border-t-2 border-gray-200 dark:border-gray-700 mt-20">
-            <p class="animate-fade-in font-orbitron">${data.footer.copyright}</p>
-        </footer>
-      `;
+      <footer class="bg-gray-100 dark:bg-gray-800 py-8 mt-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-600 dark:text-gray-400">
+          <p>${data.footer.copyright}</p>
+        </div>
+      </footer>
+            `;
           }
 
-          const content = `
-    ${headerHTML}
-    <div class="flex flex-col min-h-screen relative nav-mobile:pt-20">
-      <div class="nav-desktop fixed top-4 right-4 z-50 animate-fade-in">
-          <button id="theme-toggle" class="p-3 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-110 rpg-button target-lock shadow-lg"></button>
+          let aboutHTML = "";
+          if (data.sections.about && data.sections.about.enabled) {
+            aboutHTML = `
+      <section id="about" class="py-12 sm:py-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          ${createSectionDivider("About Me")}
+          <div class="max-w-3xl mx-auto scroll-reveal">
+            <p class="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+              ${data.sections.about.content}
+            </p>
+          </div>
+        </div>
+      </section>
+            `;
+          }
+
+          let skillsHTML = "";
+          if (data.sections.about && data.sections.about.skills && data.sections.about.skills.enabled) {
+            const skillsItemsHTML = (data.sections.about.skills.items || [])
+              .map((skill, index) => {
+                const delay = (index % 10) * 0.05;
+                return `<span class="skill-btn text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200 scroll-reveal" style="animation-delay: ${delay}s">${skill}</span>`;
+              })
+              .join("");
+
+            skillsHTML = `
+      <section id="skills" class="py-12 sm:py-16 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          ${createSectionDivider(data.sections.about.skills.title)}
+          <div class="flex flex-wrap gap-3 sm:gap-4 justify-center max-w-5xl mx-auto">
+            ${skillsItemsHTML}
+          </div>
+        </div>
+      </section>
+            `;
+          }
+
+          let projectsHTML = "";
+          if (data.sections.projects && data.sections.projects.enabled) {
+            const projectsItemsHTML = (data.sections.projects.items || [])
+              .map((project, index) => {
+                const tagsHTML = (project.tags || [])
+                  .map(tag => `<span class="px-3 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full">${tag}</span>`)
+                  .join("");
+                
+                const animClass = index % 2 === 0 ? 'scroll-reveal-left' : 'scroll-reveal-right';
+                
+                return `
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700 ${animClass}">
+        <h3 class="text-xl font-bold mb-3 font-orbitron bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+          ${project.title}
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">${project.description}</p>
+        <div class="flex flex-wrap gap-2 mb-4">
+          ${tagsHTML}
+        </div>
+        ${project.repoUrl ? `<a href="${ensureUrl(project.repoUrl)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:underline font-medium">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          View on GitHub
+        </a>` : ''}
       </div>
-      <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-12 animate-blur-in nav-mobile:pt-8 relative z-10">
-        <header class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 items-center mb-16 sm:mb-20">
-            <div class="sm:col-span-1 flex justify-center scroll-reveal-scale">
-              <div class="relative group">
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-2xl opacity-60 group-hover:opacity-90 transition-opacity duration-500 animate-pulse-glow"></div>
-                <img src="${data.settings.profileImage}" alt="${data.settings.name}" class="profile-image-container relative rounded-full w-40 h-40 sm:w-48 sm:h-48 object-cover border-4 border-white dark:border-gray-800 shadow-2xl" loading="lazy">
-              </div>
+                `;
+              })
+              .join("");
+
+            projectsHTML = `
+      <section id="projects" class="py-12 sm:py-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          ${createSectionDivider(data.sections.projects.title)}
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            ${projectsItemsHTML}
+          </div>
+        </div>
+      </section>
+            `;
+          }
+
+          let experienceHTML = "";
+          if (data.sections.experience && data.sections.experience.enabled) {
+            const experienceItemsHTML = (data.sections.experience.items || [])
+              .map((exp, index) => {
+                const animClass = 'scroll-reveal-scale';
+                return `
+      <div class="relative pl-8 pb-8 border-l-2 border-blue-500 dark:border-blue-400 ${animClass}">
+        <div class="absolute left-0 top-0 w-4 h-4 bg-blue-500 dark:bg-blue-400 rounded-full -translate-x-[9px]"></div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700">
+          <h3 class="text-xl font-bold mb-2 font-orbitron bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+            ${exp.position}
+          </h3>
+          <p class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-1">${exp.company}</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">${exp.period}</p>
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${exp.description}</p>
+        </div>
+      </div>
+                `;
+              })
+              .join("");
+
+            experienceHTML = `
+      <section id="experience" class="py-12 sm:py-16 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          ${createSectionDivider(data.sections.experience.title)}
+          <div class="max-w-4xl mx-auto">
+            ${experienceItemsHTML}
+          </div>
+        </div>
+      </section>
+            `;
+          }
+
+          let educationHTML = "";
+          if (data.sections.education && data.sections.education.enabled) {
+            const educationItemsHTML = (data.sections.education.items || [])
+              .map((edu, index) => {
+                const animClass = 'scroll-reveal';
+                return `
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700 ${animClass}">
+        <h3 class="text-xl font-bold mb-2 font-orbitron bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+          ${edu.degree}
+        </h3>
+        <p class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-1">${edu.institution}</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">${edu.period}</p>
+        ${edu.details ? `<p class="text-gray-700 dark:text-gray-300">${edu.details}</p>` : ''}
+      </div>
+                `;
+              })
+              .join("");
+
+            educationHTML = `
+      <section id="education" class="py-12 sm:py-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          ${createSectionDivider(data.sections.education.title)}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            ${educationItemsHTML}
+          </div>
+        </div>
+      </section>
+            `;
+          }
+
+          let achievementsHTML = "";
+          if (data.sections.achievements && data.sections.achievements.enabled) {
+            const achievementsItemsHTML = (data.sections.achievements.items || [])
+              .map((achievement, index) => {
+                const animClass = 'scroll-reveal';
+                return `
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700 ${animClass}">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-1 font-orbitron text-gray-900 dark:text-white">${achievement.title}</h3>
+            <p class="text-gray-600 dark:text-gray-400">${achievement.description}</p>
+          </div>
+        </div>
+      </div>
+                `;
+              })
+              .join("");
+
+            achievementsHTML = `
+      <section id="achievements" class="py-12 sm:py-16 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          ${createSectionDivider(data.sections.achievements.title)}
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            ${achievementsItemsHTML}
+          </div>
+        </div>
+      </section>
+            `;
+          }
+
+          let contactHTML = "";
+          if (data.sections.contact && data.sections.contact.enabled) {
+            const contactFormHTML = data.sections.contact.showContactForm
+              ? `
+      <form onsubmit="handleContactForm(event)" class="space-y-6 scroll-reveal">
+        <div>
+          <label for="name" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Name</label>
+          <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" />
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Email</label>
+          <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" />
+        </div>
+        <div>
+          <label for="message" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Message</label>
+          <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl">
+          Send Message
+        </button>
+      </form>
+              `
+              : "";
+
+            const socialHTML = data.sections.social && data.sections.social.enabled
+              ? `
+      <div class="flex justify-center gap-6 mt-8 scroll-reveal">
+        ${(data.sections.social.items || [])
+          .map(social => `
+            <a href="${ensureUrl(social.url)}" target="_blank" rel="noopener noreferrer" class="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-2xl" aria-label="${social.platform}">
+              ${social.platform === 'github' ? '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>' : ''}
+              ${social.platform === 'linkedin' ? '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>' : ''}
+            </a>
+          `).join('')}
+      </div>
+              `
+              : "";
+
+            contactHTML = `
+      <section id="contact" class="py-12 sm:py-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          ${createSectionDivider(data.sections.contact.title)}
+          ${data.sections.contact.subtitle ? `<p class="text-center text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-12 scroll-reveal">${data.sections.contact.subtitle}</p>` : ''}
+          <div class="max-w-xl mx-auto">
+            <div class="text-center mb-8 space-y-3 scroll-reveal">
+              ${data.sections.contact.email ? `<p class="flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg><a href="mailto:${data.sections.contact.email}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">${data.sections.contact.email}</a></p>` : ''}
+              ${data.sections.contact.phone ? `<p class="flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>${data.sections.contact.phone}</p>` : ''}
+              ${data.sections.contact.location ? `<p class="flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>${data.sections.contact.location}</p>` : ''}
             </div>
-            <div class="sm:col-span-2 scroll-reveal text-center sm:text-left">
-                <h1 class="text-3xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2"><span class="heading-quirky">${wrapHeadingText(`Hey, I'm ${data.settings.name}`)}</span></h1>
-                <p class="text-base sm:text-xl text-gray-700 dark:text-gray-300 mb-6 font-medium">${data.settings.title} • ${data.settings.location}</p>
-                 <div class="flex flex-wrap gap-4 mt-8 justify-center sm:justify-start">
-                  ${ctaButtonsHTML}
-                </div>
+            ${contactFormHTML}
+            ${socialHTML}
+          </div>
+        </div>
+      </section>
+            `;
+          }
+
+          let ctaButtonsHTML = "";
+          if (data.sections.hero && data.sections.hero.enabled && data.sections.hero.ctaButtons) {
+            ctaButtonsHTML = (data.sections.hero.ctaButtons || [])
+              .map((btn, index) => {
+                const isPrimary = index === 0;
+                return `
+      <a href="${ensureUrl(btn.url)}" class="${isPrimary ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white' : 'border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-600 dark:hover:bg-blue-400 hover:text-white'} font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl scroll-reveal">
+        ${btn.text}
+      </a>
+                `;
+              })
+              .join("");
+          }
+
+          const wrappedName = wrapHeadingText(data.settings.name);
+          
+          const content = `
+      ${headerHTML}
+      <main class="relative">
+        <header class="min-h-screen flex items-center justify-center py-12 sm:py-16 px-4">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+                    <div class="w-48 h-48 sm:w-64 sm:h-64 rounded-full overflow-hidden border-4 border-blue-500 shadow-2xl scroll-reveal-scale">
+                        <img src="${data.settings.profileImage}" alt="${data.settings.name}" class="w-full h-full object-cover" />
+                    </div>
+                    <div class="flex-1 text-center lg:text-left">
+                        <h1 class="text-3xl sm:text-4xl lg:text-6xl font-bold mb-4 scroll-reveal">
+                            <span class="heading-quirky inline-block font-orbitron bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">${wrappedName}</span>
+                        </h1>
+                        <p class="text-xl sm:text-2xl lg:text-3xl mb-4 text-gray-700 dark:text-gray-300 scroll-reveal">${data.settings.title}</p>
+                        <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-4 scroll-reveal">${data.settings.location}</p>
+                        <p class="text-base sm:text-lg text-gray-700 dark:text-gray-300 max-w-2xl mb-8 scroll-reveal">${data.settings.summary}</p>
+                        <div class="flex flex-wrap gap-4 mt-8 justify-center lg:justify-start">
+                         ${ctaButtonsHTML}
+                       </div>
+                   </div>
+               </div>
             </div>
         </header>
 
